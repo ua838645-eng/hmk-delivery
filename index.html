@@ -1,2175 +1,1197 @@
-<!doctype html>
-<html lang="en" class="dark scroll-smooth">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#081624">
-<meta name="description" content="HMK Trading Inc. — Premier Canadian On-Demand Delivery, Heavy Appliance & Furniture Freight, Moving and White-Glove Platform across Ontario, BC, Alberta, and Quebec.">
-<title>HMK Trading Inc. — Canadian On-Demand Delivery & Logistics</title>
-
-<!-- Tailwind CSS & Google Fonts CDN -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
-
-<script>
-  tailwind.config = {
-    darkMode: 'class',
-    theme: {
-      extend: {
-        colors: {
-          navy: {
-            950: '#040b12',
-            900: '#081624',
-            850: '#0e2034',
-            800: '#152b44',
-            750: '#1d3857',
-            700: '#27476d',
-          },
-          lime: {
-            DEFAULT: '#9be136',
-            hover: '#b2f04d',
-            soft: 'rgba(155, 225, 54, 0.12)',
-            border: 'rgba(155, 225, 54, 0.35)',
-            900: '#183002'
-          },
-          sky: {
-            DEFAULT: '#38bdf8',
-            soft: 'rgba(56, 189, 248, 0.12)'
-          }
-        },
-        fontFamily: {
-          sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-          mono: ['JetBrains Mono', 'Fira Code', 'monospace']
-        }
-      }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HMK Trading Inc. — Canadian Freight & On-Demand Delivery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #081624;
+      --navy-2: #0f273c;
+      --lime: #9be136;
+      --lime-dark: #7ec21e;
+      --bg: #f4f7fa;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --success: #10b981;
+      --warn: #f59e0b;
+      --danger: #ef4444;
+      --radius: 14px;
+      --shadow: 0 10px 25px -5px rgba(8, 22, 36, 0.08), 0 4px 10px -2px rgba(8, 22, 36, 0.04);
     }
-  }
-</script>
 
-<style>
-  html { font-family: 'Inter', system-ui, sans-serif; background-color: #081624; color: #f8fafc; }
-  .tabular-nums { font-variant-numeric: tabular-nums; }
-  
-  /* Scrollbars */
-  ::-webkit-scrollbar { width: 6px; height: 6px; }
-  ::-webkit-scrollbar-track { background: #040b12; }
-  ::-webkit-scrollbar-thumb { background: #152b44; border-radius: 9999px; }
-  ::-webkit-scrollbar-thumb:hover { background: #9be136; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding-bottom: 84px;
+    }
+    .tabular { font-variant-numeric: tabular-nums; }
 
-  /* Smooth Cards & Hairline Borders */
-  .hairline-border { border: 1px solid rgba(255, 255, 255, 0.09); }
-  .glass-card { background: rgba(14, 32, 52, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+    /* Top Header */
+    header.topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: rgba(8, 22, 36, 0.97);
+      backdrop-filter: blur(12px);
+      color: #fff;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .topbar-inner {
+      max-width: 1340px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #fff;
+    }
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: var(--lime);
+      color: var(--navy);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 15px;
+    }
+    .brand-title { font-weight: 800; font-size: 16px; letter-spacing: -0.02em; }
+    .brand-sub { font-size: 11px; color: #94a3b8; display: block; }
 
-  /* Pulsing animation */
-  @keyframes pulseGlow {
-    0%, 100% { transform: scale(1); opacity: 1; box-shadow: 0 0 8px rgba(155, 225, 54, 0.8); }
-    50% { transform: scale(1.35); opacity: 0.5; box-shadow: 0 0 16px rgba(155, 225, 54, 0.3); }
-  }
-  .pulse-dot {
-    width: 8px;
-    height: 8px;
-    background-color: #9be136;
-    border-radius: 50%;
-    animation: pulseGlow 2s infinite ease-in-out;
-  }
+    .nav-tabs {
+      display: flex;
+      gap: 6px;
+      background: rgba(255,255,255,0.06);
+      padding: 4px;
+      border-radius: 10px;
+      flex-wrap: wrap;
+    }
+    .nav-btn {
+      background: transparent;
+      border: none;
+      color: #cbd5e1;
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.18s;
+    }
+    .nav-btn:hover { color: #fff; background: rgba(255,255,255,0.08); }
+    .nav-btn.active { background: var(--lime); color: var(--navy); }
 
-  .animated-dash-line {
-    stroke-dasharray: 8 6;
-    animation: dashMove 14s linear infinite;
-  }
-  @keyframes dashMove { to { stroke-dashoffset: -320; } }
+    .header-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .pill-btn {
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.06);
+      color: #fff;
+      padding: 7px 12px;
+      border-radius: 9px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .pill-btn:hover { background: rgba(255,255,255,0.14); }
+    .pill-btn.lime { background: var(--lime); color: var(--navy); border-color: var(--lime); }
+    .pill-btn.lime:hover { background: var(--lime-dark); }
 
-  /* Range Slider */
-  input[type=range] {
-    -webkit-appearance: none;
-    background: #152b44;
-    height: 8px;
-    border-radius: 6px;
-  }
-  input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    height: 24px;
-    width: 24px;
-    border-radius: 50%;
-    background: #9be136;
-    cursor: pointer;
-    box-shadow: 0 0 12px rgba(155, 225, 54, 0.5);
-    border: 3px solid #081624;
-  }
+    /* Hero Banner */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
+      color: #fff;
+      padding: 26px 20px 32px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .container { max-width: 1340px; margin: 0 auto; padding: 0 20px; }
+    .hero-grid { display: grid; grid-template-columns: 1.25fr 0.75fr; gap: 22px; align-items: center; }
+    .badge-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+    .hero-badge {
+      background: rgba(155, 225, 54, 0.15);
+      border: 1px solid rgba(155, 225, 54, 0.4);
+      color: #d9f99d;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+    .hero h1 { font-size: clamp(24px, 3.5vw, 36px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 8px; }
+    .hero h1 span { color: var(--lime); }
+    .hero p { color: #cbd5e1; font-size: 14px; max-width: 660px; }
 
-  /* Print Receipt Styling */
-  @media print {
-    body * { visibility: hidden; }
-    #printable-invoice-modal, #printable-invoice-modal * { visibility: visible; }
-    #printable-invoice-modal { position: absolute; left: 0; top: 0; width: 100%; background: #ffffff !important; color: #000000 !important; }
-    .no-print { display: none !important; }
-  }
-</style>
+    .quick-panel {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 14px;
+      padding: 16px;
+    }
+    .quick-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 13px; }
+    .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; margin-right: 6px; background: var(--lime); }
+
+    /* Workspace */
+    main.workspace { margin-top: 22px; }
+    .view-panel { display: none; }
+    .view-panel.active { display: block; }
+
+    .grid-2 { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 20px; align-items: start; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .card-title { font-size: 16px; font-weight: 700; color: var(--navy); display: flex; align-items: center; gap: 8px; }
+
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .form-group { margin-bottom: 12px; }
+    label { display: block; font-size: 12.5px; font-weight: 600; color: #334155; margin-bottom: 5px; }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 13.5px;
+      background: #fff;
+      color: var(--text);
+    }
+    textarea { min-height: 70px; resize: vertical; }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(8,22,36,0.08); }
+
+    .chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+    .chip {
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      color: #1e293b;
+      cursor: pointer;
+    }
+    .chip:hover { background: #e2e8f0; }
+
+    .btn {
+      border: none;
+      border-radius: 10px;
+      padding: 10px 16px;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      transition: 0.16s;
+    }
+    .btn-primary { background: var(--navy); color: #fff; }
+    .btn-primary:hover { background: var(--navy-2); }
+    .btn-lime { background: var(--lime); color: var(--navy); }
+    .btn-lime:hover { background: var(--lime-dark); }
+    .btn-outline { background: #fff; border: 1px solid #cbd5e1; color: var(--text); }
+    .btn-outline:hover { background: #f8fafc; }
+    .btn-sm { padding: 6px 11px; font-size: 12px; border-radius: 8px; }
+
+    /* Fare Bid & Summary */
+    .bid-box {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      margin-top: 12px;
+    }
+    .slider-row { display: flex; align-items: center; gap: 10px; margin: 8px 0; }
+    input[type="range"] { padding: 0; border: none; background: transparent; accent-color: var(--navy); }
+
+    .bid-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 10px;
+      margin-top: 8px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .summary-line { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13.5px; }
+    .summary-total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--navy);
+      padding-top: 10px;
+      margin-top: 10px;
+      border-top: 1px dashed #cbd5e1;
+    }
+
+    /* Map */
+    .map-card {
+      background: #0b1e30;
+      color: #fff;
+      border-radius: 12px;
+      padding: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .map-meta { display: flex; justify-content: space-between; font-size: 12px; color: #cbd5e1; margin-top: 8px; flex-wrap: wrap; gap: 6px; }
+
+    /* Milestones & Table */
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 14px 0; }
+    .step-pill {
+      padding: 9px 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #f8fafc;
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+      color: #64748b;
+    }
+    .step-pill.done { background: rgba(155, 225, 54, 0.22); border-color: var(--lime-dark); color: var(--navy); }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+    th { background: #f8fafc; color: #334155; font-weight: 700; }
+
+    .status-badge { padding: 3px 9px; border-radius: 999px; font-size: 11.5px; font-weight: 700; display: inline-block; }
+    .st-confirmed { background: #e0f2fe; color: #0369a1; }
+    .st-transit { background: #fef3c7; color: #b45309; }
+    .st-delivered { background: #dcfce7; color: #15803d; }
+
+    /* OTP Box */
+    .otp-banner {
+      background: #081624;
+      color: #9be136;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Driver Job Cards */
+    .job-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      background: #f8fafc;
+      margin-bottom: 12px;
+    }
+    .job-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
+    .job-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; align-items: center; }
+
+    /* Modals & Drawers */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(8, 22, 36, 0.65);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 80;
+      padding: 16px;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal {
+      width: 100%;
+      max-width: 480px;
+      background: #fff;
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.35);
+      max-height: 92vh;
+      overflow-y: auto;
+    }
+    .modal.wide { max-width: 720px; }
+
+    .chat-drawer {
+      position: fixed;
+      right: 18px;
+      bottom: 76px;
+      width: 340px;
+      max-width: calc(100vw - 36px);
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      display: none;
+      flex-direction: column;
+      z-index: 75;
+      overflow: hidden;
+    }
+    .chat-drawer.open { display: flex; }
+    .chat-head { background: var(--navy); color: #fff; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 13.5px; }
+    .chat-body { padding: 12px; height: 240px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; background: #f8fafc; }
+    .msg { padding: 8px 11px; border-radius: 10px; font-size: 12.5px; max-width: 85%; }
+    .msg.customer { background: var(--navy); color: #fff; align-self: flex-end; }
+    .msg.driver { background: #e2e8f0; color: #0f172a; align-self: flex-start; }
+    .msg.system { background: #fef9c3; color: #713f12; align-self: center; font-size: 11.5px; }
+    .chat-foot { padding: 10px; border-top: 1px solid var(--border); display: flex; gap: 6px; background: #fff; }
+
+    /* Toast */
+    .toast-wrap { position: fixed; top: 72px; right: 20px; z-index: 95; display: flex; flex-direction: column; gap: 8px; }
+    .toast {
+      background: var(--navy);
+      color: #fff;
+      border-left: 4px solid var(--lime);
+      padding: 11px 15px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      max-width: 360px;
+    }
+
+    /* Bottom Dock */
+    .dock {
+      position: fixed;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(8, 22, 36, 0.94);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.14);
+      padding: 6px 10px;
+      border-radius: 999px;
+      display: flex;
+      gap: 6px;
+      z-index: 60;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+    }
+
+    @media (max-width: 960px) {
+      .hero-grid, .grid-2, .grid-4, .form-grid, .form-grid-3 { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
 </head>
-<body class="bg-navy-900 text-slate-100 min-h-screen flex flex-col selection:bg-lime selection:text-navy-950">
+<body>
+  <div class="toast-wrap" id="toastWrap"></div>
 
-<!-- SVG ICON LIBRARY -->
-<svg class="hidden" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-  <symbol id="i-arrow" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6 6 6-6 6"/></symbol>
-  <symbol id="i-truck" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 6h11v11H3zM14 9h4l3 4v4h-7M6 17a2 2 0 1 0 4 0 2 2 0 0 0-4 0ZM16 17a2 2 0 1 0 4 0 2 2 0 0 0-4 0Z"/></symbol>
-  <symbol id="i-box" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m12 2 9 5-9 5-9-5 9-5ZM3 7v10l9 5 9-5V7M12 12v10"/></symbol>
-  <symbol id="i-map" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
-  <symbol id="i-shield" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m12 2 9 4v6c0 5.5-3 8.5-9 10-6-1.5-9-4.5-9-10V6l9-4Z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m8 12 3 3 5-6"/></symbol>
-  <symbol id="i-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m5 12 5 5 9-10"/></symbol>
-  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 21v-2a8 8 0 0 1 16 0v2"/></symbol>
-  <symbol id="i-chat" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
-  <symbol id="i-printer" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></symbol>
-  <symbol id="i-wallet" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M20 7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path fill="none" stroke="currentColor" stroke-width="2" d="M16 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M4 7V5a2 2 0 0 1 2-2h12"/></symbol>
-  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path fill="none" stroke="currentColor" stroke-width="2" d="M12 2a14.5 14.5 0 0 0 0 20M12 2a14.5 14.5 0 0 1 0 20M2 12h20"/></symbol>
-  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path fill="none" stroke="currentColor" stroke-width="2" d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
-  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="4.5" fill="none" stroke="currentColor" stroke-width="2"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="m10.7 12.3 8.8-8.8M15.5 7.5l2 2M18 5l2 2"/></symbol>
-  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path fill="none" stroke="currentColor" stroke-width="2" d="m22 7-10 7L2 7"/></symbol>
-  <symbol id="i-phone" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
-  <symbol id="i-bell" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0"/></symbol>
-  <symbol id="i-card" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><line x1="1" y1="10" x2="23" y2="10" stroke="currentColor" stroke-width="2"/></symbol>
-  <symbol id="i-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
-  <symbol id="i-cash" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M6 12h.01M18 12h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
-  <symbol id="i-refresh" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M23 4v6h-6M1 20v-6h6"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></symbol>
-  <symbol id="i-logout" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></symbol>
-  <symbol id="i-car" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.02 3.02 0 0 0 1 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17" cy="17" r="2" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
-  <symbol id="i-van" viewBox="0 0 24 24"><rect x="1" y="6" width="15" height="10" rx="1" fill="none" stroke="currentColor" stroke-width="2"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="17.5" r="2.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="18.5" cy="17.5" r="2.5" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
-  <symbol id="i-plus" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
-  <symbol id="i-minus" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
-  <symbol id="i-spark" viewBox="0 0 24 24"><path fill="currentColor" d="m12 2 2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4L12 2Z"/></symbol>
-  <symbol id="i-badge" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 15l-2 5l3-1.5l3 1.5l-2-5"/><circle cx="12" cy="9" r="6" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
-  <symbol id="i-download" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
-</svg>
-
-<!-- 1. TOP ANNOUNCEMENT & AUTHENTICATED USER BAR -->
-<div class="bg-navy-950 border-b border-navy-800 text-slate-300 text-xs py-2 px-4 select-none">
-  <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
-    <div class="flex items-center gap-3">
-      <span class="flex items-center gap-2 text-lime font-mono font-bold text-[11px] tracking-wide">
-        <span class="pulse-dot"></span> <span id="txt-status-active">CANADIAN DISPATCH ACTIVE</span>
-      </span>
-      <span class="hidden md:inline text-navy-700">|</span>
-      <span class="hidden md:inline text-[11px] text-slate-400 font-mono">CRA BN: 84920 1948 RT0001 · $50,000 Insured</span>
-      <span class="hidden lg:inline text-navy-700">|</span>
-      <span class="text-[11px] text-slate-300">Toll-Free: <a href="tel:18005554657" class="text-lime font-bold hover:underline">+1 (800) 555-HMK7</a></span>
-    </div>
-
-    <div class="flex items-center gap-4 text-[11px]">
-      <!-- Language Switcher (EN | UR) -->
-      <div class="flex items-center gap-1.5 bg-navy-850 px-2.5 py-1 rounded-xl border border-navy-750 font-bold">
-        <svg class="icon text-lime w-3.5 h-3.5"><use href="#i-globe"/></svg>
-        <button onclick="toggleLanguage('en')" id="lang-btn-en" class="text-lime font-extrabold px-1 rounded hover:bg-navy-750">EN</button>
-        <span class="text-navy-700">|</span>
-        <button onclick="toggleLanguage('ur')" id="lang-btn-ur" class="text-slate-400 font-medium px-1 rounded hover:bg-navy-750">Urdu (Roman)</button>
-      </div>
-
-      <!-- HMK Wallet Pill -->
-      <div class="flex items-center gap-2 bg-navy-850 px-2.5 py-1 rounded-xl border border-navy-750">
-        <svg class="icon text-lime w-3.5 h-3.5"><use href="#i-wallet"/></svg>
-        <span class="text-slate-400 font-medium">Wallet:</span>
-        <strong id="header-wallet-balance" class="text-lime font-mono font-bold tabular-nums">$450.00 CAD</strong>
-        <button onclick="openWalletModal()" class="px-1.5 py-0.5 rounded bg-lime/10 border border-lime/30 text-lime font-bold text-[10px] hover:bg-lime hover:text-navy-950 transition-all">+ Top Up</button>
-      </div>
-
-      <!-- User Auth Profile Widget / Login Button -->
-      <div id="user-auth-widget" class="flex items-center gap-2">
-        <!-- Injected via JavaScript -->
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- 2. MAIN HEADER & ROLE NAVIGATION -->
-<header class="sticky top-0 z-40 bg-navy-900/95 backdrop-blur-xl border-b border-navy-800">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-    
-    <!-- Brand Logo -->
-    <a href="#top" onclick="switchAppRole('home')" class="flex items-center gap-3 group">
-      <div class="w-11 h-11 rounded-2xl bg-navy-800 border border-lime/30 flex items-center justify-center text-lime font-black text-2xl group-hover:bg-lime group-hover:text-navy-950 transition-all shadow-lg shadow-lime/5">
-        H<span class="text-xs text-lime group-hover:text-navy-950 -ml-1">✦</span>
-      </div>
-      <div class="flex flex-col">
-        <span class="font-black text-xl tracking-tight leading-none text-white flex items-center gap-1">
-          HMK<span class="text-lime font-extrabold">TRADING</span><span class="text-lime font-mono text-xs">.CA</span>
-        </span>
-        <span class="text-[9px] font-mono font-bold tracking-widest text-slate-400 mt-1 uppercase">LOGISTICS & DELIVERY INC.</span>
-      </div>
-    </a>
-
-    <!-- Nav Links / Workspaces -->
-    <nav class="hidden lg:flex items-center bg-navy-950 border border-navy-800 p-1.5 rounded-2xl text-xs font-bold gap-1">
-      <a href="#process" onclick="switchAppRole('home')" class="px-3.5 py-1.5 rounded-xl text-slate-300 hover:text-white transition-all flex items-center gap-1.5" id="nav-lbl-process">
-        <svg class="w-3.5 h-3.5 text-slate-400"><use href="#i-box"/></svg> How It Works
-      </a>
-      <a href="#services" onclick="switchAppRole('home')" class="px-3.5 py-1.5 rounded-xl text-slate-300 hover:text-white transition-all flex items-center gap-1.5" id="nav-lbl-services">
-        <svg class="w-3.5 h-3.5 text-slate-400"><use href="#i-truck"/></svg> Services
-      </a>
-      <button id="nav-role-customer" onclick="switchAppRole('customer')" class="px-3.5 py-1.5 rounded-xl text-navy-950 bg-lime font-black transition-all shadow-sm flex items-center gap-1.5">
-        <svg class="w-3.5 h-3.5 text-navy-950"><use href="#i-car"/></svg> Book & Bid
-      </button>
-      <button id="nav-role-tracking" onclick="switchAppRole('tracking')" class="px-3.5 py-1.5 rounded-xl text-slate-300 hover:text-white transition-all flex items-center gap-1.5">
-        <svg class="w-3.5 h-3.5 text-slate-400"><use href="#i-map"/></svg> Live Radar
-      </button>
-      <button id="nav-role-driver" onclick="switchAppRole('driver')" class="px-3.5 py-1.5 rounded-xl text-slate-300 hover:text-white transition-all flex items-center gap-1.5">
-        <svg class="w-3.5 h-3.5 text-slate-400"><use href="#i-van"/></svg> Driver Portal
-      </button>
-      <button id="nav-role-admin" onclick="switchAppRole('admin')" class="px-3.5 py-1.5 rounded-xl text-slate-300 hover:text-white transition-all flex items-center gap-1.5">
-        <svg class="w-3.5 h-3.5 text-slate-400"><use href="#i-shield"/></svg> Fleet HQ
-      </button>
-    </nav>
-
-    <!-- Header Quick Actions -->
-    <div class="flex items-center gap-3">
-      <button onclick="openChatDrawer()" class="relative p-2.5 rounded-xl bg-navy-850 border border-navy-800 text-slate-200 hover:text-lime hover:border-lime/40 transition-all" title="Driver Chat">
-        <svg class="icon w-5 h-5"><use href="#i-chat"/></svg>
-        <span id="chat-unread-badge" class="hidden absolute -top-1 -right-1 w-4 h-4 rounded-full bg-lime text-navy-950 text-[10px] font-black flex items-center justify-center">1</span>
-      </button>
-      
-      <button onclick="switchAppRole('customer')" class="bg-lime text-navy-950 hover:bg-lime-hover font-black text-xs px-4 py-2.5 rounded-xl flex items-center gap-2 transition-all shadow-lg shadow-lime/10" id="btn-head-book">
-        <span>Book Delivery</span> <svg class="icon w-4 h-4"><use href="#i-arrow"/></svg>
-      </button>
-
-      <button onclick="toggleMobileNav()" class="lg:hidden p-2.5 rounded-xl bg-navy-850 text-slate-200 border border-navy-800">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-      </button>
-    </div>
-  </div>
-
-  <!-- Mobile Dropdown Nav -->
-  <div id="mobile-nav" class="hidden lg:hidden bg-navy-950 border-b border-navy-800 p-4 space-y-2 text-sm font-semibold">
-    <button onclick="switchAppRole('home'); toggleMobileNav();" class="w-full text-left p-3 rounded-xl bg-navy-850 text-slate-200 flex items-center gap-2">
-      <svg class="w-4 h-4 text-lime"><use href="#i-box"/></svg> Overview & Process
-    </button>
-    <button onclick="switchAppRole('customer'); toggleMobileNav();" class="w-full text-left p-3 rounded-xl bg-lime text-navy-950 font-bold flex items-center gap-2">
-      <svg class="w-4 h-4 text-navy-950"><use href="#i-car"/></svg> Book & Offer Fare (inDrive)
-    </button>
-    <button onclick="switchAppRole('tracking'); toggleMobileNav();" class="w-full text-left p-3 rounded-xl bg-navy-850 text-slate-200 flex items-center gap-2">
-      <svg class="w-4 h-4 text-lime"><use href="#i-map"/></svg> Live Trip Radar & PIN
-    </button>
-    <button onclick="switchAppRole('driver'); toggleMobileNav();" class="w-full text-left p-3 rounded-xl bg-navy-850 text-slate-200 flex items-center gap-2">
-      <svg class="w-4 h-4 text-lime"><use href="#i-van"/></svg> Driver Partner Console
-    </button>
-    <button onclick="switchAppRole('admin'); toggleMobileNav();" class="w-full text-left p-3 rounded-xl bg-navy-850 text-slate-200 flex items-center gap-2">
-      <svg class="w-4 h-4 text-lime"><use href="#i-shield"/></svg> Fleet HQ Command Center
-    </button>
-  </div>
-</header>
-
-<main id="top" class="flex-grow">
-
-  <!-- =================================================================== -->
-  <!-- SECTION 0: LANDING & HERO (GUIDED USER EXPERIENCE)                  -->
-  <!-- =================================================================== -->
-  <section id="role-view-home" class="space-y-20 py-10">
-    
-    <!-- Hero Main Split -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-      <div class="lg:col-span-7 space-y-7">
-        
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-lime/10 border border-lime/30 text-lime font-mono text-xs font-bold">
-          <span class="w-2 h-2 rounded-full bg-lime animate-pulse"></span> <span id="hero-badge-txt">CANADA'S PREMIER LOGISTICS PLATFORM</span>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="#top" class="brand" onclick="switchTab('dispatch'); return false;">
+        <div class="brand-mark">HMK</div>
+        <div>
+          <span class="brand-title">HMK Trading Inc.</span>
+          <span class="brand-sub">CRA BN 84920 1948 RT0001 • Canada</span>
         </div>
+      </a>
 
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-[1.08] tracking-tight" id="hero-heading">
-          Big deliveries.<br>
-          <span class="text-lime">Small worries.</span>
-        </h1>
+      <nav class="nav-tabs" aria-label="Role Workspaces">
+        <button class="nav-btn active" data-tab="dispatch" onclick="switchTab('dispatch')">Customer Dispatch</button>
+        <button class="nav-btn" data-tab="track" onclick="switchTab('track')">Live Tracking</button>
+        <button class="nav-btn" data-tab="driver" onclick="switchTab('driver')">Driver Interface</button>
+        <button class="nav-btn" data-tab="admin" onclick="switchTab('admin')">Fleet HQ</button>
+      </nav>
 
-        <p class="text-slate-300 text-base sm:text-lg max-w-2xl leading-relaxed" id="hero-subtext">
-          From heavy fridge & couch deliveries to your next big home or office move across Ontario, BC, Alberta, and Quebec — manage booking, driver bidding, and GPS tracking in one effortless place.
+      <div class="header-actions">
+        <button class="pill-btn" onclick="toggleLanguage()">EN | UR</button>
+        <div id="authHeaderArea" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;"></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero" id="top">
+    <div class="container hero-grid">
+      <div>
+        <div class="badge-row">
+          <span class="hero-badge">Customer + Driver + Admin Portals</span>
+          <span class="hero-badge">Canadian Tax Engine (HST / GST+PST / GST)</span>
+          <span class="hero-badge">6-Digit OTP + 4-Digit Delivery PIN</span>
+        </div>
+        <h1 data-i18n="hero_title">On-Demand Canadian Freight & <span>Precision Delivery</span></h1>
+        <p data-i18n="hero_sub">
+          Complete Canadian freight and on-demand delivery suite with customer fare bidding, live shipment tracking,
+          dedicated driver dispatch console, 4-digit PIN escrow release, Interac e-Transfer payouts, and CRA tax invoices.
         </p>
-
-        <!-- Quick Search & Track Box -->
-        <div class="bg-navy-850 border border-navy-750 p-3 rounded-2xl flex flex-col sm:flex-row items-center gap-3 shadow-2xl hairline-border">
-          <div class="flex items-center gap-2.5 px-3 text-slate-400 w-full sm:w-auto">
-            <svg class="icon text-lime w-5 h-5"><use href="#i-map"/></svg>
-            <span class="text-xs font-mono font-bold uppercase tracking-wider text-slate-300" id="lbl-quick-track">Quick Track:</span>
-          </div>
-          <input id="public-track-input" type="text" placeholder="Enter Order ID (e.g. HMK-88412)..." class="w-full bg-navy-950 border border-navy-800 rounded-xl px-4 py-3 text-sm text-white font-mono focus:outline-none focus:border-lime transition-colors">
-          <button onclick="handlePublicTrackSubmit()" class="w-full sm:w-auto px-6 py-3 bg-lime text-navy-950 font-black rounded-xl text-xs hover:bg-lime-hover transition-all whitespace-nowrap shadow-lg shadow-lime/10 flex items-center justify-center gap-2" id="btn-track-submit">
-            <span>Track Shipment</span> <svg class="w-4 h-4"><use href="#i-arrow"/></svg>
-          </button>
-        </div>
-
-        <!-- Sample Order Chips -->
-        <div class="flex items-center gap-2 text-xs font-mono text-slate-400 pt-1">
-          <span class="text-[11px] uppercase tracking-wider text-slate-500" id="lbl-try-demo">Try Demo Orders:</span>
-          <button onclick="quickFillTrack('HMK-88412')" class="px-2.5 py-1 rounded bg-navy-850 border border-navy-800 hover:border-lime hover:text-lime text-slate-300 transition-colors">#HMK-88412</button>
-          <button onclick="quickFillTrack('HMK-90412')" class="px-2.5 py-1 rounded bg-navy-850 border border-navy-800 hover:border-lime hover:text-lime text-slate-300 transition-colors">#HMK-90412</button>
-        </div>
-
-        <!-- Key Trust Metrics -->
-        <div class="grid grid-cols-3 gap-4 pt-6 border-t border-navy-800">
-          <div class="flex items-start gap-2.5">
-            <svg class="w-5 h-5 text-lime mt-1 flex-shrink-0"><use href="#i-shield"/></svg>
-            <div>
-              <strong class="text-base sm:text-lg font-black text-white block">100% Insured</strong>
-              <span class="text-xs text-slate-400 font-mono">$50k Cargo Protection</span>
-            </div>
-          </div>
-          <div class="flex items-start gap-2.5">
-            <svg class="w-5 h-5 text-lime mt-1 flex-shrink-0"><use href="#i-lock"/></svg>
-            <div>
-              <strong class="text-base sm:text-lg font-black text-lime block">Interac & Escrow</strong>
-              <span class="text-xs text-slate-400 font-mono">PIN Security Release</span>
-            </div>
-          </div>
-          <div class="flex items-start gap-2.5">
-            <svg class="w-5 h-5 text-lime mt-1 flex-shrink-0"><use href="#i-badge"/></svg>
-            <div>
-              <strong class="text-base sm:text-lg font-black text-white block">CRA Registered</strong>
-              <span class="text-xs text-slate-400 font-mono">HST / GST Receipt</span>
-            </div>
-          </div>
-        </div>
       </div>
 
-      <!-- Hero Visual Interactive Dispatch Card -->
-      <div class="lg:col-span-5 bg-navy-850/90 border border-navy-750 rounded-3xl p-6 shadow-2xl space-y-6 relative overflow-hidden backdrop-blur-md hairline-border">
-        <div class="flex justify-between items-center border-b border-navy-800 pb-4">
-          <span class="text-xs font-mono font-bold text-lime flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-lime"></span> FLEET RADAR CENTRE
-          </span>
-          <span class="text-[10px] font-mono text-slate-400 flex items-center gap-1"><svg class="w-3 h-3 text-slate-400"><use href="#i-globe"/></svg> CANADA / DEMO 01</span>
+      <div class="quick-panel">
+        <div class="quick-row">
+          <span><strong>System Status</strong></span>
+          <span><span class="dot"></span>Live & Ready</span>
         </div>
-
-        <!-- Fleet Tier Quick Cards -->
-        <div class="space-y-3">
-          <div onclick="switchAppRole('customer')" class="p-3.5 rounded-2xl bg-navy-950 border border-navy-800 hover:border-lime/50 flex items-center justify-between cursor-pointer transition-all">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl bg-lime/10 text-lime font-bold flex items-center justify-center text-lg">
-                <svg class="w-6 h-6"><use href="#i-van"/></svg>
-              </div>
-              <div>
-                <strong class="text-sm font-bold text-white block">Cargo Van (Ford Transit)</strong>
-                <span class="text-xs text-slate-400">Fridges, Washers & Sofas</span>
-              </div>
-            </div>
-            <span class="text-xs font-mono font-bold text-lime tabular-nums">$85.00 CAD</span>
-          </div>
-
-          <div onclick="switchAppRole('customer')" class="p-3.5 rounded-2xl bg-navy-950 border border-navy-800 hover:border-lime/50 flex items-center justify-between cursor-pointer transition-all">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl bg-sky/10 text-sky font-bold flex items-center justify-center text-lg">
-                <svg class="w-6 h-6"><use href="#i-truck"/></svg>
-              </div>
-              <div>
-                <strong class="text-sm font-bold text-white block">16ft Cube Truck</strong>
-                <span class="text-xs text-slate-400">Condo & House Moves</span>
-              </div>
-            </div>
-            <span class="text-xs font-mono font-bold text-lime tabular-nums">$160.00 CAD</span>
-          </div>
-
-          <div onclick="switchAppRole('customer')" class="p-3.5 rounded-2xl bg-navy-950 border border-navy-800 hover:border-lime/50 flex items-center justify-between cursor-pointer transition-all">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl bg-lime/10 text-lime font-bold flex items-center justify-center text-lg">
-                <svg class="w-6 h-6"><use href="#i-car"/></svg>
-              </div>
-              <div>
-                <strong class="text-sm font-bold text-white block">Courier Van / SUV</strong>
-                <span class="text-xs text-slate-400">Parcels & Urgent Boxes</span>
-              </div>
-            </div>
-            <span class="text-xs font-mono font-bold text-lime tabular-nums">$45.00 CAD</span>
-          </div>
+        <div class="quick-row">
+          <span><strong>Province & Tax</strong></span>
+          <span id="heroTaxIndicator" class="tabular">Ontario • HST 13%</span>
         </div>
-
-        <button onclick="switchAppRole('customer')" class="w-full py-4 rounded-2xl bg-lime text-navy-950 font-black text-sm hover:bg-lime-hover transition-all shadow-xl shadow-lime/10 flex items-center justify-center gap-2" id="btn-hero-launch">
-          <span>Launch Fare Booking Studio</span> <svg class="icon w-5 h-5"><use href="#i-arrow"/></svg>
-        </button>
-      </div>
-    </div>
-
-    <!-- 4-STEP GUIDED PROCESS SECTION -->
-    <div id="process" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-navy-800 pt-16 space-y-12">
-      <div class="text-center max-w-3xl mx-auto space-y-3">
-        <span class="text-xs font-mono font-bold text-lime uppercase tracking-widest" id="step-eyebrow">01 / SIMPLE 4-STEP PROCESS</span>
-        <h2 class="text-3xl sm:text-4xl font-black text-white" id="step-title">From Booking to Doorstep.<br><span class="text-lime">Effortless and Clear.</span></h2>
-        <p class="text-slate-400 text-sm" id="step-desc">No complicated paperwork. Select your route, set or bid your price, pay securely, and verify delivery with a 4-digit PIN.</p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div class="bg-navy-950 p-6 rounded-3xl border border-navy-800 space-y-4 hover:border-lime/40 transition-colors">
-          <div class="w-12 h-12 rounded-2xl bg-lime/10 text-lime font-mono font-black text-lg flex items-center justify-center">01</div>
-          <h3 class="text-lg font-bold text-white flex items-center gap-2" id="s1-title"><svg class="w-5 h-5 text-lime"><use href="#i-map"/></svg> Pick Route & Vehicle</h3>
-          <p class="text-xs text-slate-400 leading-relaxed" id="s1-desc">Select Canadian metro hub (GTA, Ottawa, Vancouver, Calgary, Montreal) and vehicle tier.</p>
-        </div>
-
-        <div class="bg-navy-950 p-6 rounded-3xl border border-navy-800 space-y-4 hover:border-lime/40 transition-colors">
-          <div class="w-12 h-12 rounded-2xl bg-lime/10 text-lime font-mono font-black text-lg flex items-center justify-center">02</div>
-          <h3 class="text-lg font-bold text-white flex items-center gap-2" id="s2-title"><svg class="w-5 h-5 text-lime"><use href="#i-cash"/></svg> Set or Bid Your Price</h3>
-          <p class="text-xs text-slate-400 leading-relaxed" id="s2-desc">Accept recommended fare or offer your custom price and receive live driver counter-bids.</p>
-        </div>
-
-        <div class="bg-navy-950 p-6 rounded-3xl border border-navy-800 space-y-4 hover:border-lime/40 transition-colors">
-          <div class="w-12 h-12 rounded-2xl bg-lime/10 text-lime font-mono font-black text-lg flex items-center justify-center">03</div>
-          <h3 class="text-lg font-bold text-white flex items-center gap-2" id="s3-title"><svg class="w-5 h-5 text-lime"><use href="#i-lock"/></svg> Pay & Escrow Lock</h3>
-          <p class="text-xs text-slate-400 leading-relaxed" id="s3-desc">Pay via Interac, Card, Wallet, Net-30, or COD. Funds held safely in Escrow until completion.</p>
-        </div>
-
-        <div class="bg-navy-950 p-6 rounded-3xl border border-navy-800 space-y-4 hover:border-lime/40 transition-colors">
-          <div class="w-12 h-12 rounded-2xl bg-lime/10 text-lime font-mono font-black text-lg flex items-center justify-center">04</div>
-          <h3 class="text-lg font-bold text-white flex items-center gap-2" id="s4-title"><svg class="w-5 h-5 text-lime"><use href="#i-check"/></svg> Track Live & PIN Verify</h3>
-          <p class="text-xs text-slate-400 leading-relaxed" id="s4-desc">Follow your truck on the map, chat with your driver, give 4-digit PIN on delivery, and print tax receipt.</p>
+        <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;">
+          <button class="btn btn-sm btn-lime" onclick="openWalletModal()">Add CAD Wallet Funds</button>
+          <button class="btn btn-sm btn-outline" style="background:rgba(255,255,255,0.08);color:#fff;border-color:rgba(255,255,255,0.2);" onclick="openInvoiceModal()">CRA Tax Invoice</button>
+          <button class="btn btn-sm btn-outline" style="background:rgba(255,255,255,0.08);color:#fff;border-color:rgba(255,255,255,0.2);" onclick="toggleChat()">Chat</button>
         </div>
       </div>
     </div>
-
-    <!-- SERVICES SHOWCASE SECTION -->
-    <div id="services" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-navy-800 pt-16 space-y-12">
-      <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
-        <div>
-          <span class="text-xs font-mono font-bold text-lime uppercase tracking-widest">02 / SERVICES OFFERED</span>
-          <h2 class="text-3xl sm:text-4xl font-black text-white mt-1">Whatever you're moving,<br><span class="text-lime">we've got a way.</span></h2>
-        </div>
-        <p class="text-slate-400 text-sm max-w-md">Click any service card to launch customized booking with pre-selected options.</p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
-        <div onclick="launchServiceBooking('appliance')" class="bg-navy-850 border border-navy-800 hover:border-lime rounded-3xl p-6 flex flex-col justify-between transition-all cursor-pointer group hover:-translate-y-1 hairline-border">
-          <div>
-            <span class="text-xs font-mono text-slate-500 font-bold block mb-4">01</span>
-            <div class="w-12 h-12 rounded-2xl bg-lime/10 text-lime flex items-center justify-center mb-4 text-2xl">
-              <svg class="w-7 h-7"><use href="#i-box"/></svg>
-            </div>
-            <h3 class="text-lg font-bold text-white group-hover:text-lime transition-colors">Appliance Delivery</h3>
-            <p class="text-xs text-slate-400 mt-2 leading-relaxed">Fridges, washers, dryers, and ranges handled with padded straps.</p>
-          </div>
-          <span class="text-xs font-bold text-lime mt-6 inline-flex items-center gap-1">Configure ↗</span>
-        </div>
-
-        <div onclick="launchServiceBooking('furniture')" class="bg-navy-850 border border-navy-800 hover:border-lime rounded-3xl p-6 flex flex-col justify-between transition-all cursor-pointer group hover:-translate-y-1 hairline-border">
-          <div>
-            <span class="text-xs font-mono text-slate-500 font-bold block mb-4">02</span>
-            <div class="w-12 h-12 rounded-2xl bg-lime/10 text-lime flex items-center justify-center mb-4 text-2xl">
-              <svg class="w-7 h-7"><use href="#i-truck"/></svg>
-            </div>
-            <h3 class="text-lg font-bold text-white group-hover:text-lime transition-colors">Furniture Freight</h3>
-            <p class="text-xs text-slate-400 mt-2 leading-relaxed">Store pickup, sectional sofas, dining tables & blanket-wrapped care.</p>
-          </div>
-          <span class="text-xs font-bold text-lime mt-6 inline-flex items-center gap-1">Configure ↗</span>
-        </div>
-
-        <div onclick="launchServiceBooking('moving')" class="bg-navy-850 border border-navy-800 hover:border-lime rounded-3xl p-6 flex flex-col justify-between transition-all cursor-pointer group hover:-translate-y-1 hairline-border">
-          <div>
-            <span class="text-xs font-mono text-slate-500 font-bold block mb-4">03</span>
-            <div class="w-12 h-12 rounded-2xl bg-lime/10 text-lime flex items-center justify-center mb-4 text-2xl">
-              <svg class="w-7 h-7"><use href="#i-van"/></svg>
-            </div>
-            <h3 class="text-lg font-bold text-white group-hover:text-lime transition-colors">Home & Office Moves</h3>
-            <p class="text-xs text-slate-400 mt-2 leading-relaxed">Condo, apartment, townhouse, and corporate office relocations.</p>
-          </div>
-          <span class="text-xs font-bold text-lime mt-6 inline-flex items-center gap-1">Configure ↗</span>
-        </div>
-
-        <div onclick="launchServiceBooking('express')" class="bg-navy-850 border border-navy-800 hover:border-lime rounded-3xl p-6 flex flex-col justify-between transition-all cursor-pointer group hover:-translate-y-1 hairline-border">
-          <div>
-            <span class="text-xs font-mono text-slate-500 font-bold block mb-4">04</span>
-            <div class="w-12 h-12 rounded-2xl bg-lime/10 text-lime flex items-center justify-center mb-4 text-2xl">
-              <svg class="w-7 h-7"><use href="#i-spark"/></svg>
-            </div>
-            <h3 class="text-lg font-bold text-white group-hover:text-lime transition-colors">Express Courier</h3>
-            <p class="text-xs text-slate-400 mt-2 leading-relaxed">Same-day urgent B2B freight and parcel delivery under 2 hours.</p>
-          </div>
-          <span class="text-xs font-bold text-lime mt-6 inline-flex items-center gap-1">Configure ↗</span>
-        </div>
-
-        <div onclick="launchServiceBooking('whiteglove')" class="bg-navy-850 border border-navy-800 hover:border-lime rounded-3xl p-6 flex flex-col justify-between transition-all cursor-pointer group hover:-translate-y-1 hairline-border">
-          <div>
-            <span class="text-xs font-mono text-slate-500 font-bold block mb-4">05</span>
-            <div class="w-12 h-12 rounded-2xl bg-lime/10 text-lime flex items-center justify-center mb-4 text-2xl">
-              <svg class="w-7 h-7"><use href="#i-shield"/></svg>
-            </div>
-            <h3 class="text-lg font-bold text-white group-hover:text-lime transition-colors">White-Glove Care</h3>
-            <p class="text-xs text-slate-400 mt-2 leading-relaxed">Unpacking, full assembly, room-of-choice placement & box cleanup.</p>
-          </div>
-          <span class="text-xs font-bold text-lime mt-6 inline-flex items-center gap-1">Configure ↗</span>
-        </div>
-      </div>
-    </div>
-
   </section>
 
-  <!-- =================================================================== -->
-  <!-- SECTION 1: UBER + INDRIVE BOOKING & FARE BIDDING STUDIO             -->
-  <!-- =================================================================== -->
-  <section id="role-view-customer" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-      
-      <!-- Left Panel: Booking & Driver Bidding Controls -->
-      <div class="lg:col-span-5 space-y-6">
-        
-        <div class="bg-navy-850 border border-navy-750 rounded-3xl p-6 shadow-2xl space-y-6 hairline-border">
-          <div class="flex justify-between items-center pb-4 border-b border-navy-800">
-            <div>
-              <span class="text-[10px] font-mono font-bold text-lime uppercase tracking-widest flex items-center gap-1">
-                <svg class="w-3.5 h-3.5 text-lime"><use href="#i-car"/></svg> INDRIVE FARE BIDDING ENGINE
-              </span>
-              <h2 class="text-2xl font-black text-white mt-0.5">Book or Offer Your Fare</h2>
+  <main class="container workspace">
+    <!-- 1. CUSTOMER DISPATCH & BIDDING -->
+    <section class="view-panel active" id="view-dispatch">
+      <div class="grid-2">
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title" data-i18n="card_booking">Book Shipment & Place Fare Bid</div>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span id="walletDisplay" class="tabular" style="font-weight:800;font-size:13px;color:var(--navy);">Wallet: $0.00 CAD</span>
+                <button type="button" class="btn btn-sm btn-outline" onclick="openWalletModal()">+ Top Up</button>
+              </div>
             </div>
-            <span class="px-3 py-1 bg-lime/10 text-lime border border-lime/30 rounded-full font-mono text-xs font-bold flex items-center gap-1">
-              <svg class="w-3.5 h-3.5"><use href="#i-lock"/></svg> ESCROW SECURED
-            </span>
+
+            <form id="bookingForm" onsubmit="submitOrder(event)">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Province & Tax Rate</label>
+                  <select id="provinceSelect" onchange="recalculateQuote()">
+                    <option value="ON" selected>Ontario — HST (13%)</option>
+                    <option value="BC">British Columbia — GST + PST (12%)</option>
+                    <option value="AB">Alberta — GST (5%)</option>
+                    <option value="QC">Quebec — GST + QST (14.975%)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Service Category</label>
+                  <select id="serviceSelect" onchange="recalculateQuote()">
+                    <option value="Parcel & Courier">Parcel & Courier</option>
+                    <option value="Appliances" selected>Appliances</option>
+                    <option value="Residential Moving">Residential Moving</option>
+                    <option value="Commercial Pallet">Commercial Pallet</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Vehicle Tier</label>
+                  <select id="vehicleSelect" onchange="recalculateQuote()">
+                    <option value="Courier Car / SUV" data-base="45">Courier Car / SUV ($45 base)</option>
+                    <option value="Cargo Van (Ford Transit)" data-base="125" selected>Cargo Van (Ford Transit) ($125 base)</option>
+                    <option value="16ft Cube Truck" data-base="210">16ft Cube Truck ($210 base)</option>
+                    <option value="26ft Straight Truck + 2 Movers" data-base="340">26ft Straight Truck + 2 Movers ($340 base)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Payment Method</label>
+                  <select id="paymentSelect" onchange="recalculateQuote()">
+                    <option value="Interac e-Transfer" selected>Interac e-Transfer (Escrow)</option>
+                    <option value="HMK CAD Wallet">HMK CAD Wallet</option>
+                    <option value="Visa / Mastercard / Amex">Visa / Mastercard / Amex</option>
+                    <option value="Corporate Net-30">Corporate Net-30 Account</option>
+                    <option value="Cash on Delivery">Cash on Delivery</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Pickup Postal Code & Address</label>
+                <input type="text" id="pickupInput" placeholder="Enter Canadian Postal Code & Street (e.g. M5V 2T6)" oninput="recalculateQuote()" required />
+                <div class="chips">
+                  <span class="chip" onclick="setPostal('pickup', 'M5V 2T6 — Toronto', 'ON')">M5V 2T6</span>
+                  <span class="chip" onclick="setPostal('pickup', 'K1P 5G4 — Ottawa', 'ON')">K1P 5G4</span>
+                  <span class="chip" onclick="setPostal('pickup', 'V6B 1A1 — Vancouver', 'BC')">V6B 1A1</span>
+                  <span class="chip" onclick="setPostal('pickup', 'T2P 1J9 — Calgary', 'AB')">T2P 1J9</span>
+                  <span class="chip" onclick="setPostal('pickup', 'H3B 1X9 — Montreal', 'QC')">H3B 1X9</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Drop-off Postal Code & Address</label>
+                <input type="text" id="dropoffInput" placeholder="Enter Destination Postal Code & Street (e.g. L5B 3C2)" oninput="recalculateQuote()" required />
+                <div class="chips">
+                  <span class="chip" onclick="setPostal('dropoff', 'L5B 3C2 — Mississauga', 'ON')">L5B 3C2</span>
+                  <span class="chip" onclick="setPostal('dropoff', 'L6Y 0A1 — Brampton', 'ON')">L6Y 0A1</span>
+                  <span class="chip" onclick="setPostal('dropoff', 'V3T 2W1 — Surrey', 'BC')">V3T 2W1</span>
+                  <span class="chip" onclick="setPostal('dropoff', 'T5J 2R7 — Edmonton', 'AB')">T5J 2R7</span>
+                </div>
+              </div>
+
+              <div class="form-grid-3">
+                <div class="form-group">
+                  <label>Est. Weight (kg)</label>
+                  <input type="number" id="weightInput" min="1" step="0.5" placeholder="e.g. 25" />
+                </div>
+                <div class="form-group">
+                  <label>Package Count</label>
+                  <input type="number" id="pkgCountInput" min="1" value="1" />
+                </div>
+                <div class="form-group">
+                  <label>Pickup Window</label>
+                  <input type="datetime-local" id="pickupTimeInput" />
+                </div>
+              </div>
+
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Your Name</label>
+                  <input type="text" id="customerNameInput" placeholder="Full name" required />
+                </div>
+                <div class="form-group">
+                  <label>Your Email</label>
+                  <input type="email" id="customerEmailInput" placeholder="name@domain.com" required />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Handling / Delivery Instructions</label>
+                <textarea id="notesInput" placeholder="Gate code, elevator access, fragile handling, or recipient contact..."></textarea>
+              </div>
+
+              <div class="bid-box">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                  <strong>Your Fare Offer (CAD $)</strong>
+                  <span id="bidOfferLabel" class="tabular" style="font-weight:800;color:var(--navy);">$125.00 CAD</span>
+                </div>
+                <div class="slider-row">
+                  <button type="button" class="btn btn-sm btn-outline" onclick="adjustBid(-5)">-$5</button>
+                  <input type="range" id="bidSlider" min="30" max="750" step="5" value="125" oninput="recalculateQuote()" />
+                  <button type="button" class="btn btn-sm btn-outline" onclick="adjustBid(5)">+$5</button>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
+                  <span style="font-size:12px;color:var(--muted);">Vehicle Base Fare: <strong id="suggestedFareText" class="tabular">$125.00</strong></span>
+                  <button type="button" class="btn btn-sm btn-primary" onclick="generateCounterBids()">Check Available Fare Options</button>
+                </div>
+                <div id="liveBidsList"></div>
+              </div>
+
+              <div class="form-grid" style="margin-top:12px;">
+                <div class="form-group">
+                  <label>Promo Code (HMK20 or CANADA15)</label>
+                  <div style="display:flex;gap:6px;">
+                    <input type="text" id="promoInput" placeholder="Enter promo code" />
+                    <button type="button" class="btn btn-sm btn-outline" onclick="applyPromo()">Apply</button>
+                  </div>
+                </div>
+                <div class="form-group" style="display:flex;align-items:flex-end;">
+                  <button type="submit" class="btn btn-lime" style="width:100%;" data-i18n="btn_confirm">Confirm & Lock Shipment</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Live Route & Canadian Tax Breakdown</div>
+              <span id="taxBadge" class="status-badge st-confirmed">HST (13%)</span>
+            </div>
+
+            <div class="map-card">
+              <svg viewBox="0 0 420 150" width="100%" height="150" role="img" aria-label="Route Map">
+                <rect x="0" y="0" width="420" height="150" fill="#0b1e30" rx="8" />
+                <line x1="0" y1="38" x2="420" y2="38" stroke="rgba(255,255,255,0.06)" />
+                <line x1="0" y1="76" x2="420" y2="76" stroke="rgba(255,255,255,0.06)" />
+                <line x1="0" y1="114" x2="420" y2="114" stroke="rgba(255,255,255,0.06)" />
+                <line x1="105" y1="0" x2="105" y2="150" stroke="rgba(255,255,255,0.06)" />
+                <line x1="210" y1="0" x2="210" y2="150" stroke="rgba(255,255,255,0.06)" />
+                <line x1="315" y1="0" x2="315" y2="150" stroke="rgba(255,255,255,0.06)" />
+                <path d="M 65 108 Q 210 35 355 52" fill="none" stroke="#9be136" stroke-width="3.5" stroke-dasharray="6 4" />
+                <circle cx="65" cy="108" r="7" fill="#38bdf8" />
+                <text x="65" y="128" fill="#e2e8f0" font-size="10" text-anchor="middle">Pickup</text>
+                <circle cx="355" cy="52" r="7" fill="#9be136" />
+                <text x="355" y="72" fill="#e2e8f0" font-size="10" text-anchor="middle">Drop-off</text>
+                <circle cx="210" cy="70" r="8" fill="#facc15" stroke="#081624" stroke-width="2" />
+              </svg>
+              <div class="map-meta tabular">
+                <span id="distMeta">Distance: 18.0 km</span>
+                <span id="etaMeta">Est. Transit: 24 mins</span>
+                <span id="provMeta">Hub: Ontario</span>
+              </div>
+            </div>
+
+            <div style="margin-top:16px;">
+              <div class="summary-line tabular"><span>Fare Offer</span><span id="sumSubtotal">$125.00 CAD</span></div>
+              <div class="summary-line tabular"><span>Promo Discount</span><span id="sumDiscount">-$0.00 CAD</span></div>
+              <div class="summary-line tabular"><span id="sumTaxLabel">Provincial Tax (HST 13%)</span><span id="sumTax">$16.25 CAD</span></div>
+              <div class="summary-total tabular"><span>Total (CAD)</span><span id="sumTotal">$141.25 CAD</span></div>
+              <p style="font-size:12px;color:var(--muted);margin-top:8px;">
+                Escrow protected until the 4-digit delivery PIN is verified at drop-off.
+              </p>
+            </div>
           </div>
 
-          <!-- Canadian Metro Hub Selector -->
-          <div>
-            <label class="block text-xs font-bold text-slate-300 mb-1.5 flex justify-between">
-              <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-lime"><use href="#i-globe"/></svg> Metropolitan Region & Tax</span>
-              <span id="tax-rate-label" class="text-lime text-[11px] font-mono font-bold">Ontario 13% HST</span>
-            </label>
-            <select id="city-selector" onchange="updateCityMapNodes()" class="w-full bg-navy-950 border border-navy-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-lime font-bold">
-              <option value="gta" selected>Greater Toronto Area (GTA, ON) — 13% HST</option>
-              <option value="ottawa">Ottawa - Gatineau Region (ON) — 13% HST</option>
-              <option value="van">Metro Vancouver (BC) — 12% GST+PST</option>
-              <option value="calgary">Calgary Metropolitan (AB) — 5% GST</option>
-              <option value="montreal">Greater Montreal (QC) — 14.975% GST+QST</option>
-            </select>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Recent Shipments</div>
+            </div>
+            <div id="customerRecentOrders"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. LIVE TRACKING -->
+    <section class="view-panel" id="view-track">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Live Shipment Tracker & 4-Digit Handoff PIN</div>
+          <div class="chips" style="margin:0;" id="recentOrderChips"></div>
+        </div>
+
+        <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;">
+          <input type="text" id="trackSearchInput" placeholder="Enter Order ID (e.g. HMK-...)" style="max-width:280px;" />
+          <button class="btn btn-primary" onclick="selectTrackOrder(document.getElementById('trackSearchInput').value)">Track Order</button>
+          <button class="btn btn-outline" onclick="toggleChat()">Open Chat</button>
+        </div>
+
+        <div id="trackedOrderBox"></div>
+      </div>
+    </section>
+
+    <!-- 3. DEDICATED DRIVER INTERFACE -->
+    <section class="view-panel" id="view-driver">
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Driver Partner Interface</div>
+            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+              <button class="btn btn-sm btn-lime" id="dutyToggleBtn" onclick="toggleDriverDuty()">Online • Ready for Trips</button>
+              <span id="driverWalletBadge" class="tabular" style="font-weight:800;color:var(--navy);">Earnings: $0.00 CAD</span>
+            </div>
           </div>
 
-          <!-- Pickup & Drop-off Selectors -->
-          <div class="space-y-4">
-            <div>
-              <label class="block text-xs font-bold text-slate-300 mb-1.5 flex justify-between">
-                <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-lime"><use href="#i-map"/></svg> Pickup Hub Node</span>
-                <span class="text-lime text-[11px] font-mono">Verified Address</span>
-              </label>
-              <select id="pickup-select" onchange="updateRouteFromInputs()" class="w-full bg-navy-950 border border-navy-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-lime font-medium">
-                <!-- Populated dynamically -->
+          <div class="form-grid-3">
+            <div class="form-group">
+              <label>Driver Name</label>
+              <input type="text" id="driverActiveName" placeholder="Enter driver full name" oninput="syncDriverProfile()" />
+            </div>
+            <div class="form-group">
+              <label>Driver Vehicle</label>
+              <select id="driverVehicleSelect" onchange="syncDriverProfile()">
+                <option value="Courier Car / SUV">Courier Car / SUV</option>
+                <option value="Cargo Van (Ford Transit)" selected>Cargo Van (Ford Transit)</option>
+                <option value="16ft Cube Truck">16ft Cube Truck</option>
+                <option value="26ft Straight Truck + 2 Movers">26ft Straight Truck + 2 Movers</option>
               </select>
             </div>
-
-            <div>
-              <label class="block text-xs font-bold text-slate-300 mb-1.5 flex items-center gap-1.5">
-                <svg class="w-4 h-4 text-sky"><use href="#i-map"/></svg> Drop-off Destination Node
-              </label>
-              <select id="dropoff-select" onchange="updateRouteFromInputs()" class="w-full bg-navy-950 border border-navy-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-lime font-medium">
-                <!-- Populated dynamically -->
-              </select>
+            <div class="form-group">
+              <label>Plate / License #</label>
+              <input type="text" id="driverPlateInput" placeholder="e.g. ON-CDKL-402" oninput="syncDriverProfile()" />
             </div>
           </div>
 
-          <!-- Fleet Tier Selection Cards -->
-          <div>
-            <label class="block text-xs font-bold text-slate-300 mb-2">Select Fleet Tier</label>
-            <div class="grid grid-cols-2 gap-3">
-              <button onclick="selectVehicleTier('suv')" id="vtier-suv" class="vtier-card text-left p-3.5 rounded-2xl bg-navy-950 border border-navy-800 text-white transition-all">
-                <div class="flex justify-between items-start">
-                  <svg class="w-7 h-7 text-lime"><use href="#i-car"/></svg>
-                  <span class="text-[10px] font-mono text-slate-400">75 kg</span>
-                </div>
-                <strong class="text-sm font-bold block mt-2">Courier SUV</strong>
-                <span class="text-xs text-slate-400 block">Boxes & Parcels</span>
-                <span id="vtier-price-suv" class="text-xs font-mono font-bold text-lime mt-2 block tabular-nums">$45.00 CAD</span>
-              </button>
-
-              <button onclick="selectVehicleTier('van')" id="vtier-van" class="vtier-card text-left p-3.5 rounded-2xl bg-navy-950 border-2 border-lime text-white transition-all">
-                <div class="flex justify-between items-start">
-                  <svg class="w-7 h-7 text-lime"><use href="#i-van"/></svg>
-                  <span class="text-[10px] font-mono text-slate-400">800 kg</span>
-                </div>
-                <strong class="text-sm font-bold block mt-2">Cargo Van</strong>
-                <span class="text-xs text-slate-400 block">Fridges & Sofas</span>
-                <span id="vtier-price-van" class="text-xs font-mono font-bold text-lime mt-2 block tabular-nums">$85.00 CAD</span>
-              </button>
-
-              <button onclick="selectVehicleTier('cube')" id="vtier-cube" class="vtier-card text-left p-3.5 rounded-2xl bg-navy-950 border border-navy-800 text-white transition-all">
-                <div class="flex justify-between items-start">
-                  <svg class="w-7 h-7 text-sky"><use href="#i-truck"/></svg>
-                  <span class="text-[10px] font-mono text-slate-400">2,200 kg</span>
-                </div>
-                <strong class="text-sm font-bold block mt-2">16ft Cube Truck</strong>
-                <span class="text-xs text-slate-400 block">Condo Moves</span>
-                <span id="vtier-price-cube" class="text-xs font-mono font-bold text-lime mt-2 block tabular-nums">$160.00 CAD</span>
-              </button>
-
-              <button onclick="selectVehicleTier('truck')" id="vtier-truck" class="vtier-card text-left p-3.5 rounded-2xl bg-navy-950 border border-navy-800 text-white transition-all">
-                <div class="flex justify-between items-start">
-                  <svg class="w-7 h-7 text-lime"><use href="#i-truck"/></svg>
-                  <span class="text-[10px] font-mono text-slate-400">5,000 kg</span>
-                </div>
-                <strong class="text-sm font-bold block mt-2">26ft Heavy Truck</strong>
-                <span class="text-xs text-slate-400 block">Truck + 2 Movers</span>
-                <span id="vtier-price-truck" class="text-xs font-mono font-bold text-lime mt-2 block tabular-nums">$290.00 CAD</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- Add-ons Selection -->
-          <div class="space-y-3 pt-2 border-t border-navy-800">
-            <span class="text-xs font-bold text-slate-300 block">Add-ons & Options</span>
-            <div class="grid grid-cols-2 gap-3 text-xs">
-              <label class="flex items-center justify-between p-3 rounded-xl bg-navy-950 border border-navy-800 cursor-pointer">
-                <div class="flex items-center gap-2">
-                  <input type="checkbox" id="opt-helpers" onchange="calculateFare()" class="w-4 h-4 accent-lime rounded">
-                  <span class="text-slate-300 font-medium flex items-center gap-1"><svg class="w-3.5 h-3.5 text-lime"><use href="#i-user"/></svg> + Extra Helper</span>
-                </div>
-                <span class="text-lime font-mono text-[10px] tabular-nums">+$40</span>
-              </label>
-
-              <label class="flex items-center justify-between p-3 rounded-xl bg-navy-950 border border-navy-800 cursor-pointer">
-                <div class="flex items-center gap-2">
-                  <input type="checkbox" id="opt-insurance" onchange="calculateFare()" class="w-4 h-4 accent-lime rounded">
-                  <span class="text-slate-300 font-medium flex items-center gap-1"><svg class="w-3.5 h-3.5 text-lime"><use href="#i-shield"/></svg> $50k Coverage</span>
-                </div>
-                <span class="text-lime font-mono text-[10px] tabular-nums">+$20</span>
-              </label>
-            </div>
-          </div>
-
-          <!-- Promo Code & Itemized CAD Breakdown -->
-          <div class="bg-navy-950 p-4 rounded-2xl border border-navy-800 space-y-3">
-            <div class="flex gap-2">
-              <input id="promo-code-input" type="text" placeholder="Promo Code (e.g. HMK20)" class="flex-grow bg-navy-900 border border-navy-800 rounded-xl px-3 py-2 text-xs text-white uppercase font-mono focus:outline-none focus:border-lime">
-              <button onclick="applyPromoCode()" class="bg-navy-800 hover:bg-navy-750 text-lime font-bold text-xs px-4 py-2 rounded-xl border border-navy-750 flex items-center gap-1">
-                <svg class="w-3.5 h-3.5"><use href="#i-check"/></svg> Apply
-              </button>
-            </div>
-            
-            <div id="promo-applied-badge" class="hidden text-[11px] font-mono text-lime flex items-center justify-between">
-              <span>PROMO APPLIED (<b id="promo-name-lbl">HMK20</b>)</span>
-              <button onclick="removePromoCode()" class="text-red-400 underline text-[10px]">Remove</button>
-            </div>
-
-            <div class="space-y-1.5 text-xs pt-2 border-t border-navy-800 text-slate-400 font-mono">
-              <div class="flex justify-between"><span>Base Vehicle Rate:</span><span id="breakdown-base" class="tabular-nums">$85.00 CAD</span></div>
-              <div class="flex justify-between"><span>Add-ons & Options:</span><span id="breakdown-addons" class="tabular-nums">$0.00 CAD</span></div>
-              <div class="flex justify-between text-lime"><span>Discount:</span><span id="breakdown-discount" class="tabular-nums">-$0.00 CAD</span></div>
-              <div class="flex justify-between"><span id="breakdown-tax-name">Provincial Tax (13% HST):</span><span id="breakdown-tax" class="tabular-nums">$11.05 CAD</span></div>
-              <div class="flex justify-between font-bold text-white pt-2 border-t border-navy-800 text-sm">
-                <span>Total CAD Payable:</span>
-                <span id="breakdown-net" class="text-lime font-black tabular-nums">$96.05 CAD</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Payment Channel Picker -->
-          <div>
-            <label class="block text-xs font-bold text-slate-300 mb-2">Select Payment Channel</label>
-            <div class="grid grid-cols-2 gap-2 text-xs font-bold">
-              <button onclick="selectCheckoutMethod('interac')" id="pmethod-interac" class="p-3 rounded-xl bg-navy-950 border-2 border-lime text-lime flex items-center gap-2">
-                <svg class="w-4 h-4"><use href="#i-card"/></svg>
-                <span>🇨🇦 Interac e-Transfer</span>
-              </button>
-              <button onclick="selectCheckoutMethod('card')" id="pmethod-card" class="p-3 rounded-xl bg-navy-950 border border-navy-800 text-slate-300 flex items-center gap-2">
-                <svg class="w-4 h-4"><use href="#i-card"/></svg>
-                <span>💳 Visa / Mastercard</span>
-              </button>
-              <button onclick="selectCheckoutMethod('wallet')" id="pmethod-wallet" class="p-3 rounded-xl bg-navy-950 border border-navy-800 text-slate-300 flex items-center gap-2">
-                <svg class="w-4 h-4 text-lime"><use href="#i-wallet"/></svg>
-                <span>HMK CAD Wallet</span>
-              </button>
-              <button onclick="selectCheckoutMethod('cod')" id="pmethod-cod" class="p-3 rounded-xl bg-navy-950 border border-navy-800 text-slate-300 flex items-center gap-2">
-                <svg class="w-4 h-4"><use href="#i-cash"/></svg>
-                <span>💵 Cash on Delivery</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- inDrive Custom Price Slider & Controls -->
-          <div class="bg-navy-950 p-4 rounded-2xl border border-navy-800 space-y-4">
-            <div class="flex justify-between items-center text-xs">
-              <span class="text-slate-400 font-medium">Recommended System Fare:</span>
-              <span id="rec-price-display" class="font-mono font-bold text-slate-300 tabular-nums">$96.05 CAD</span>
-            </div>
-
-            <div>
-              <div class="flex justify-between items-center mb-1 text-xs">
-                <span class="text-slate-400 uppercase font-mono text-[10px]">Offer Your Custom Price</span>
-                <div class="flex items-center gap-2">
-                  <button onclick="adjustFareBid(-5)" class="px-2 py-0.5 rounded bg-navy-800 hover:bg-navy-750 text-white font-mono font-bold flex items-center justify-center">
-                    <svg class="w-3 h-3"><use href="#i-minus"/></svg>
-                  </button>
-                  <span class="text-lime font-mono font-black text-lg tabular-nums">$<span id="offer-amt-lbl">96</span> CAD</span>
-                  <button onclick="adjustFareBid(5)" class="px-2 py-0.5 rounded bg-navy-800 hover:bg-navy-750 text-white font-mono font-bold flex items-center justify-center">
-                    <svg class="w-3 h-3"><use href="#i-plus"/></svg>
-                  </button>
-                </div>
-              </div>
-              <input id="fare-range-slider" type="range" min="30" max="450" value="96" oninput="updateFareFromSlider(this.value)" class="w-full">
-            </div>
-          </div>
-
-          <!-- Broadcast Button -->
-          <button onclick="startDriverBiddingStream()" class="w-full bg-lime text-navy-950 hover:bg-lime-hover font-black text-base py-4 rounded-2xl transition-all shadow-xl shadow-lime/10 flex items-center justify-center gap-2">
-            <span>Broadcast Fare & Find Drivers</span> <svg class="icon w-5 h-5"><use href="#i-arrow"/></svg>
-          </button>
+          <div class="card-title" style="font-size:14.5px;margin:10px 0;">Available & Active Shipments</div>
+          <div id="driverJobsList"></div>
         </div>
 
-        <!-- Simulated Driver Bidding Stream -->
-        <div id="driver-bidding-radar" class="hidden bg-navy-850 border border-navy-750 rounded-3xl p-6 shadow-2xl space-y-4 hairline-border">
-          <div class="flex justify-between items-center">
-            <div class="flex items-center gap-2">
-              <span class="pulse-dot"></span>
-              <strong class="text-sm font-bold text-white">Live Driver Counter-Bids</strong>
-            </div>
-            <span class="text-xs font-mono text-lime font-bold">Scanning nearby fleet...</span>
-          </div>
-
-          <div id="driver-offers-container" class="space-y-3">
-            <!-- Dynamically populated -->
-          </div>
-        </div>
-      </div>
-
-      <!-- Right Panel: Interactive SVG Vector Route Map -->
-      <div class="lg:col-span-7 space-y-6">
-        <div class="bg-navy-850 border border-navy-750 rounded-3xl p-6 shadow-2xl relative overflow-hidden backdrop-blur-md hairline-border">
-          
-          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b border-navy-800 mb-4">
-            <div>
-              <span class="text-xs font-mono text-slate-400 block">CANADIAN VECTOR ROUTE MAP</span>
-              <h3 class="text-lg font-bold text-white flex items-center gap-2">
-                <span id="map-region-name">GTA Transit Corridor</span>
-                <span id="route-distance-tag" class="text-xs bg-navy-950 text-lime px-2.5 py-1 rounded-full font-mono border border-lime/30 tabular-nums">24.5 km · 28 mins</span>
-              </h3>
-            </div>
-            <div class="flex items-center gap-2 text-xs font-mono">
-              <span class="flex items-center gap-1.5 text-slate-300"><span class="w-2.5 h-2.5 rounded-full bg-lime"></span> Pickup</span>
-              <span class="flex items-center gap-1.5 text-slate-300"><span class="w-2.5 h-2.5 rounded-full bg-sky"></span> Dropoff</span>
-            </div>
-          </div>
-
-          <!-- SVG Canvas -->
-          <div class="relative w-full h-[480px] bg-navy-950 rounded-2xl border border-navy-800 overflow-hidden">
-            <svg id="live-map-svg" class="w-full h-full" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice">
-              <defs>
-                <pattern id="map-grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#152b44" stroke-width="0.8"/>
-                </pattern>
-                <linearGradient id="route-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#9be136"/>
-                  <stop offset="100%" stop-color="#38bdf8"/>
-                </linearGradient>
-              </defs>
-
-              <rect width="800" height="500" fill="#040b12"/>
-              <rect width="800" height="500" fill="url(#map-grid)"/>
-
-              <!-- Main Corridors -->
-              <path d="M 50 120 L 750 120 M 100 280 L 700 280 M 200 420 L 750 420" stroke="#0e2034" stroke-width="24"/>
-              <path d="M 120 50 L 120 450 M 380 50 L 380 450 M 650 50 L 650 450" stroke="#0e2034" stroke-width="24"/>
-
-              <!-- Animated Route Path -->
-              <path id="map-route-path" d="M 120 120 L 380 120 L 380 280 L 650 280 L 650 420" fill="none" stroke="url(#route-grad)" stroke-width="6" class="animated-dash-line"/>
-
-              <!-- Pickup Node -->
-              <g id="map-pickup-node" transform="translate(120, 120)">
-                <circle r="18" fill="#9be136" fill-opacity="0.25" class="animate-ping"/>
-                <circle r="10" fill="#9be136" stroke="#081624" stroke-width="3"/>
-                <text id="svg-txt-pickup" x="16" y="5" fill="#9be136" font-family="monospace" font-size="12" font-weight="bold">TORONTO DOWNTOWN</text>
-              </g>
-
-              <!-- Dropoff Node -->
-              <g id="map-dropoff-node" transform="translate(650, 420)">
-                <circle r="18" fill="#38bdf8" fill-opacity="0.25" class="animate-ping"/>
-                <circle r="10" fill="#38bdf8" stroke="#081624" stroke-width="3"/>
-                <text id="svg-txt-dropoff" x="16" y="5" fill="#38bdf8" font-family="monospace" font-size="12" font-weight="bold">MISSISSAUGA CITY CTR</text>
-              </g>
-
-              <!-- Vehicle Node -->
-              <g id="map-vehicle-node" class="transition-all duration-1000 ease-out" transform="translate(120, 120)">
-                <circle r="16" fill="#081624" stroke="#9be136" stroke-width="3"/>
-                <text x="-7" y="5" fill="#9be136" font-size="14">🚚</text>
-              </g>
-            </svg>
-
-            <div class="absolute bottom-4 left-4 bg-navy-900/90 border border-navy-800 backdrop-blur px-3.5 py-2 rounded-xl text-[11px] font-mono text-slate-300 flex items-center gap-3">
-              <span id="map-gps-coords">📍 GPS: 43.6532° N, 79.3832° W</span>
-              <button onclick="simulateVehicleMovement()" class="text-lime hover:underline font-bold flex items-center gap-1">
-                <svg class="w-3.5 h-3.5"><use href="#i-van"/></svg> Animate Truck
-              </button>
-            </div>
-          </div>
-
-          <!-- Stats Ribbon -->
-          <div class="grid grid-cols-3 gap-4 mt-4 text-center">
-            <div class="bg-navy-950 p-3.5 rounded-2xl border border-navy-800">
-              <span class="text-[10px] font-mono text-slate-400 block">ACTIVE FLEET UNITS</span>
-              <strong class="text-lg font-black text-lime mt-0.5 block tabular-nums">48 Vehicles</strong>
-            </div>
-            <div class="bg-navy-950 p-3.5 rounded-2xl border border-navy-800">
-              <span class="text-[10px] font-mono text-slate-400 block">ESCROW GUARANTEE</span>
-              <strong class="text-lg font-black text-white mt-0.5 block">100% Protected</strong>
-            </div>
-            <div class="bg-navy-950 p-3.5 rounded-2xl border border-navy-800">
-              <span class="text-[10px] font-mono text-slate-400 block">DRIVER SLA RATING</span>
-              <strong class="text-lg font-black text-lime mt-0.5 block tabular-nums">4.97 / 5.0 ⭐</strong>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- =================================================================== -->
-  <!-- SECTION 2: LIVE TRIP RADAR & TRACKING VIEW (#tracking)              -->
-  <!-- =================================================================== -->
-  <section id="role-view-tracking" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-    <div class="bg-navy-850 border border-navy-750 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 hairline-border">
-      
-      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-6 border-b border-navy-800">
         <div>
-          <span class="text-xs font-mono text-lime font-bold tracking-widest uppercase flex items-center gap-1">
-            <svg class="w-4 h-4 text-lime"><use href="#i-map"/></svg> ACTIVE CANADIAN SHIPMENT TRACKER
-          </span>
-          <h2 id="trip-header-code" class="text-3xl font-black text-white flex items-center gap-3 mt-1 font-mono">
-            Order #HMK-88412 
-            <span id="trip-header-status-badge" class="text-xs px-3 py-1 rounded-full bg-sky-500/20 text-sky-300 border border-sky-500/30 font-mono font-bold">IN TRANSIT</span>
-          </h2>
-        </div>
-
-        <div class="flex items-center gap-3">
-          <button onclick="shareTripLink()" class="px-4 py-2 bg-navy-950 hover:bg-navy-800 border border-navy-800 text-slate-200 rounded-xl font-bold text-xs flex items-center gap-2">
-            <span>🔗 Share Link</span>
-          </button>
-          <button onclick="openInvoiceModalFromTrip()" class="px-4 py-2 bg-lime text-navy-950 hover:bg-lime-hover rounded-xl font-black text-xs shadow-lg shadow-lime/10 flex items-center gap-1.5">
-            <svg class="w-4 h-4 text-navy-950"><use href="#i-printer"/></svg> CRA Tax Receipt
-          </button>
-        </div>
-      </div>
-
-      <!-- 4-Stage Milestone Stepper -->
-      <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 font-mono text-xs">
-        <div id="mstep-1" class="p-4 rounded-2xl bg-navy-950 border border-lime text-lime font-bold">
-          <span>1. BOOKED ✓</span>
-          <p class="text-[10px] text-slate-400 font-normal mt-1">Escrow Secured</p>
-        </div>
-
-        <div id="mstep-2" class="p-4 rounded-2xl bg-navy-950 border border-lime text-lime font-bold">
-          <span>2. DRIVER MATCHED</span>
-          <p id="trip-driver-name" class="text-[10px] text-slate-400 font-normal mt-1">Marc Tremblay (Ford Transit)</p>
-        </div>
-
-        <div id="mstep-3" class="p-4 rounded-2xl bg-navy-950 border border-sky-400 text-sky-400 font-bold animate-pulse">
-          <span>3. IN TRANSIT 🚚</span>
-          <p class="text-[10px] text-slate-400 font-normal mt-1">En route to destination</p>
-        </div>
-
-        <div id="mstep-4" class="p-4 rounded-2xl bg-navy-950/40 border border-navy-800 text-slate-500">
-          <span>4. DELIVERED</span>
-          <p class="text-[10px] text-slate-500 font-normal mt-1">PIN Verified</p>
-        </div>
-      </div>
-
-      <!-- PIN Card & Trip Specs -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-navy-950 p-6 rounded-2xl border border-lime/30 flex flex-col justify-between">
-          <div>
-            <span class="text-[10px] font-mono text-slate-400 uppercase tracking-wider block flex items-center gap-1">
-              <svg class="w-3.5 h-3.5 text-lime"><use href="#i-key"/></svg> DELIVERY HANDOFF PIN
-            </span>
-            <strong id="trip-pin-display" class="text-4xl font-mono font-black text-lime mt-2 block tracking-widest tabular-nums">8492</strong>
-            <p class="text-xs text-slate-400 mt-2 leading-relaxed">Provide this 4-digit code to your driver upon arrival to authorize release of escrow funds.</p>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">4-Digit PIN Delivery & Escrow Release</div>
+            </div>
+            <div class="form-group">
+              <label>Select Shipment to Complete</label>
+              <select id="driverCompleteOrderSelect"></select>
+            </div>
+            <div class="form-group">
+              <label>Customer 4-Digit Delivery PIN</label>
+              <input type="text" id="driverPinInput" maxlength="4" placeholder="Enter 4-digit PIN" />
+            </div>
+            <button class="btn btn-lime" style="width:100%;" onclick="driverCompleteDelivery()">Verify 4-Digit PIN & Complete Delivery</button>
           </div>
-          <button onclick="openChatDrawer()" class="mt-4 w-full bg-navy-800 hover:bg-navy-750 text-slate-200 font-bold text-xs py-2.5 rounded-xl flex items-center justify-center gap-2 border border-navy-750">
-            <svg class="w-4 h-4 text-lime"><use href="#i-chat"/></svg> Open Driver Chat
-          </button>
-        </div>
 
-        <div class="md:col-span-2 bg-navy-950 p-6 rounded-2xl border border-navy-800 space-y-4">
-          <h3 class="font-bold text-white text-base">Shipment Details & Ledger</h3>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-            <div>
-              <span class="text-slate-400 uppercase font-mono text-[10px]">Pickup Hub</span>
-              <p id="trip-pickup-txt" class="text-slate-200 font-bold mt-0.5">Toronto Downtown Hub</p>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Interac e-Transfer Payout</div>
             </div>
-            <div>
-              <span class="text-slate-400 uppercase font-mono text-[10px]">Drop-off Destination</span>
-              <p id="trip-dropoff-txt" class="text-slate-200 font-bold mt-0.5">Mississauga City Centre</p>
+            <div class="form-group">
+              <label>Interac Email Address</label>
+              <input type="email" id="payoutInteracEmail" placeholder="driver@interac-email.ca" />
             </div>
-            <div>
-              <span class="text-slate-400 uppercase font-mono text-[10px]">Fleet Tier</span>
-              <p id="trip-fleet-txt" class="text-slate-200 font-bold mt-0.5">Cargo Van (Ford Transit)</p>
+            <div class="form-group">
+              <label>Withdrawal Amount (CAD $)</label>
+              <input type="number" id="payoutAmountInput" min="1" step="0.01" placeholder="0.00" />
             </div>
-            <div>
-              <span class="text-slate-400 uppercase font-mono text-[10px]">Total CAD Paid</span>
-              <p id="trip-fare-txt" class="text-lime font-mono font-bold mt-0.5 tabular-nums">$96.05 CAD (HST Included)</p>
-            </div>
+            <button class="btn btn-primary" style="width:100%;" onclick="requestDriverPayout()">Withdraw via Interac e-Transfer</button>
+            <div id="payoutResultBox" style="margin-top:12px;font-size:13px;"></div>
+            <div id="payoutHistoryBox" style="margin-top:10px;font-size:12.5px;color:var(--muted);"></div>
           </div>
         </div>
       </div>
+    </section>
 
-    </div>
-  </section>
+    <!-- 4. FLEET HQ ADMIN -->
+    <section class="view-panel" id="view-admin">
+      <div class="grid-4" style="margin-bottom:18px;" id="adminKpis"></div>
 
-  <!-- =================================================================== -->
-  <!-- SECTION 3: DRIVER PARTNER CONSOLE                                  -->
-  <!-- =================================================================== -->
-  <section id="role-view-driver" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-    <div class="bg-navy-850 border border-navy-750 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 hairline-border">
-      
-      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-6 border-b border-navy-800">
-        <div>
-          <span class="text-xs font-mono text-lime font-bold uppercase tracking-widest flex items-center gap-1">
-            <svg class="w-4 h-4 text-lime"><use href="#i-van"/></svg> CANADIAN DRIVER PARTNER CONSOLE
-          </span>
-          <h2 class="text-2xl font-black text-white flex items-center gap-3 mt-1">
-            Welcome, Marc Tremblay 👋
-            <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-lime/10 text-lime border border-lime/30">Ford Transit #ON-8492</span>
-          </h2>
-        </div>
-
-        <div class="flex items-center gap-4">
-          <div class="flex items-center gap-2 bg-navy-950 px-3 py-1.5 rounded-xl border border-navy-800">
-            <span class="text-xs text-slate-400 font-medium">Duty:</span>
-            <button onclick="toggleDriverDuty()" id="driver-duty-btn" class="px-3 py-1 rounded-lg bg-lime text-navy-950 font-black text-xs">
-              ONLINE
-            </button>
-          </div>
-
-          <button onclick="requestInteracPayout()" class="px-4 py-2 bg-lime text-navy-950 font-black rounded-xl text-xs hover:bg-lime-hover flex items-center gap-1">
-            <svg class="w-4 h-4"><use href="#i-wallet"/></svg> Interac Payout
-          </button>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
-        <div class="bg-navy-950 p-5 rounded-2xl border border-navy-800">
-          <span class="text-xs font-mono text-slate-400 block">TODAY'S NET EARNINGS</span>
-          <strong id="driver-earnings-val" class="text-2xl font-black text-lime mt-1 block tabular-nums">$342.50 CAD</strong>
-        </div>
-        <div class="bg-navy-950 p-5 rounded-2xl border border-navy-800">
-          <span class="text-xs font-mono text-slate-400 block">COMPLETED TRIPS</span>
-          <strong class="text-2xl font-black text-white mt-1 block tabular-nums">4 Trips</strong>
-        </div>
-        <div class="bg-navy-950 p-5 rounded-2xl border border-navy-800">
-          <span class="text-xs font-mono text-slate-400 block">ESCROW PENDING RELEASE</span>
-          <strong class="text-2xl font-black text-sky mt-1 block tabular-nums">$96.05 CAD</strong>
-        </div>
-      </div>
-
-      <!-- Active Incoming Radar -->
-      <div class="space-y-4">
-        <h3 class="font-bold text-white text-lg flex items-center gap-2">
-          <span>📡 Incoming Request Radar</span>
-          <span class="text-xs font-mono bg-lime/10 text-lime px-2 py-0.5 rounded-full border border-lime/30">1 Active Trip</span>
-        </h3>
-
-        <div class="bg-navy-950 p-6 rounded-2xl border border-lime/40 space-y-4">
-          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-navy-800 pb-3">
-            <div>
-              <span class="text-xs font-mono text-lime font-bold">TRIP #HMK-88412 · Cargo Van</span>
-              <h4 class="text-base font-bold text-white">Toronto Downtown ➔ Mississauga City Centre</h4>
-            </div>
-            <div class="text-right">
-              <span class="text-xs text-slate-400 block">Customer Offered Fare</span>
-              <strong class="text-xl font-mono font-black text-lime tabular-nums">$96.05 CAD</strong>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-            <div>
-              <span class="text-slate-400 block">Cargo Notes:</span>
-              <span class="text-white font-medium">1 Sofa + 2 Boxes (Blanket Wrapped & Strapped)</span>
-            </div>
-            <div>
-              <span class="text-slate-400 block">Est. Distance & Drive:</span>
-              <span class="text-white font-medium">24.5 km · 28 Mins Drive</span>
-            </div>
-          </div>
-
-          <!-- Driver Controls & Keypad -->
-          <div class="pt-4 border-t border-navy-800 space-y-4">
-            <span class="text-xs font-bold text-slate-300 block">Driver Dispatch Milestones:</span>
-            <div class="flex flex-wrap gap-2 text-xs font-bold">
-              <button onclick="updateDriverStage('arrived')" class="px-4 py-2.5 rounded-xl bg-navy-800 text-slate-200 hover:bg-navy-750 border border-navy-750">1. Mark Arrived</button>
-              <button onclick="updateDriverStage('intransit')" class="px-4 py-2.5 rounded-xl bg-sky-500 text-slate-950 font-black">2. Start Transit</button>
-            </div>
-
-            <div class="bg-navy-900 p-4 rounded-xl border border-navy-800 space-y-3">
-              <label class="block text-xs font-bold text-slate-300 flex items-center gap-1.5">
-                <svg class="w-4 h-4 text-lime"><use href="#i-key"/></svg> Enter Customer 4-Digit Delivery PIN to Settle Escrow:
-              </label>
-              <div class="flex gap-2">
-                <input id="driver-pin-input" type="text" maxlength="4" placeholder="8492" class="w-32 bg-navy-950 border border-navy-800 rounded-xl px-4 py-2 text-center text-lg text-lime font-mono font-black focus:outline-none focus:border-lime tabular-nums">
-                <button onclick="verifyDriverPIN()" class="bg-lime text-navy-950 font-black text-xs px-6 py-2 rounded-xl hover:bg-lime-hover flex items-center gap-1">
-                  <svg class="w-4 h-4"><use href="#i-check"/></svg> Verify PIN & Complete Trip
-                </button>
-              </div>
-            </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Fleet Command HQ — Shipments & Audit Export</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+            <input type="text" id="adminFilterInput" placeholder="Search Order ID, Province, Route..." oninput="renderAdminPanel()" style="width:220px;padding:6px 10px;" />
+            <button class="btn btn-sm btn-lime" onclick="exportOrdersCsv()">Export CSV Report</button>
           </div>
         </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- =================================================================== -->
-  <!-- SECTION 4: FLEET HQ COMMAND DASHBOARD                              -->
-  <!-- =================================================================== -->
-  <section id="role-view-admin" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-    <div class="bg-navy-850 border border-navy-750 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 hairline-border">
-      
-      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-6 border-b border-navy-800">
-        <div>
-          <span class="text-xs font-mono text-lime font-bold uppercase tracking-widest flex items-center gap-1">
-            <svg class="w-4 h-4 text-lime"><use href="#i-shield"/></svg> EXECUTIVE FLEET COMMAND
-          </span>
-          <h2 class="text-2xl font-black text-white mt-1">HQ Operations & Audit Ledger</h2>
-        </div>
-        <button onclick="exportOrdersCSV()" class="px-4 py-2.5 bg-navy-950 hover:bg-navy-800 border border-navy-800 text-slate-200 font-bold text-xs rounded-xl flex items-center gap-2">
-          <svg class="w-4 h-4 text-lime"><use href="#i-download"/></svg> Export CSV Audit Report
-        </button>
-      </div>
-
-      <!-- Analytics -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div class="bg-navy-950 p-4 rounded-2xl border border-navy-800">
-          <span class="text-[10px] font-mono text-slate-400 uppercase">ACTIVE FLEET UNITS</span>
-          <strong class="text-2xl font-black text-lime mt-1 block tabular-nums">48 Vehicles</strong>
-        </div>
-        <div class="bg-navy-950 p-4 rounded-2xl border border-navy-800">
-          <span class="text-[10px] font-mono text-slate-400 uppercase">TOTAL REVENUE (CAD)</span>
-          <strong class="text-2xl font-black text-white mt-1 block tabular-nums">$18,450 CAD</strong>
-        </div>
-        <div class="bg-navy-950 p-4 rounded-2xl border border-navy-800">
-          <span class="text-[10px] font-mono text-slate-400 uppercase">ESCROW PROTECTION HELD</span>
-          <strong class="text-2xl font-black text-sky mt-1 block tabular-nums">$3,840 CAD</strong>
-        </div>
-        <div class="bg-navy-950 p-4 rounded-2xl border border-navy-800">
-          <span class="text-[10px] font-mono text-slate-400 uppercase">SLA COMPLIANCE</span>
-          <strong class="text-2xl font-black text-lime mt-1 block tabular-nums">99.4%</strong>
-        </div>
-      </div>
-
-      <!-- Master Order Table -->
-      <div class="space-y-4">
-        <h3 class="font-bold text-white text-base">Active & Recent Orders</h3>
-        <div class="overflow-x-auto rounded-2xl border border-navy-800">
-          <table class="w-full text-left text-xs font-mono">
-            <thead class="bg-navy-950 text-slate-400 uppercase border-b border-navy-800">
+        <div style="overflow-x:auto;">
+          <table>
+            <thead>
               <tr>
-                <th class="p-3.5">Order ID</th>
-                <th class="p-3.5">Metro Hub</th>
-                <th class="p-3.5">Tier</th>
-                <th class="p-3.5">Driver</th>
-                <th class="p-3.5">Fare (CAD)</th>
-                <th class="p-3.5">Status</th>
-                <th class="p-3.5 text-right">Actions</th>
+                <th>Order ID</th>
+                <th>Province / Tax</th>
+                <th>Route</th>
+                <th>Vehicle & Driver</th>
+                <th>Total (CAD)</th>
+                <th>PIN</th>
+                <th>Status</th>
+                <th>Dispatch Action</th>
               </tr>
             </thead>
-            <tbody id="admin-orders-tbody" class="divide-y divide-navy-800 text-slate-300">
-              <!-- Dynamically populated -->
-            </tbody>
+            <tbody id="adminOrdersBody"></tbody>
           </table>
         </div>
       </div>
 
-    </div>
-  </section>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Fleet Roster — Register Truck / Driver</div>
+        </div>
+        <form class="form-grid-3" onsubmit="addFleetUnit(event)">
+          <div class="form-group">
+            <label>Driver Name</label>
+            <input type="text" id="fleetDriverName" placeholder="Driver name" required />
+          </div>
+          <div class="form-group">
+            <label>Vehicle Tier</label>
+            <select id="fleetVehicleTier">
+              <option value="Courier Car / SUV">Courier Car / SUV</option>
+              <option value="Cargo Van (Ford Transit)">Cargo Van (Ford Transit)</option>
+              <option value="16ft Cube Truck">16ft Cube Truck</option>
+              <option value="26ft Straight Truck + 2 Movers">26ft Straight Truck + 2 Movers</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Unit / Plate Number</label>
+            <input type="text" id="fleetUnitPlate" placeholder="e.g. UNIT-104" required />
+          </div>
+          <div class="form-group" style="grid-column:1 / -1;margin-bottom:0;">
+            <button type="submit" class="btn btn-primary">Add to Fleet Roster</button>
+          </div>
+        </form>
+        <div id="fleetRosterList" style="margin-top:14px;"></div>
+      </div>
+    </section>
+  </main>
 
-  <!-- =================================================================== -->
-  <!-- SECTION 5: FAQS & FOOTER                                           -->
-  <!-- =================================================================== -->
-  <section id="faq" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-navy-800 space-y-12">
-    <div class="text-center max-w-2xl mx-auto space-y-3">
-      <span class="text-xs font-mono font-bold text-lime uppercase tracking-widest">GOOD TO KNOW</span>
-      <h2 class="text-3xl font-black text-white">Frequently Asked Questions</h2>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-      <div class="bg-navy-850 p-6 rounded-2xl border border-navy-800 space-y-2 hairline-border">
-        <h3 class="font-bold text-white text-base">Are your deliveries fully insured in Canada?</h3>
-        <p class="text-xs text-slate-400 leading-relaxed">Yes. HMK Trading Inc. carries comprehensive cargo insurance up to $50,000 CAD per trip across Ontario, British Columbia, Alberta, and Quebec.</p>
+  <!-- AUTH MODAL -->
+  <div class="modal-backdrop" id="authModal">
+    <div class="modal">
+      <div class="card-header" style="margin-bottom:12px;">
+        <div class="card-title" id="authModalTitle">Account Access</div>
+        <button class="btn btn-sm btn-outline" onclick="closeAuthModal()">✕</button>
       </div>
 
-      <div class="bg-navy-850 p-6 rounded-2xl border border-navy-800 space-y-2 hairline-border">
-        <h3 class="font-bold text-white text-base">How does the 4-Digit Delivery PIN work?</h3>
-        <p class="text-xs text-slate-400 leading-relaxed">When your booking is confirmed, a unique 4-digit PIN is generated. Your driver will ask for this PIN upon arrival to verify delivery and trigger escrow payment release.</p>
+      <div class="chips" style="margin-bottom:14px;">
+        <span class="chip" onclick="switchAuthMode('login')">Sign In</span>
+        <span class="chip" onclick="switchAuthMode('signup')">Sign Up + OTP</span>
+        <span class="chip" onclick="switchAuthMode('otp')">Verify OTP</span>
+        <span class="chip" onclick="switchAuthMode('forgot')">Forgot Password</span>
+        <span class="chip" onclick="switchAuthMode('reset')">Reset Password</span>
       </div>
 
-      <div class="bg-navy-850 p-6 rounded-2xl border border-navy-800 space-y-2 hairline-border">
-        <h3 class="font-bold text-white text-base">Can I get a CRA-compliant tax receipt?</h3>
-        <p class="text-xs text-slate-400 leading-relaxed">Absoutely. Click on "CRA Tax Receipt" on any trip page or invoice modal to view and print official receipts showing our CRA Business Number (BN 84920 1948 RT0001).</p>
-      </div>
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="loginEmail" placeholder="Enter your email" required />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="loginPassword" placeholder="Enter your password" required />
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Sign In</button>
+      </form>
 
-      <div class="bg-navy-850 p-6 rounded-2xl border border-navy-800 space-y-2 hairline-border">
-        <h3 class="font-bold text-white text-base">What payment methods do you accept?</h3>
-        <p class="text-xs text-slate-400 leading-relaxed">We accept Interac e-Transfer, Visa, Mastercard, American Express, Apple Pay, HMK CAD Wallet balances, and Corporate Net-30 billing for approved business accounts.</p>
-      </div>
-    </div>
-  </section>
+      <form id="signupForm" style="display:none;" onsubmit="handleSignup(event)">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="signupName" placeholder="Your full name" required />
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="signupEmail" placeholder="you@example.com" required />
+        </div>
+        <div class="form-group">
+          <label>Role</label>
+          <select id="signupRole">
+            <option value="customer">Customer</option>
+            <option value="driver">Driver Partner</option>
+            <option value="admin">Fleet Admin</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Password (min 6 characters)</label>
+          <input type="password" id="signupPassword" placeholder="Create a password" required />
+        </div>
+        <button type="submit" class="btn btn-lime" style="width:100%;">Register & Send 6-Digit OTP</button>
+      </form>
 
-</main>
+      <form id="otpForm" style="display:none;" onsubmit="handleVerifyOtp(event)">
+        <div class="otp-banner" id="otpCodeBanner" style="display:none;">
+          <span>6-Digit Verification OTP:</span>
+          <strong id="otpCodeDisplay" class="tabular" style="font-size:18px;letter-spacing:3px;"></strong>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="otpEmail" required />
+        </div>
+        <div class="form-group">
+          <label>Enter 6-Digit OTP Code</label>
+          <input type="text" id="otpCodeInput" maxlength="6" placeholder="000000" required />
+        </div>
+        <button type="submit" class="btn btn-lime" style="width:100%;">Verify OTP & Activate Account</button>
+      </form>
 
-<!-- FLOATING DOCK -->
-<div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-30 bg-navy-950/90 border border-navy-750 backdrop-blur-xl px-4 py-2.5 rounded-full shadow-2xl flex items-center gap-4 text-xs font-bold hairline-border">
-  <button onclick="switchAppRole('customer')" class="flex items-center gap-1.5 text-slate-300 hover:text-lime transition-colors">
-    <svg class="w-4 h-4 text-lime"><use href="#i-car"/></svg> <span>Dispatch</span>
-  </button>
-  <span class="text-navy-800">|</span>
-  <button onclick="switchAppRole('tracking')" class="flex items-center gap-1.5 text-slate-300 hover:text-lime transition-colors">
-    <svg class="w-4 h-4 text-lime"><use href="#i-map"/></svg> <span>Track</span>
-  </button>
-  <span class="text-navy-800">|</span>
-  <button onclick="openWalletModal()" class="flex items-center gap-1.5 text-lime hover:underline font-mono">
-    <svg class="w-4 h-4 text-lime"><use href="#i-wallet"/></svg> <strong id="dock-wallet-lbl" class="tabular-nums">$450.00</strong>
-  </button>
-</div>
+      <form id="forgotForm" style="display:none;" onsubmit="handleForgotPassword(event)">
+        <div class="form-group">
+          <label>Registered Email Address</label>
+          <input type="email" id="forgotEmail" placeholder="Enter registered email" required />
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Send Password Reset OTP</button>
+      </form>
 
-<!-- FOOTER -->
-<footer class="bg-navy-950 border-t border-navy-800 text-slate-400 text-xs py-12 mb-12 lg:mb-0">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
-    <div class="space-y-3">
-      <a href="#top" class="flex items-center gap-2 text-white font-black text-lg">
-        HMK<span class="text-lime">TRADING.CA</span>
-      </a>
-      <p class="text-slate-400 text-xs leading-relaxed">Premier Canadian Delivery, Moving & White-Glove Freight Platform.</p>
-      <span class="text-[10px] font-mono text-slate-500 block">CRA BN: 84920 1948 RT0001</span>
-    </div>
-
-    <div>
-      <h4 class="font-bold text-white mb-3 uppercase tracking-wider text-[11px] font-mono">Navigation</h4>
-      <ul class="space-y-2">
-        <li><a href="#services" class="hover:text-lime transition-colors">Services</a></li>
-        <li><a href="#process" class="hover:text-lime transition-colors">Our Process</a></li>
-        <li><a href="#faq" class="hover:text-lime transition-colors">FAQs</a></li>
-      </ul>
-    </div>
-
-    <div>
-      <h4 class="font-bold text-white mb-3 uppercase tracking-wider text-[11px] font-mono">Platform App</h4>
-      <ul class="space-y-2">
-        <li><button onclick="switchAppRole('customer')" class="hover:text-lime transition-colors">Book & Offer Fare</button></li>
-        <li><button onclick="switchAppRole('tracking')" class="hover:text-lime transition-colors">Live Trip Radar</button></li>
-        <li><button onclick="switchAppRole('driver')" class="hover:text-lime transition-colors">Driver Partner App</button></li>
-        <li><button onclick="switchAppRole('admin')" class="hover:text-lime transition-colors">Fleet HQ Command</button></li>
-      </ul>
-    </div>
-
-    <div>
-      <h4 class="font-bold text-white mb-3 uppercase tracking-wider text-[11px] font-mono">Canadian Hubs</h4>
-      <p class="text-slate-400 leading-relaxed">Serving Toronto (GTA), Ottawa-Gatineau, Metro Vancouver, Calgary & Montreal.</p>
+      <form id="resetForm" style="display:none;" onsubmit="handleResetPassword(event)">
+        <div class="otp-banner" id="resetCodeBanner" style="display:none;">
+          <span>Password Reset OTP:</span>
+          <strong id="resetCodeDisplay" class="tabular" style="font-size:18px;letter-spacing:3px;"></strong>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="resetEmail" required />
+        </div>
+        <div class="form-group">
+          <label>6-Digit Reset OTP</label>
+          <input type="text" id="resetCodeInput" maxlength="6" placeholder="000000" required />
+        </div>
+        <div class="form-group">
+          <label>New Password</label>
+          <input type="password" id="resetNewPassword" placeholder="Enter new password" required />
+        </div>
+        <button type="submit" class="btn btn-lime" style="width:100%;">Reset Password</button>
+      </form>
     </div>
   </div>
 
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 pt-8 border-t border-navy-900 flex flex-col sm:flex-row justify-between items-center text-[11px] text-slate-500">
-    <span>© 2026 HMK Trading Inc. All rights reserved.</span>
-    <span>Single-file Application Prototype</span>
+  <!-- WALLET TOP-UP MODAL -->
+  <div class="modal-backdrop" id="walletModal">
+    <div class="modal">
+      <div class="card-header" style="margin-bottom:12px;">
+        <div class="card-title">HMK CAD Wallet Top-Up</div>
+        <button class="btn btn-sm btn-outline" onclick="closeWalletModal()">✕</button>
+      </div>
+      <form onsubmit="handleWalletTopup(event)">
+        <div class="form-group">
+          <label>Funding Method</label>
+          <select id="walletMethodSelect">
+            <option value="Interac e-Transfer">Interac e-Transfer</option>
+            <option value="Debit / Credit Card">Debit / Credit Card</option>
+            <option value="Corporate Wire">Corporate Wire</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Amount (CAD $)</label>
+          <input type="number" id="walletAmountInput" min="1" max="50000" step="0.01" placeholder="Enter CAD amount" required />
+        </div>
+        <button type="submit" class="btn btn-lime" style="width:100%;">Add Funds to Wallet</button>
+      </form>
+    </div>
   </div>
-</footer>
 
-<!-- MODALS & DRAWERS -->
-
-<!-- 1. AUTHENTICATION MODAL (LOGIN / SIGNUP) -->
-<div id="auth-modal" class="hidden fixed inset-0 z-50 bg-navy-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-  <div class="bg-navy-850 border border-navy-750 rounded-3xl p-6 max-w-md w-full space-y-6 shadow-2xl relative hairline-border">
-    <div class="flex justify-between items-center border-b border-navy-800 pb-4">
-      <div class="flex items-center gap-2">
-        <svg class="w-5 h-5 text-lime"><use href="#i-user"/></svg>
-        <span id="auth-tab-heading" class="text-lg font-bold text-white">Sign In to HMK Account</span>
+  <!-- CRA TAX INVOICE MODAL -->
+  <div class="modal-backdrop" id="invoiceModal">
+    <div class="modal wide">
+      <div class="card-header">
+        <div class="card-title">CRA-Compliant Corporate Tax Invoice</div>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-sm btn-primary" onclick="window.print()">Print / Save PDF</button>
+          <button class="btn btn-sm btn-outline" onclick="closeInvoiceModal()">✕</button>
+        </div>
       </div>
-      <button onclick="closeAuthModal()" class="text-slate-400 hover:text-white font-bold text-xl">✕</button>
+      <div id="invoiceContent" class="tabular" style="font-size:13.5px;"></div>
     </div>
+  </div>
 
-    <!-- Auth Tabs -->
-    <div class="flex bg-navy-950 p-1 rounded-xl border border-navy-800 font-bold text-xs">
-      <button onclick="switchAuthTab('login')" id="authtab-login" class="flex-1 py-2 rounded-lg bg-lime text-navy-950 transition-all">Sign In</button>
-      <button onclick="switchAuthTab('signup')" id="authtab-signup" class="flex-1 py-2 rounded-lg text-slate-300 hover:text-white transition-all">Create Account</button>
+  <!-- CHAT DRAWER -->
+  <aside class="chat-drawer" id="chatDrawer">
+    <div class="chat-head">
+      <span id="chatTitle">Shipment Chat</span>
+      <button class="btn btn-sm btn-outline" style="padding:2px 8px;" onclick="toggleChat()">✕</button>
     </div>
-
-    <!-- Login Form -->
-    <form id="auth-login-form" onsubmit="handleLoginSubmit(event)" class="space-y-4">
-      <div>
-        <label class="block text-xs font-bold text-slate-300 mb-1">Email Address</label>
-        <div class="flex items-center gap-2 bg-navy-950 border border-navy-800 rounded-xl px-3 py-2.5">
-          <svg class="w-4 h-4 text-slate-400"><use href="#i-mail"/></svg>
-          <input type="email" id="login-email" required placeholder="name@company.ca" class="w-full bg-transparent text-sm text-white focus:outline-none">
-        </div>
-      </div>
-
-      <div>
-        <div class="flex justify-between items-center mb-1">
-          <label class="block text-xs font-bold text-slate-300">Password</label>
-          <button type="button" onclick="openForgotPasswordModal()" class="text-[11px] text-lime hover:underline">Forgot?</button>
-        </div>
-        <div class="flex items-center gap-2 bg-navy-950 border border-navy-800 rounded-xl px-3 py-2.5">
-          <svg class="w-4 h-4 text-slate-400"><use href="#i-lock"/></svg>
-          <input type="password" id="login-password" required placeholder="••••••••" class="w-full bg-transparent text-sm text-white focus:outline-none">
-        </div>
-      </div>
-
-      <button type="submit" class="w-full py-3 bg-lime text-navy-950 font-black rounded-xl text-sm hover:bg-lime-hover transition-all flex items-center justify-center gap-2 shadow-lg shadow-lime/10">
-        <svg class="w-4 h-4"><use href="#i-check"/></svg> Sign In to Workspace
-      </button>
+    <div class="chat-body" id="chatMessages"></div>
+    <form class="chat-foot" onsubmit="sendChatMessage(event)">
+      <input type="text" id="chatInput" placeholder="Type message..." required />
+      <button type="submit" class="btn btn-sm btn-lime">Send</button>
     </form>
+  </aside>
 
-    <!-- Sign Up Form -->
-    <form id="auth-signup-form" onsubmit="handleSignupSubmit(event)" class="hidden space-y-4">
-      <div>
-        <label class="block text-xs font-bold text-slate-300 mb-1">Full Name</label>
-        <div class="flex items-center gap-2 bg-navy-950 border border-navy-800 rounded-xl px-3 py-2.5">
-          <svg class="w-4 h-4 text-slate-400"><use href="#i-user"/></svg>
-          <input type="text" id="signup-name" required placeholder="Jean Tremblay" class="w-full bg-transparent text-sm text-white focus:outline-none">
-        </div>
-      </div>
-
-      <div>
-        <label class="block text-xs font-bold text-slate-300 mb-1">Email Address</label>
-        <div class="flex items-center gap-2 bg-navy-950 border border-navy-800 rounded-xl px-3 py-2.5">
-          <svg class="w-4 h-4 text-slate-400"><use href="#i-mail"/></svg>
-          <input type="email" id="signup-email" required placeholder="jean@company.ca" class="w-full bg-transparent text-sm text-white focus:outline-none">
-        </div>
-      </div>
-
-      <div>
-        <label class="block text-xs font-bold text-slate-300 mb-1">Password</label>
-        <div class="flex items-center gap-2 bg-navy-950 border border-navy-800 rounded-xl px-3 py-2.5">
-          <svg class="w-4 h-4 text-slate-400"><use href="#i-lock"/></svg>
-          <input type="password" id="signup-password" required placeholder="At least 6 chars" class="w-full bg-transparent text-sm text-white focus:outline-none">
-        </div>
-      </div>
-
-      <div>
-        <label class="block text-xs font-bold text-slate-300 mb-1">Select Primary Role</label>
-        <div class="grid grid-cols-3 gap-2 text-xs font-bold">
-          <label class="p-2.5 rounded-xl bg-navy-950 border border-navy-800 flex items-center gap-1.5 cursor-pointer">
-            <input type="radio" name="signup-role" value="customer" checked class="accent-lime">
-            <span>Customer</span>
-          </label>
-          <label class="p-2.5 rounded-xl bg-navy-950 border border-navy-800 flex items-center gap-1.5 cursor-pointer">
-            <input type="radio" name="signup-role" value="driver" class="accent-lime">
-            <span>Driver</span>
-          </label>
-          <label class="p-2.5 rounded-xl bg-navy-950 border border-navy-800 flex items-center gap-1.5 cursor-pointer">
-            <input type="radio" name="signup-role" value="admin" class="accent-lime">
-            <span>Fleet HQ</span>
-          </label>
-        </div>
-      </div>
-
-      <button type="submit" class="w-full py-3 bg-lime text-navy-950 font-black rounded-xl text-sm hover:bg-lime-hover transition-all flex items-center justify-center gap-2 shadow-lg shadow-lime/10">
-        <svg class="w-4 h-4"><use href="#i-arrow"/></svg> Continue to OTP Verification
-      </button>
-    </form>
-
-  </div>
-</div>
-
-<!-- 2. OTP EMAIL VERIFICATION MODAL -->
-<div id="otp-modal" class="hidden fixed inset-0 z-50 bg-navy-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-  <div class="bg-navy-850 border border-navy-750 rounded-3xl p-6 max-w-md w-full space-y-6 shadow-2xl relative hairline-border text-center">
-    <div class="w-12 h-12 rounded-2xl bg-lime/10 text-lime flex items-center justify-center mx-auto text-xl">
-      <svg class="w-6 h-6"><use href="#i-shield"/></svg>
-    </div>
-    
-    <div>
-      <h3 class="text-lg font-bold text-white">6-Digit Email Verification</h3>
-      <p class="text-xs text-slate-400 mt-1">We sent a security OTP code to <b id="otp-target-email" class="text-lime">user@domain.ca</b></p>
-      <div class="mt-2 text-xs font-mono text-lime bg-navy-950 p-2 rounded-xl border border-lime/30 inline-block">
-        Demo OTP Code: <b id="demo-otp-code" class="text-white">849201</b>
-      </div>
-    </div>
-
-    <!-- 6 Input Digits -->
-    <div class="flex justify-center gap-2">
-      <input type="text" maxlength="1" class="otp-digit w-10 h-12 bg-navy-950 border border-navy-800 rounded-xl text-center text-lg font-mono font-bold text-lime focus:outline-none focus:border-lime">
-      <input type="text" maxlength="1" class="otp-digit w-10 h-12 bg-navy-950 border border-navy-800 rounded-xl text-center text-lg font-mono font-bold text-lime focus:outline-none focus:border-lime">
-      <input type="text" maxlength="1" class="otp-digit w-10 h-12 bg-navy-950 border border-navy-800 rounded-xl text-center text-lg font-mono font-bold text-lime focus:outline-none focus:border-lime">
-      <input type="text" maxlength="1" class="otp-digit w-10 h-12 bg-navy-950 border border-navy-800 rounded-xl text-center text-lg font-mono font-bold text-lime focus:outline-none focus:border-lime">
-      <input type="text" maxlength="1" class="otp-digit w-10 h-12 bg-navy-950 border border-navy-800 rounded-xl text-center text-lg font-mono font-bold text-lime focus:outline-none focus:border-lime">
-      <input type="text" maxlength="1" class="otp-digit w-10 h-12 bg-navy-950 border border-navy-800 rounded-xl text-center text-lg font-mono font-bold text-lime focus:outline-none focus:border-lime">
-    </div>
-
-    <button onclick="verifyOTPCode()" class="w-full py-3 bg-lime text-navy-950 font-black rounded-xl text-sm hover:bg-lime-hover transition-all flex items-center justify-center gap-2">
-      <svg class="w-4 h-4"><use href="#i-check"/></svg> Verify & Activate Account
-    </button>
-
-    <div class="text-xs text-slate-400 font-mono">
-      <span>Resend Code in: </span><strong id="otp-timer-lbl" class="text-lime">60s</strong>
-      <button id="otp-resend-btn" onclick="resendOTPCode()" class="hidden ml-2 text-lime underline font-bold">Resend OTP</button>
-    </div>
-  </div>
-</div>
-
-<!-- 3. FORGOT PASSWORD MODAL -->
-<div id="forgot-modal" class="hidden fixed inset-0 z-50 bg-navy-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-  <div class="bg-navy-850 border border-navy-750 rounded-3xl p-6 max-w-md w-full space-y-6 shadow-2xl relative hairline-border">
-    <div class="flex justify-between items-center border-b border-navy-800 pb-4">
-      <h3 class="text-lg font-bold text-white flex items-center gap-2">
-        <svg class="w-5 h-5 text-lime"><use href="#i-key"/></svg> Password Reset
-      </h3>
-      <button onclick="closeForgotPasswordModal()" class="text-slate-400 hover:text-white font-bold text-xl">✕</button>
-    </div>
-
-    <form onsubmit="handlePasswordReset(event)" class="space-y-4">
-      <p class="text-xs text-slate-400 leading-relaxed">Enter your registered Canadian email address to receive a password reset authorization code.</p>
-      
-      <div>
-        <label class="block text-xs font-bold text-slate-300 mb-1">Email Address</label>
-        <div class="flex items-center gap-2 bg-navy-950 border border-navy-800 rounded-xl px-3 py-2.5">
-          <svg class="w-4 h-4 text-slate-400"><use href="#i-mail"/></svg>
-          <input type="email" required placeholder="user@company.ca" class="w-full bg-transparent text-sm text-white focus:outline-none">
-        </div>
-      </div>
-
-      <button type="submit" class="w-full py-3 bg-lime text-navy-950 font-black rounded-xl text-sm hover:bg-lime-hover transition-all flex items-center justify-center gap-2">
-        <svg class="w-4 h-4"><use href="#i-arrow"/></svg> Send Password Reset Code
-      </button>
-    </form>
-  </div>
-</div>
-
-<!-- 4. WALLET TOPUP MODAL -->
-<div id="wallet-modal" class="hidden fixed inset-0 z-50 bg-navy-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-  <div class="bg-navy-850 border border-navy-750 rounded-3xl p-6 max-w-md w-full space-y-6 shadow-2xl relative hairline-border">
-    <div class="flex justify-between items-center border-b border-navy-800 pb-4">
-      <h3 class="text-lg font-bold text-white flex items-center gap-2">
-        <svg class="icon text-lime"><use href="#i-wallet"/></svg>
-        <span>HMK CAD Wallet Top-up</span>
-      </h3>
-      <button onclick="closeWalletModal()" class="text-slate-400 hover:text-white font-bold text-xl">✕</button>
-    </div>
-
-    <div class="space-y-4">
-      <div>
-        <label class="block text-xs font-bold text-slate-300 mb-1">Enter Top-up Amount (CAD $)</label>
-        <div class="flex items-center gap-2 bg-navy-950 border border-navy-800 rounded-xl px-4 py-3">
-          <span class="text-lime font-mono font-bold">$</span>
-          <input id="wallet-add-amount" type="number" step="10" value="100" class="w-full bg-transparent text-white font-mono font-bold text-lg focus:outline-none tabular-nums">
-        </div>
-      </div>
-
-      <div class="grid grid-cols-3 gap-2">
-        <button onclick="setQuickTopUp(50)" class="py-2 rounded-xl bg-navy-950 border border-navy-800 hover:border-lime text-xs font-mono text-lime tabular-nums">$50 CAD</button>
-        <button onclick="setQuickTopUp(100)" class="py-2 rounded-xl bg-navy-950 border border-navy-800 hover:border-lime text-xs font-mono text-lime tabular-nums">$100 CAD</button>
-        <button onclick="setQuickTopUp(250)" class="py-2 rounded-xl bg-navy-950 border border-navy-800 hover:border-lime text-xs font-mono text-lime tabular-nums">$250 CAD</button>
-      </div>
-
-      <button onclick="processWalletTopUp()" class="w-full py-3 bg-lime text-navy-950 font-black rounded-xl text-sm hover:bg-lime-hover transition-all shadow-lg shadow-lime/10 flex items-center justify-center gap-2">
-        <span>Confirm Top-up via Interac</span> <svg class="w-4 h-4"><use href="#i-arrow"/></svg>
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- 5. DRIVER CHAT DRAWER -->
-<div id="chat-drawer" class="hidden fixed bottom-4 right-4 z-50 max-w-sm w-full bg-navy-850 border border-navy-750 rounded-3xl shadow-2xl overflow-hidden flex flex-col h-[480px] hairline-border">
-  <div class="bg-navy-950 p-4 border-b border-navy-800 flex justify-between items-center">
-    <div class="flex items-center gap-3">
-      <div class="w-8 h-8 rounded-full bg-lime text-navy-950 font-black flex items-center justify-center text-xs">MT</div>
-      <div>
-        <strong class="text-xs font-bold text-white block">Marc Tremblay (Driver)</strong>
-        <span class="text-[10px] font-mono text-lime">Ford Transit #ON-8492</span>
-      </div>
-    </div>
-    <button onclick="closeChatDrawer()" class="text-slate-400 hover:text-white font-bold">✕</button>
+  <!-- BOTTOM QUICK DOCK -->
+  <div class="dock">
+    <button class="btn btn-sm btn-lime" onclick="switchTab('dispatch')">Customer</button>
+    <button class="btn btn-sm btn-outline" style="background:rgba(255,255,255,0.1);color:#fff;border-color:rgba(255,255,255,0.2);" onclick="switchTab('driver')">Driver</button>
+    <button class="btn btn-sm btn-outline" style="background:rgba(255,255,255,0.1);color:#fff;border-color:rgba(255,255,255,0.2);" onclick="switchTab('track')">Track</button>
   </div>
 
-  <div id="chat-messages-container" class="flex-grow p-4 space-y-3 overflow-y-auto text-xs">
-    <!-- Dynamic chat content -->
-  </div>
-
-  <div class="p-3 bg-navy-950 border-t border-navy-800 space-y-2">
-    <div class="flex gap-2">
-      <input id="chat-input" type="text" placeholder="Type a message..." class="flex-grow bg-navy-900 border border-navy-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-lime">
-      <button onclick="sendChatMessage()" class="bg-lime text-navy-950 font-black text-xs px-4 py-2 rounded-xl flex items-center gap-1">
-        <svg class="w-3.5 h-3.5"><use href="#i-chat"/></svg> Send
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- 6. PRINTABLE CRA TAX RECEIPT MODAL -->
-<div id="printable-invoice-modal" class="hidden fixed inset-0 z-50 bg-navy-950/90 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
-  <div class="bg-white text-slate-900 rounded-3xl p-8 max-w-2xl w-full space-y-6 shadow-2xl relative my-8">
-    
-    <div class="no-print flex justify-between items-center border-b border-slate-200 pb-4">
-      <span class="text-xs font-mono font-bold text-slate-500 uppercase">CRA-COMPLIANT OFFICIAL INVOICE</span>
-      <div class="flex items-center gap-3">
-        <button onclick="window.print()" class="px-4 py-2 bg-navy-900 text-white rounded-xl text-xs font-bold flex items-center gap-2">
-          <svg class="icon w-4 h-4"><use href="#i-printer"/></svg> Print / Save PDF
-        </button>
-        <button onclick="closeInvoiceModal()" class="text-slate-500 hover:text-black font-bold text-xl">✕</button>
-      </div>
-    </div>
-
-    <div class="space-y-6">
-      <div class="flex justify-between items-start border-b border-slate-200 pb-6">
-        <div>
-          <h2 class="text-2xl font-black text-slate-900">HMK TRADING INC.</h2>
-          <p class="text-xs text-slate-600 mt-1">Delivery, Freight & Logistics Platform</p>
-          <span class="text-[11px] font-mono text-slate-500 block mt-1">CRA Business No: <b>BN 84920 1948 RT0001</b></span>
-        </div>
-        <div class="text-right">
-          <span class="text-xs font-mono font-bold text-slate-400 block uppercase">INVOICE RECEIPT</span>
-          <strong id="inv-code" class="text-lg font-mono font-black text-slate-900 block">#HMK-88412</strong>
-          <span id="inv-date" class="text-xs text-slate-500 font-mono">Date: Nov 21, 2026</span>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-2 gap-4 text-xs font-mono border-b border-slate-200 pb-6">
-        <div>
-          <span class="text-slate-400 uppercase text-[10px] block">Pickup Node</span>
-          <strong id="inv-pickup" class="text-slate-900 text-sm block">Toronto Downtown Hub</strong>
-        </div>
-        <div>
-          <span class="text-slate-400 uppercase text-[10px] block">Drop-off Destination</span>
-          <strong id="inv-dropoff" class="text-slate-900 text-sm block">Mississauga City Centre</strong>
-        </div>
-        <div>
-          <span class="text-slate-400 uppercase text-[10px] block">Vehicle Fleet Tier</span>
-          <strong id="inv-tier" class="text-slate-900 text-sm block">Cargo Van (Ford Transit)</strong>
-        </div>
-        <div>
-          <span class="text-slate-400 uppercase text-[10px] block">Payment Channel</span>
-          <strong id="inv-pmethod" class="text-slate-900 text-sm block">Interac e-Transfer (Escrow Secured)</strong>
-        </div>
-      </div>
-
-      <table class="w-full text-xs font-mono text-left">
-        <thead class="bg-slate-100 text-slate-600 uppercase">
-          <tr>
-            <th class="p-3">Description</th>
-            <th class="p-3 text-right">Amount (CAD)</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-slate-200">
-          <tr>
-            <td class="p-3 font-medium">Base Delivery Fare</td>
-            <td id="inv-base" class="p-3 text-right font-bold tabular-nums">$85.00</td>
-          </tr>
-          <tr>
-            <td class="p-3 font-medium">Add-on Options</td>
-            <td id="inv-addons" class="p-3 text-right font-bold tabular-nums">$0.00</td>
-          </tr>
-          <tr>
-            <td class="p-3 font-medium text-emerald-700">Promo Discount</td>
-            <td id="inv-discount" class="p-3 text-right font-bold text-emerald-700 tabular-nums">-$0.00</td>
-          </tr>
-          <tr>
-            <td id="inv-tax-name" class="p-3 font-medium">Ontario HST (13%)</td>
-            <td id="inv-tax" class="p-3 text-right font-bold tabular-nums">$11.05</td>
-          </tr>
-          <tr class="bg-slate-50 font-black text-sm">
-            <td class="p-3">Total Paid (CAD)</td>
-            <td id="inv-total" class="p-3 text-right text-emerald-600 tabular-nums">$96.05 CAD</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="bg-slate-100 p-4 rounded-2xl flex justify-between items-center text-xs font-mono">
-        <div>
-          <span class="text-slate-500 uppercase text-[10px] block">Delivery Handoff PIN</span>
-          <strong id="inv-pin" class="text-lg font-black text-slate-900 tabular-nums">8492</strong>
-        </div>
-        <span class="px-3 py-1 bg-emerald-100 text-emerald-800 font-bold rounded-full">✓ ESCROW VERIFIED & RELEASED</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- TOAST CONTAINER -->
-<div id="toast-container" class="fixed top-24 right-4 z-50 space-y-2 pointer-events-none"></div>
-
-<!-- JAVASCRIPT LOGIC ENGINE -->
-<script>
-  // Translations Dictionary (EN / Roman Urdu)
-  const translations = {
-    en: {
-      statusActive: 'CANADIAN DISPATCH ACTIVE',
-      navProcess: 'How It Works',
-      navServices: 'Services',
-      btnHeadBook: 'Book Delivery ➔',
-      heroBadge: "CANADA'S PREMIER LOGISTICS PLATFORM",
-      heroHeading: 'Big deliveries.<br><span class="text-lime">Small worries.</span>',
-      heroSubtext: 'From heavy fridge & couch deliveries to your next big home or office move across Ontario, BC, Alberta, and Quebec — manage booking, driver bidding, and GPS tracking in one effortless place.',
-      lblQuickTrack: 'Quick Track:',
-      btnTrackSubmit: 'Track Shipment ➔',
-      lblTryDemo: 'Try Demo Orders:',
-      btnHeroLaunch: 'Launch Fare Booking Studio ➔',
-      stepEyebrow: '01 / SIMPLE 4-STEP PROCESS',
-      stepTitle: 'From Booking to Doorstep.<br><span class="text-lime">Effortless and Clear.</span>',
-      stepDesc: 'No complicated paperwork. Select your route, set or bid your price, pay securely, and verify delivery with a 4-digit PIN.',
-      s1Title: 'Pick Route & Vehicle',
-      s1Desc: 'Select Canadian metro hub (GTA, Ottawa, Vancouver, Calgary, Montreal) and vehicle tier.',
-      s2Title: 'Set or Bid Your Price',
-      s2Desc: 'Accept recommended fare or offer your custom price and receive live driver counter-bids.',
-      s3Title: 'Pay & Escrow Lock',
-      s3Desc: 'Pay via Interac, Card, Wallet, Net-30, or COD. Funds held safely in Escrow until completion.',
-      s4Title: 'Track Live & PIN Verify',
-      s4Desc: 'Follow your truck on the map, chat with your driver, give 4-digit PIN on delivery, and print tax receipt.'
-    },
-    ur: {
-      statusActive: 'CANADIAN DISPATCH ACTIVE (ON)',
-      navProcess: 'Kaam Kaise Karta Hai',
-      navServices: 'Services',
-      btnHeadBook: 'Delivery Book Karein ➔',
-      heroBadge: "CANADA KA BEHTAREEN LOGISTICS PLATFORM",
-      heroHeading: 'Bari Deliveries.<br><span class="text-lime">Chhoti Fikr.</span>',
-      heroSubtext: 'Fridge, sofa ya ghar/office ka shifting — Ontario, BC, Alberta aur Quebec mein asani se booking, driver bidding aur tracking karein.',
-      lblQuickTrack: 'Fori Tracking:',
-      btnTrackSubmit: 'Track Karein ➔',
-      lblTryDemo: 'Sample Orders Try Karein:',
-      btnHeroLaunch: 'Fare Booking Studio Kholein ➔',
-      stepEyebrow: '01 / AASAAN 4-STEP TAREEQA',
-      stepTitle: 'Booking Se Doorstep Tak.<br><span class="text-lime">Aasaan Aur Saaf.</span>',
-      stepDesc: 'Koi mushkil form nahi. Route choose karein, apni marzi ka rate dein, secure pay karein, aur 4-digit PIN se verify karein.',
-      s1Title: '1. Route & Gaadi Select Karein',
-      s1Desc: 'Canada ka hub (GTA, Ottawa, Vancouver, Calgary, Montreal) aur vehicle select karein.',
-      s2Title: '2. Apna Rate Set Ya Bid Karein',
-      s2Desc: 'System price lein ya inDrive ki tarah apna rate offer karke drivers ki bids dekhein.',
-      s3Title: '3. Payment & Escrow Lock',
-      s3Desc: 'Interac, Card ya Wallet se pay karein. Rakam Escrow mein safe rehti hai.',
-      s4Title: '4. Live Tracking & PIN Verify',
-      s4Desc: 'Map pe gaadi dekhein, driver se chat karein, delivery pe 4-digit PIN dein.'
-    }
-  };
-
-  // Persistent State Engine
-  const AppState = {
-    currentLang: localStorage.getItem('hmk_lang') || 'en',
-    role: 'home',
-    currentUser: JSON.parse(localStorage.getItem('hmk_auth_user')) || null,
-    walletBalance: parseFloat(localStorage.getItem('hmk_wallet_bal')) || 450.00,
-    selectedHub: 'gta',
-    pickupNode: 'Toronto Downtown Hub',
-    dropoffNode: 'Mississauga City Centre',
-    selectedTier: 'van',
-    addons: { helpers: false, insurance: false },
-    promo: { code: '', discount: 0 },
-    checkoutMethod: 'interac',
-    baseFareCAD: 85.00,
-    userOfferBid: 96,
-    activeTripCode: 'HMK-88412',
-    activeTripPIN: '8492',
-    tripStage: 'intransit',
-    isDriverOnline: true,
-    driverEarnings: 342.50,
-    otpTimerSeconds: 60,
-    otpTimerInterval: null,
-    pendingSignupData: null,
-    orders: [
-      { id: 'HMK-88412', hub: 'GTA Corridor', tier: 'Cargo Van', driver: 'Marc Tremblay', fare: '$96.05 CAD', status: 'In Transit', pin: '8492', pickup: 'Toronto Downtown', dropoff: 'Mississauga City Ctr' },
-      { id: 'HMK-90412', hub: 'Ottawa Hub', tier: '16ft Cube Truck', driver: 'Luc Robitaille', fare: '$180.80 CAD', status: 'Assigned', pin: '1948', pickup: 'Ottawa Downtown', dropoff: 'Kanata Tech Park' },
-      { id: 'HMK-99201', hub: 'Vancouver Hub', tier: 'Courier SUV', driver: 'Devon Miller', fare: '$50.40 CAD', status: 'Delivered', pin: '3920', pickup: 'Vancouver Downtown', dropoff: 'Burnaby Metrotown' }
-    ],
-    chatMessages: [
-      { sender: 'driver', text: 'Hi! I am Marc. I have arrived at Toronto Downtown pickup hub.' },
-      { sender: 'customer', text: 'Great! My cargo is ready in the lobby.' }
-    ]
-  };
-
-  const HubNodes = {
-    gta: {
-      name: 'GTA Transit Corridor (Ontario)',
-      taxName: 'Ontario HST (13%)',
-      taxRate: 0.13,
-      coords: '📍 GPS: 43.6532° N, 79.3832° W',
-      pickups: ['Toronto Downtown Hub', 'Scarborough Centre', 'Markham Tech Hub'],
-      dropoffs: ['Mississauga City Centre', 'Brampton Freight Hub', 'Oakville South']
-    },
-    ottawa: {
-      name: 'Ottawa - Gatineau Hub (Ontario)',
-      taxName: 'Ontario HST (13%)',
-      taxRate: 0.13,
-      coords: '📍 GPS: 45.4215° N, 75.6972° W',
-      pickups: ['Ottawa Downtown Hub', 'Orléans East Hub', 'Nepean Commercial'],
-      dropoffs: ['Kanata Tech Park', 'Barrhaven South', 'Gatineau Sector']
-    },
-    van: {
-      name: 'Metro Vancouver Hub (BC)',
-      taxName: 'BC GST+PST (12%)',
-      taxRate: 0.12,
-      coords: '📍 GPS: 49.2827° N, 123.1207° W',
-      pickups: ['Vancouver Downtown Hub', 'Richmond Terminal', 'Kitsilano'],
-      dropoffs: ['Burnaby Metrotown', 'Surrey Central Hub', 'North Vancouver']
-    },
-    calgary: {
-      name: 'Calgary Metropolitan (AB)',
-      taxName: 'Alberta GST (5%)',
-      taxRate: 0.05,
-      coords: '📍 GPS: 51.0447° N, 114.0719° W',
-      pickups: ['Calgary Downtown Hub', 'NE Industrial Park'],
-      dropoffs: ['Airdrie Hub', 'Cochrane Gateway', 'SW Residential']
-    },
-    montreal: {
-      name: 'Greater Montreal (QC)',
-      taxName: 'Quebec GST+QST (14.975%)',
-      taxRate: 0.14975,
-      coords: '📍 GPS: 45.5017° N, 73.5673° W',
-      pickups: ['Montreal Downtown', 'Vieux-Montréal', 'Laval Centre'],
-      dropoffs: ['Longueuil Hub', 'Mont-Royal', 'West Island']
-    }
-  };
-
-  const TierRates = { suv: 45.00, van: 85.00, cube: 160.00, truck: 290.00 };
-
-  // Init Application
-  window.addEventListener('DOMContentLoaded', () => {
-    updateCityMapNodes();
-    calculateFare();
-    renderAdminOrders();
-    renderChatMessages();
-    renderUserAuthWidget();
-    setupOTPInputs();
-
-    // Keyboard listener
-    document.addEventListener('keydown', (e) => {
-      if (e.key === '/' && document.activeElement.tagName !== 'INPUT') {
-        e.preventDefault();
-        const input = document.getElementById('public-track-input');
-        if (input) input.focus();
-      } else if (e.key === 'Escape') {
-        closeAuthModal();
-        closeOTPModal();
-        closeForgotPasswordModal();
-        closeWalletModal();
-        closeChatDrawer();
-        closeInvoiceModal();
-      }
-    });
-  });
-
-  // User Auth UI Widget Renderer
-  function renderUserAuthWidget() {
-    const container = document.getElementById('user-auth-widget');
-    if (AppState.currentUser) {
-      const initial = AppState.currentUser.name ? AppState.currentUser.name.charAt(0).toUpperCase() : 'U';
-      container.innerHTML = `
-        <div class="flex items-center gap-2 bg-navy-850 px-2.5 py-1 rounded-xl border border-navy-750">
-          <div class="w-5 h-5 rounded-full bg-lime text-navy-950 font-black text-[10px] flex items-center justify-center">${initial}</div>
-          <span class="text-white font-bold text-[11px]">${AppState.currentUser.name}</span>
-          <span class="px-1.5 py-0.2 rounded bg-lime/10 text-lime text-[9px] font-mono font-bold uppercase">${AppState.currentUser.role}</span>
-          <button onclick="handleLogout()" class="text-slate-400 hover:text-red-400 text-[10px] font-bold ml-1" title="Log Out">✕</button>
-        </div>
-      `;
-    } else {
-      container.innerHTML = `
-        <button onclick="openAuthModal('login')" class="text-lime font-bold hover:underline flex items-center gap-1 text-[11px]">
-          <svg class="w-3.5 h-3.5"><use href="#i-user"/></svg> Sign In
-        </button>
-      `;
-    }
-  }
-
-  // Auth Modals & Flow
-  function openAuthModal(tab = 'login') {
-    document.getElementById('auth-modal').classList.remove('hidden');
-    switchAuthTab(tab);
-  }
-  function closeAuthModal() { document.getElementById('auth-modal').classList.add('hidden'); }
-
-  function switchAuthTab(tab) {
-    const loginForm = document.getElementById('auth-login-form');
-    const signupForm = document.getElementById('auth-signup-form');
-    const btnLogin = document.getElementById('authtab-login');
-    const btnSignup = document.getElementById('authtab-signup');
-    const heading = document.getElementById('auth-tab-heading');
-
-    if (tab === 'login') {
-      loginForm.classList.remove('hidden');
-      signupForm.classList.add('hidden');
-      btnLogin.className = 'flex-1 py-2 rounded-lg bg-lime text-navy-950 transition-all font-black';
-      btnSignup.className = 'flex-1 py-2 rounded-lg text-slate-300 hover:text-white transition-all font-medium';
-      heading.innerText = 'Sign In to HMK Account';
-    } else {
-      signupForm.classList.remove('hidden');
-      loginForm.classList.add('hidden');
-      btnSignup.className = 'flex-1 py-2 rounded-lg bg-lime text-navy-950 transition-all font-black';
-      btnLogin.className = 'flex-1 py-2 rounded-lg text-slate-300 hover:text-white transition-all font-medium';
-      heading.innerText = 'Create HMK Account';
-    }
-  }
-
-  function handleLoginSubmit(e) {
-    e.preventDefault();
-    const email = document.getElementById('login-email').value;
-    AppState.currentUser = {
-      name: email.split('@')[0],
-      email: email,
-      role: 'customer',
-      isVerified: true
+  <script>
+    const TAX_RATES = {
+      ON: { rate: 0.13, label: 'HST (13%)', name: 'Ontario' },
+      BC: { rate: 0.12, label: 'GST + PST (12%)', name: 'British Columbia' },
+      AB: { rate: 0.05, label: 'GST (5%)', name: 'Alberta' },
+      QC: { rate: 0.14975, label: 'GST + QST (14.975%)', name: 'Quebec' }
     };
-    localStorage.setItem('hmk_auth_user', JSON.stringify(AppState.currentUser));
-    renderUserAuthWidget();
-    closeAuthModal();
-    showToast(`Welcome back, ${AppState.currentUser.name}!`);
-  }
 
-  function handleSignupSubmit(e) {
-    e.preventDefault();
-    const name = document.getElementById('signup-name').value;
-    const email = document.getElementById('signup-email').value;
-    const role = document.querySelector('input[name="signup-role"]:checked').value;
+    const I18N = {
+      en: {
+        hero_title: 'On-Demand Canadian Freight & <span>Precision Delivery</span>',
+        hero_sub: 'Complete Canadian freight and on-demand delivery suite with customer fare bidding, live shipment tracking, dedicated driver dispatch console, 4-digit PIN escrow release, Interac e-Transfer payouts, and CRA tax invoices.',
+        card_booking: 'Book Shipment & Place Fare Bid',
+        btn_confirm: 'Confirm & Lock Shipment'
+      },
+      ur: {
+        hero_title: 'Canada Bhar Mein Fast Freight aur <span>Smart Delivery</span>',
+        hero_sub: 'Customer booking, live tracking, driver console, 4-digit PIN escrow release, Interac payouts, fleet roster, aur CRA tax invoice — sab ek hi jagah.',
+        card_booking: 'Shipment Book Aur Fare Bid Karein',
+        btn_confirm: 'Shipment Confirm Karein'
+      }
+    };
 
-    AppState.pendingSignupData = { name, email, role };
-    closeAuthModal();
-    openOTPModal(email);
-  }
+    const STORAGE_KEY = 'hmk_trading_full_suite_v1';
 
-  function openOTPModal(email) {
-    document.getElementById('otp-modal').classList.remove('hidden');
-    document.getElementById('otp-target-email').innerText = email;
-    startOTPTimer();
-  }
-  function closeOTPModal() { document.getElementById('otp-modal').classList.add('hidden'); }
+    function initialState() {
+      return {
+        lang: 'en',
+        driverOnline: true,
+        driverName: '',
+        driverVehicle: 'Cargo Van (Ford Transit)',
+        driverPlate: '',
+        driverEarnings: 0,
+        customerWallet: 0,
+        activeOrderId: null,
+        currentUser: null,
+        pendingOtp: null,
+        users: [],
+        orders: [],
+        fleetRoster: [],
+        payouts: []
+      };
+    }
 
-  function setupOTPInputs() {
-    const digits = document.querySelectorAll('.otp-digit');
-    digits.forEach((digit, index) => {
-      digit.addEventListener('keyup', (e) => {
-        if (e.key >= '0' && e.key <= '9') {
-          if (index < digits.length - 1) digits[index + 1].focus();
-        } else if (e.key === 'Backspace') {
-          if (index > 0) digits[index - 1].focus();
-        }
+    let state = loadState();
+    let promoApplied = '';
+    let lastVehicle = 'Cargo Van (Ford Transit)';
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return initialState();
+        return { ...initialState(), ...JSON.parse(raw) };
+      } catch (e) {
+        return initialState();
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function showToast(msg) {
+      const wrap = document.getElementById('toastWrap');
+      const el = document.createElement('div');
+      el.className = 'toast';
+      el.textContent = msg;
+      wrap.appendChild(el);
+      setTimeout(() => el.remove(), 4000);
+    }
+
+    function toggleLanguage() {
+      state.lang = state.lang === 'en' ? 'ur' : 'en';
+      saveState();
+      applyLanguage();
+    }
+
+    function applyLanguage() {
+      const d = I18N[state.lang] || I18N.en;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const k = el.getAttribute('data-i18n');
+        if (d[k]) el.innerHTML = d[k];
       });
-    });
-  }
-
-  function startOTPTimer() {
-    AppState.otpTimerSeconds = 60;
-    document.getElementById('otp-timer-lbl').innerText = '60s';
-    document.getElementById('otp-resend-btn').classList.add('hidden');
-    
-    if (AppState.otpTimerInterval) clearInterval(AppState.otpTimerInterval);
-    AppState.otpTimerInterval = setInterval(() => {
-      AppState.otpTimerSeconds--;
-      document.getElementById('otp-timer-lbl').innerText = `${AppState.otpTimerSeconds}s`;
-      if (AppState.otpTimerSeconds <= 0) {
-        clearInterval(AppState.otpTimerInterval);
-        document.getElementById('otp-resend-btn').classList.remove('hidden');
-      }
-    }, 1000);
-  }
-
-  function resendOTPCode() {
-    startOTPTimer();
-    showToast('New 6-digit OTP sent to your email!');
-  }
-
-  function verifyOTPCode() {
-    const digits = Array.from(document.querySelectorAll('.otp-digit')).map(d => d.value).join('');
-    if (digits.length === 6) {
-      if (AppState.pendingSignupData) {
-        AppState.currentUser = { ...AppState.pendingSignupData, isVerified: true };
-        localStorage.setItem('hmk_auth_user', JSON.stringify(AppState.currentUser));
-        renderUserAuthWidget();
-        closeOTPModal();
-        showToast('✓ Email Verified! Account created successfully.');
-        switchAppRole(AppState.currentUser.role === 'admin' ? 'admin' : (AppState.currentUser.role === 'driver' ? 'driver' : 'customer'));
-      }
-    } else {
-      showToast('Please enter all 6 OTP digits.', 'error');
-    }
-  }
-
-  function openForgotPasswordModal() {
-    closeAuthModal();
-    document.getElementById('forgot-modal').classList.remove('hidden');
-  }
-  function closeForgotPasswordModal() { document.getElementById('forgot-modal').classList.add('hidden'); }
-
-  function handlePasswordReset(e) {
-    e.preventDefault();
-    closeForgotPasswordModal();
-    showToast('Password reset code sent to your email address!');
-  }
-
-  function handleLogout() {
-    AppState.currentUser = null;
-    localStorage.removeItem('hmk_auth_user');
-    renderUserAuthWidget();
-    showToast('Logged out successfully.');
-    switchAppRole('home');
-  }
-
-  // Language Toggle Engine
-  function toggleLanguage(lang) {
-    AppState.currentLang = lang;
-    localStorage.setItem('hmk_lang', lang);
-    const t = translations[lang];
-
-    document.getElementById('lang-btn-en').className = lang === 'en' ? 'text-lime font-extrabold px-1 rounded hover:bg-navy-750' : 'text-slate-400 font-medium px-1 rounded hover:bg-navy-750';
-    document.getElementById('lang-btn-ur').className = lang === 'ur' ? 'text-lime font-extrabold px-1 rounded hover:bg-navy-750' : 'text-slate-400 font-medium px-1 rounded hover:bg-navy-750';
-
-    document.getElementById('txt-status-active').innerText = t.statusActive;
-    document.getElementById('nav-lbl-process').innerHTML = `<svg class="w-3.5 h-3.5 text-slate-400"><use href="#i-box"/></svg> ${t.navProcess}`;
-    document.getElementById('nav-lbl-services').innerHTML = `<svg class="w-3.5 h-3.5 text-slate-400"><use href="#i-truck"/></svg> ${t.navServices}`;
-    document.getElementById('btn-head-book').innerHTML = `<span>${t.btnHeadBook}</span> <svg class="icon w-4 h-4"><use href="#i-arrow"/></svg>`;
-
-    document.getElementById('hero-badge-txt').innerText = t.heroBadge;
-    document.getElementById('hero-heading').innerHTML = t.heroHeading;
-    document.getElementById('hero-subtext').innerText = t.heroSubtext;
-    document.getElementById('lbl-quick-track').innerText = t.lblQuickTrack;
-    document.getElementById('btn-track-submit').innerHTML = `<span>${t.btnTrackSubmit}</span> <svg class="w-4 h-4"><use href="#i-arrow"/></svg>`;
-    document.getElementById('lbl-try-demo').innerText = t.lblTryDemo;
-    document.getElementById('btn-hero-launch').innerHTML = `<span>${t.btnHeroLaunch}</span> <svg class="icon w-5 h-5"><use href="#i-arrow"/></svg>`;
-
-    document.getElementById('step-eyebrow').innerText = t.stepEyebrow;
-    document.getElementById('step-title').innerHTML = t.stepTitle;
-    document.getElementById('step-desc').innerText = t.stepDesc;
-
-    document.getElementById('s1-title').innerHTML = `<svg class="w-5 h-5 text-lime"><use href="#i-map"/></svg> ${t.s1Title}`;
-    document.getElementById('s1-desc').innerText = t.s1Desc;
-    document.getElementById('s2-title').innerHTML = `<svg class="w-5 h-5 text-lime"><use href="#i-cash"/></svg> ${t.s2Title}`;
-    document.getElementById('s2-desc').innerText = t.s2Desc;
-    document.getElementById('s3-title').innerHTML = `<svg class="w-5 h-5 text-lime"><use href="#i-lock"/></svg> ${t.s3Title}`;
-    document.getElementById('s3-desc').innerText = t.s3Desc;
-    document.getElementById('s4-title').innerHTML = `<svg class="w-5 h-5 text-lime"><use href="#i-check"/></svg> ${t.s4Title}`;
-    document.getElementById('s4-desc').innerText = t.s4Desc;
-
-    showToast(`Language switched to ${lang === 'en' ? 'English' : 'Roman Urdu'}`);
-  }
-
-  // Switch Workspace Roles
-  function switchAppRole(newRole) {
-    AppState.role = newRole;
-    ['home', 'customer', 'tracking', 'driver', 'admin'].forEach(v => {
-      const el = document.getElementById(`role-view-${v}`);
-      if (el) el.classList.add('hidden');
-      const btn = document.getElementById(`nav-role-${v}`);
-      if (btn) {
-        btn.classList.remove('bg-lime', 'text-navy-950', 'font-black');
-        btn.classList.add('text-slate-300');
-      }
-    });
-
-    const activeEl = document.getElementById(`role-view-${newRole}`);
-    if (activeEl) activeEl.classList.remove('hidden');
-
-    const activeBtn = document.getElementById(`nav-role-${newRole}`);
-    if (activeBtn) {
-      activeBtn.classList.add('bg-lime', 'text-navy-950', 'font-black');
-      activeBtn.classList.remove('text-slate-300');
     }
 
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
+    function switchTab(tab) {
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+      document.querySelectorAll('.view-panel').forEach(p => p.classList.toggle('active', p.id === `view-${tab}`));
+      renderAll();
+    }
 
-  // Toast Engine
-  function showToast(message, type = 'success') {
-    const container = document.getElementById('toast-container');
-    const toast = document.createElement('div');
-    toast.className = `px-4 py-3 rounded-2xl border backdrop-blur-lg text-xs font-bold shadow-2xl flex items-center gap-2 transition-all transform translate-y-2 opacity-0 pointer-events-auto ${
-      type === 'success' ? 'bg-lime/10 border-lime/40 text-lime' : 'bg-red-500/10 border-red-500/40 text-red-300'
-    }`;
-    toast.innerHTML = `<span>${type === 'success' ? '✓' : '⚠️'}</span> <span>${message}</span>`;
-    container.appendChild(toast);
+    function setPostal(target, value, province) {
+      if (target === 'pickup') document.getElementById('pickupInput').value = value;
+      else document.getElementById('dropoffInput').value = value;
+      if (province) document.getElementById('provinceSelect').value = province;
+      recalculateQuote();
+    }
 
-    setTimeout(() => { toast.classList.remove('translate-y-2', 'opacity-0'); }, 10);
-    setTimeout(() => {
-      toast.classList.add('opacity-0');
-      setTimeout(() => toast.remove(), 300);
-    }, 3000);
-  }
+    function adjustBid(delta) {
+      const s = document.getElementById('bidSlider');
+      s.value = Math.min(Number(s.max), Math.max(Number(s.min), Number(s.value) + delta));
+      recalculateQuote();
+    }
 
-  // Dynamic Map Hub Nodes
-  function updateCityMapNodes() {
-    const selector = document.getElementById('city-selector');
-    AppState.selectedHub = selector.value;
-    const hub = HubNodes[AppState.selectedHub];
-
-    document.getElementById('tax-rate-label').innerText = hub.taxName;
-    document.getElementById('map-region-name').innerText = hub.name;
-    document.getElementById('map-gps-coords').innerText = hub.coords;
-
-    const pickupSel = document.getElementById('pickup-select');
-    const dropoffSel = document.getElementById('dropoff-select');
-
-    pickupSel.innerHTML = hub.pickups.map(p => `<option value="${p}">${p}</option>`).join('');
-    dropoffSel.innerHTML = hub.dropoffs.map(d => `<option value="${d}">${d}</option>`).join('');
-
-    AppState.pickupNode = hub.pickups[0];
-    AppState.dropoffNode = hub.dropoffs[0];
-
-    document.getElementById('svg-txt-pickup').textContent = AppState.pickupNode.toUpperCase();
-    document.getElementById('svg-txt-dropoff').textContent = AppState.dropoffNode.toUpperCase();
-
-    calculateFare();
-  }
-
-  function updateRouteFromInputs() {
-    AppState.pickupNode = document.getElementById('pickup-select').value;
-    AppState.dropoffNode = document.getElementById('dropoff-select').value;
-
-    document.getElementById('svg-txt-pickup').textContent = AppState.pickupNode.toUpperCase();
-    document.getElementById('svg-txt-dropoff').textContent = AppState.dropoffNode.toUpperCase();
-
-    calculateFare();
-  }
-
-  function selectVehicleTier(tier) {
-    AppState.selectedTier = tier;
-    ['suv', 'van', 'cube', 'truck'].forEach(t => {
-      const card = document.getElementById(`vtier-${t}`);
-      if (card) {
-        card.classList.remove('border-2', 'border-lime');
-        card.classList.add('border', 'border-navy-800');
+    function recalculateQuote() {
+      const vSel = document.getElementById('vehicleSelect');
+      const baseFare = Number(vSel.options[vSel.selectedIndex].dataset.base || 125);
+      if (vSel.value !== lastVehicle) {
+        lastVehicle = vSel.value;
+        document.getElementById('bidSlider').value = baseFare;
+        document.getElementById('suggestedFareText').textContent = `$${baseFare.toFixed(2)}`;
       }
-    });
-    const selected = document.getElementById(`vtier-${tier}`);
-    if (selected) {
-      selected.classList.add('border-2', 'border-lime');
-      selected.classList.remove('border-navy-800');
+
+      const bidAmount = Number(document.getElementById('bidSlider').value || baseFare);
+      document.getElementById('bidOfferLabel').textContent = `$${bidAmount.toFixed(2)} CAD`;
+
+      const prov = document.getElementById('provinceSelect').value;
+      const taxCfg = TAX_RATES[prov] || TAX_RATES.ON;
+
+      let discount = 0;
+      if (promoApplied === 'HMK20') discount = Number((bidAmount * 0.20).toFixed(2));
+      else if (promoApplied === 'CANADA15') discount = Number((bidAmount * 0.15).toFixed(2));
+
+      const taxable = Math.max(0, Number((bidAmount - discount).toFixed(2)));
+      const tax = Number((taxable * taxCfg.rate).toFixed(2));
+      const total = Number((taxable + tax).toFixed(2));
+
+      document.getElementById('taxBadge').textContent = taxCfg.label;
+      document.getElementById('heroTaxIndicator').textContent = `${taxCfg.name} • ${taxCfg.label}`;
+      document.getElementById('provMeta').textContent = `Hub: ${taxCfg.name}`;
+      document.getElementById('sumSubtotal').textContent = `$${bidAmount.toFixed(2)} CAD`;
+      document.getElementById('sumDiscount').textContent = `-$${discount.toFixed(2)} CAD`;
+      document.getElementById('sumTaxLabel').textContent = `Provincial Tax (${taxCfg.label})`;
+      document.getElementById('sumTax').textContent = `$${tax.toFixed(2)} CAD`;
+      document.getElementById('sumTotal').textContent = `$${total.toFixed(2)} CAD`;
+
+      const pLen = document.getElementById('pickupInput').value.trim().length;
+      const dLen = document.getElementById('dropoffInput').value.trim().length;
+      const km = pLen || dLen ? Number((8 + ((pLen + dLen) % 38) + 0.6).toFixed(1)) : 18.0;
+      const mins = Math.max(15, Math.round(km * 1.35));
+      document.getElementById('distMeta').textContent = `Distance: ${km} km`;
+      document.getElementById('etaMeta').textContent = `Est. Transit: ${mins} mins`;
+
+      return { bidAmount, discount, tax, total, taxCfg };
     }
 
-    calculateFare();
-  }
-
-  function calculateFare() {
-    const base = TierRates[AppState.selectedTier];
-    AppState.baseFareCAD = base;
-
-    let addonsCAD = 0;
-    if (document.getElementById('opt-helpers').checked) addonsCAD += 40;
-    if (document.getElementById('opt-insurance').checked) addonsCAD += 20;
-
-    let subtotal = base + addonsCAD;
-    let discount = subtotal * AppState.promo.discount;
-    let taxable = subtotal - discount;
-
-    const hub = HubNodes[AppState.selectedHub];
-    let tax = taxable * hub.taxRate;
-    let total = taxable + tax;
-
-    document.getElementById('breakdown-base').innerText = `$${base.toFixed(2)} CAD`;
-    document.getElementById('breakdown-addons').innerText = `$${addonsCAD.toFixed(2)} CAD`;
-    document.getElementById('breakdown-discount').innerText = `-$${discount.toFixed(2)} CAD`;
-    document.getElementById('breakdown-tax-name').innerText = hub.taxName;
-    document.getElementById('breakdown-tax').innerText = `$${tax.toFixed(2)} CAD`;
-    document.getElementById('breakdown-net').innerText = `$${total.toFixed(2)} CAD`;
-    document.getElementById('rec-price-display').innerText = `$${total.toFixed(2)} CAD`;
-
-    AppState.userOfferBid = Math.round(total);
-    document.getElementById('offer-amt-lbl').innerText = AppState.userOfferBid;
-    document.getElementById('fare-range-slider').value = AppState.userOfferBid;
-  }
-
-  function updateFareFromSlider(val) {
-    AppState.userOfferBid = parseInt(val);
-    document.getElementById('offer-amt-lbl').innerText = val;
-  }
-
-  function adjustFareBid(delta) {
-    AppState.userOfferBid = Math.max(30, AppState.userOfferBid + delta);
-    document.getElementById('offer-amt-lbl').innerText = AppState.userOfferBid;
-    document.getElementById('fare-range-slider').value = AppState.userOfferBid;
-  }
-
-  function applyPromoCode() {
-    const code = document.getElementById('promo-code-input').value.trim().toUpperCase();
-    if (code === 'HMK20' || code === 'CANADA15') {
-      AppState.promo = { code: code, discount: 0.20 };
-      document.getElementById('promo-applied-badge').classList.remove('hidden');
-      document.getElementById('promo-name-lbl').innerText = code;
-      calculateFare();
-      showToast(`Promo Code ${code} Applied (20% Off)!`);
-    } else {
-      showToast('Invalid promo code. Try HMK20', 'error');
+    function applyPromo() {
+      const code = document.getElementById('promoInput').value.trim().toUpperCase();
+      if (code === 'HMK20' || code === 'CANADA15') {
+        promoApplied = code;
+        recalculateQuote();
+        showToast(`Promo code ${code} applied.`);
+      } else {
+        promoApplied = '';
+        recalculateQuote();
+        showToast('Invalid promo code.');
+      }
     }
-  }
 
-  function removePromoCode() {
-    AppState.promo = { code: '', discount: 0 };
-    document.getElementById('promo-applied-badge').classList.add('hidden');
-    calculateFare();
-  }
-
-  function startDriverBiddingStream() {
-    const radar = document.getElementById('driver-bidding-radar');
-    const container = document.getElementById('driver-offers-container');
-    radar.classList.remove('hidden');
-    container.innerHTML = '<div class="text-xs text-lime font-mono animate-pulse">Broadcasting fare offer to nearby Canadian drivers...</div>';
-
-    setTimeout(() => {
-      const bidAmt = AppState.userOfferBid;
-      container.innerHTML = `
-        <div class="p-4 rounded-2xl bg-navy-950 border border-lime flex items-center justify-between">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-lime text-navy-950 font-black flex items-center justify-center text-sm">MT</div>
-            <div>
-              <strong class="text-sm font-bold text-white block">Marc Tremblay ⭐ 4.98</strong>
-              <span class="text-xs text-slate-400">Ford Transit · 6 mins away</span>
-            </div>
-          </div>
-          <div class="text-right space-y-1">
-            <strong class="text-lg font-mono font-black text-lime tabular-nums">$${bidAmt}.00 CAD</strong>
-            <button onclick="acceptDriverOffer('Marc Tremblay', ${bidAmt})" class="block px-4 py-1.5 bg-lime text-navy-950 font-black text-xs rounded-xl hover:bg-lime-hover shadow-lg shadow-lime/10">Accept & Lock</button>
+    function generateCounterBids() {
+      const offer = Number(document.getElementById('bidSlider').value || 125);
+      const vehicle = document.getElementById('vehicleSelect').value;
+      const wrap = document.getElementById('liveBidsList');
+      const suggested = [
+        { label: 'Value Fare Option', amount: Math.max(30, offer - 5), eta: '15 mins', vehicle },
+        { label: 'Standard Fare Option', amount: offer, eta: '12 mins', vehicle },
+        { label: 'Express Priority Option', amount: offer + 10, eta: '8 mins', vehicle }
+      ];
+      wrap.innerHTML = suggested.map(b => `
+        <div class="bid-item">
+          <div><strong>${b.label}</strong> <span style="font-size:12px;color:var(--muted);">(${b.vehicle} • ETA ${b.eta})</span></div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <strong class="tabular">$${b.amount.toFixed(2)} CAD</strong>
+            <button type="button" class="btn btn-sm btn-lime" onclick="selectOfferAmount(${b.amount})">Use Fare</button>
           </div>
         </div>
+      `).join('');
+    }
 
-        <div class="p-4 rounded-2xl bg-navy-950 border border-navy-800 flex items-center justify-between">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-sky text-navy-950 font-black flex items-center justify-center text-sm">DM</div>
-            <div>
-              <strong class="text-sm font-bold text-white block">Devon Miller ⭐ 4.92</strong>
-              <span class="text-xs text-slate-400">16ft Cube Truck · 11 mins away</span>
-            </div>
-          </div>
-          <div class="text-right space-y-1">
-            <strong class="text-lg font-mono font-black text-white tabular-nums">$${bidAmt + 15}.00 CAD</strong>
-            <button onclick="acceptDriverOffer('Devon Miller', ${bidAmt + 15})" class="block px-4 py-1.5 bg-navy-800 text-slate-200 font-bold text-xs rounded-xl border border-navy-750 hover:bg-navy-750">Accept & Lock</button>
-          </div>
-        </div>
-      `;
-    }, 1000);
-  }
+    function selectOfferAmount(amt) {
+      document.getElementById('bidSlider').value = amt;
+      recalculateQuote();
+      showToast(`Fare set to $${Number(amt).toFixed(2)} CAD.`);
+    }
 
-  function acceptDriverOffer(driverName, finalFare) {
-    showToast(`Driver ${driverName} Accepted! Order #HMK-88412 Locked in Escrow.`);
-    switchAppRole('tracking');
-  }
+    function openWalletModal() { document.getElementById('walletModal').classList.add('open'); }
+    function closeWalletModal() { document.getElementById('walletModal').classList.remove('open'); }
 
-  function selectCheckoutMethod(method) {
-    AppState.checkoutMethod = method;
-    ['interac', 'card', 'wallet', 'cod'].forEach(m => {
-      const btn = document.getElementById(`pmethod-${m}`);
-      if (btn) {
-        btn.classList.remove('border-2', 'border-lime', 'text-lime');
-        btn.classList.add('border-navy-800', 'text-slate-300');
+    function handleWalletTopup(e) {
+      e.preventDefault();
+      const amt = Number(document.getElementById('walletAmountInput').value);
+      const method = document.getElementById('walletMethodSelect').value;
+      if (!Number.isFinite(amt) || amt <= 0) {
+        showToast('Enter a valid CAD amount.');
+        return;
       }
-    });
-    const sel = document.getElementById(`pmethod-${method}`);
-    if (sel) {
-      sel.classList.add('border-2', 'border-lime', 'text-lime');
-      sel.classList.remove('border-navy-800', 'text-slate-300');
+      state.customerWallet = Number((Number(state.customerWallet || 0) + amt).toFixed(2));
+      if (state.currentUser) {
+        state.currentUser.wallet = state.customerWallet;
+        const found = state.users.find(u => u.email === state.currentUser.email);
+        if (found) found.wallet = state.customerWallet;
+      }
+      document.getElementById('walletAmountInput').value = '';
+      closeWalletModal();
+      saveState();
+      renderAll();
+      showToast(`Added $${amt.toFixed(2)} CAD via ${method}.`);
     }
-  }
 
-  function simulateVehicleMovement() {
-    const marker = document.getElementById('map-vehicle-node');
-    marker.style.transform = 'translate(380px, 120px)';
-    setTimeout(() => {
-      marker.style.transform = 'translate(380px, 280px)';
-      setTimeout(() => {
-        marker.style.transform = 'translate(650px, 420px)';
-      }, 1000);
-    }, 1000);
-  }
+    function submitOrder(e) {
+      e.preventDefault();
+      const q = recalculateQuote();
+      const paymentMethod = document.getElementById('paymentSelect').value;
 
-  function handlePublicTrackSubmit() {
-    const code = document.getElementById('public-track-input').value.trim();
-    if (code) {
-      document.getElementById('trip-header-code').innerHTML = `${code} <span class="text-xs px-3 py-1 rounded-full bg-sky-500/20 text-sky-300 border border-sky-500/30 font-mono font-bold">IN TRANSIT</span>`;
-      switchAppRole('tracking');
-    }
-  }
-
-  function quickFillTrack(code) {
-    document.getElementById('public-track-input').value = code;
-    handlePublicTrackSubmit();
-  }
-
-  function toggleDriverDuty() {
-    AppState.isDriverOnline = !AppState.isDriverOnline;
-    const btn = document.getElementById('driver-duty-btn');
-    if (AppState.isDriverOnline) {
-      btn.innerText = 'ONLINE';
-      btn.className = 'px-3 py-1 rounded-lg bg-lime text-navy-950 font-black text-xs';
-      showToast('You are now ONLINE for dispatch requests.');
-    } else {
-      btn.innerText = 'OFFLINE';
-      btn.className = 'px-3 py-1 rounded-lg bg-red-500 text-white font-black text-xs';
-      showToast('You are now OFFLINE.', 'error');
-    }
-  }
-
-  function verifyDriverPIN() {
-    const pin = document.getElementById('driver-pin-input').value.trim();
-    if (pin === AppState.activeTripPIN) {
-      AppState.driverEarnings += 96.05;
-      document.getElementById('driver-earnings-val').innerText = `$${AppState.driverEarnings.toFixed(2)} CAD`;
-      showToast('✓ PIN Verified! $96.05 CAD released from Escrow.');
-    } else {
-      showToast('Invalid 4-digit PIN code.', 'error');
-    }
-  }
-
-  function requestInteracPayout() {
-    showToast(`Interac Payout of $${AppState.driverEarnings.toFixed(2)} CAD transferred!`);
-    AppState.driverEarnings = 0;
-    document.getElementById('driver-earnings-val').innerText = '$0.00 CAD';
-  }
-
-  function openWalletModal() { document.getElementById('wallet-modal').classList.remove('hidden'); }
-  function closeWalletModal() { document.getElementById('wallet-modal').classList.add('hidden'); }
-  function setQuickTopUp(amt) { document.getElementById('wallet-add-amount').value = amt; }
-
-  function processWalletTopUp() {
-    const amt = parseFloat(document.getElementById('wallet-add-amount').value) || 0;
-    AppState.walletBalance += amt;
-    localStorage.setItem('hmk_wallet_bal', AppState.walletBalance.toString());
-    document.getElementById('header-wallet-balance').innerText = `$${AppState.walletBalance.toFixed(2)} CAD`;
-    document.getElementById('dock-wallet-lbl').innerText = `$${AppState.walletBalance.toFixed(2)}`;
-    closeWalletModal();
-    showToast(`Deposited $${amt.toFixed(2)} CAD via Interac!`);
-  }
-
-  function openChatDrawer() {
-    document.getElementById('chat-drawer').classList.remove('hidden');
-    document.getElementById('chat-unread-badge').classList.add('hidden');
-  }
-  function closeChatDrawer() { document.getElementById('chat-drawer').classList.add('hidden'); }
-
-  function renderChatMessages() {
-    const container = document.getElementById('chat-messages-container');
-    container.innerHTML = AppState.chatMessages.map(m => `
-      <div class="${m.sender === 'customer' ? 'text-right' : 'text-left'}">
-        <div class="inline-block px-3.5 py-2 rounded-2xl max-w-[80%] ${m.sender === 'customer' ? 'bg-lime text-navy-950 font-semibold' : 'bg-navy-950 border border-navy-800 text-slate-200'}">
-          ${m.text}
-        </div>
-      </div>
-    `).join('');
-  }
-
-  function sendChatMessage() {
-    const input = document.getElementById('chat-input');
-    const txt = input.value.trim();
-    if (txt) {
-      AppState.chatMessages.push({ sender: 'customer', text: txt });
-      input.value = '';
-      renderChatMessages();
-      
-      setTimeout(() => {
-        AppState.chatMessages.push({ sender: 'driver', text: 'On my way! Driving safely on highway corridor.' });
-        renderChatMessages();
-      }, 1000);
-    }
-  }
-
-  function openInvoiceModalFromTrip() { document.getElementById('printable-invoice-modal').classList.remove('hidden'); }
-  function closeInvoiceModal() { document.getElementById('printable-invoice-modal').classList.add('hidden'); }
-
-  function renderAdminOrders() {
-    const tbody = document.getElementById('admin-orders-tbody');
-    tbody.innerHTML = AppState.orders.map(o => `
-      <tr class="hover:bg-navy-800/50">
-        <td class="p-3.5 font-bold text-lime">${o.id}</td>
-        <td class="p-3.5">${o.hub}</td>
-        <td class="p-3.5">${o.tier}</td>
-        <td class="p-3.5">${o.driver}</td>
-        <td class="p-3.5 font-bold tabular-nums">${o.fare}</td>
-        <td class="p-3.5"><span class="px-2 py-0.5 rounded-full text-[10px] bg-lime/10 text-lime border border-lime/30 font-bold">${o.status}</span></td>
-        <td class="p-3.5 text-right"><button onclick="openInvoiceModalFromTrip()" class="text-lime hover:underline font-bold">Receipt 📄</button></td>
-      </tr>
-    `).join('');
-  }
-
-  function exportOrdersCSV() {
-    let csv = "Order ID,Hub,Tier,Driver,Fare,Status\n";
-    AppState.orders.forEach(o => { csv += `${o.id},${o.hub},${o.tier},${o.driver},${o.fare},${o.status}\n`; });
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `HMK_Logistics_Report_${new Date().toISOString().slice(0,10)}.csv`;
-    a.click();
-    showToast('Downloaded CSV Audit Report');
-  }
-
-  function toggleMobileNav() { document.getElementById('mobile-nav').classList.toggle('hidden'); }
-  function launchServiceBooking(type) { switchAppRole('customer'); }
-  function shareTripLink() {
-    navigator.clipboard.writeText(window.location.href);
-    showToast('Live tracking link copied to clipboard!');
-  }
-</script>
-
-</body>
-</html>
+      if (paymentMethod === 'HMK CAD Wallet') {
+        if (Number(state.customerWallet || 0) < q.total) {
+          showToast(`Insufficient Wallet balance ($${Number(state.customerWallet || 0).toFixed(2)} CAD). Top up first.`);
+          openWalletModal();
+          return;
+        }
+        state.customer
