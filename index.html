@@ -76,7 +76,7 @@ html.lt header{background:rgba(255,255,255,.95)}html.lt .btn,html.lt nav button.
 <details><summary>Problem with a delivery?</summary><p>After delivery, open the order in My Orders, describe the problem and press Report Issue.</p></details>
 </section>
 
-<!-- CUSTOMER BOOKING, ADDRESS BOOK & ORDERS -->
+<!-- CUSTOMER PORTAL (BOOK & BID / MY ORDERS / SAVED ADDRESSES) -->
 <section id="v-book" class="h">
 <div class="card col">
   <div class="subnav">
@@ -127,7 +127,7 @@ html.lt header{background:rgba(255,255,255,.95)}html.lt .btn,html.lt nav button.
 </div>
 </section>
 
-<!-- DRIVER ONLY PORTAL (WITH SUB-TABS) -->
+<!-- DRIVER ONLY PORTAL -->
 <section id="v-driver" class="h">
 <div class="card col">
   <div class="subnav">
@@ -139,7 +139,7 @@ html.lt header{background:rgba(255,255,255,.95)}html.lt .btn,html.lt nav button.
 </div>
 </section>
 
-<!-- ADMIN / FLEET HQ ONLY PORTAL (WITH SUB-TABS) -->
+<!-- ADMIN / FLEET HQ ONLY PORTAL -->
 <section id="v-admin" class="h">
 <div class="card col">
   <div class="subnav">
@@ -155,15 +155,15 @@ html.lt header{background:rgba(255,255,255,.95)}html.lt .btn,html.lt nav button.
 </main>
 <footer class="w mut" style="text-align:center;font-size:12px;padding:0 0 28px">© HMK Trading Inc. — Canadian Freight & On-Demand Logistics<br>Demo build: role-isolated workspace stored in this browser.</footer>
 
-<!-- AUTH MODAL (SIGN IN FOR ALL ROLES + CUSTOMER OTP SIGNUP) -->
+<!-- AUTH MODAL (SIGN IN + REGISTER + OTP) -->
 <div id="am" class="mod h" role="dialog" aria-modal="true"><div><div class="row"><h3>HMK account</h3><button type="button" class="btn d s" onclick="mc('am')">✕</button></div>
-<div class="g" style="margin:12px 0"><button type="button" class="btn" id="ti" onclick="authMode('in')">Sign In</button><button type="button" class="btn d" id="tu" onclick="authMode('up')">Customer Register</button></div>
+<div class="g" style="margin:12px 0"><button type="button" class="btn" id="ti" onclick="authMode('in')">Sign In</button><button type="button" class="btn d" id="tu" onclick="authMode('up')">Register + OTP</button></div>
 <form id="lf" onsubmit="login(event)" class="col">
   <div><label>Email</label><input id="le" type="email" required placeholder="Enter your email"></div>
   <div><label>Password</label><input id="lp" type="password" required placeholder="Enter password"></div>
   <button type="submit" class="btn" style="padding:12px">Sign In</button>
   <div class="deep m" style="font-size:11px">
-    <div class="lime" style="font-weight:800;margin-bottom:4px">COMPANY CREDENTIALS (ADMIN & DRIVER)</div>
+    <div class="lime" style="font-weight:800;margin-bottom:4px">COMPANY-ISSUED ACCOUNTS (ADMIN & DRIVER)</div>
     <div>Admin HQ: <b>hq@hmktrading.ca</b> / <b>AdminHMK#2026</b></div>
     <div>Driver 1: <b>marc@hmktrading.ca</b> / <b>DriverHMK#2026</b></div>
     <div>Driver 2: <b>devon@hmktrading.ca</b> / <b>DriverHMK#2026</b></div>
@@ -174,7 +174,7 @@ html.lt header{background:rgba(255,255,255,.95)}html.lt .btn,html.lt nav button.
   </div>
 </form>
 <form id="sf" class="col h" onsubmit="signup(event)">
-  <div class="deep sky" style="font-size:12px">Customer registration only. Driver & Fleet HQ logins are issued directly by HMK Trading Inc.</div>
+  <div class="deep sky" style="font-size:12px">Customer registration with 6-digit OTP. Driver & Fleet HQ credentials are issued by HMK Trading Inc.</div>
   <div class="g"><div><label>Full name</label><input id="sn" required></div><div><label>Phone</label><input id="sp" type="tel" required></div></div>
   <div><label>Email</label><input id="se" type="email" required></div>
   <div><label>Password (min 6)</label><input id="sw" type="password" minlength="6" required></div>
@@ -198,7 +198,7 @@ van:['Metro Vancouver (BC)',.12,'GST+PST 12%',['Vancouver Downtown','Richmond Te
 calgary:['Calgary (AB)',.05,'GST 5%',['Calgary Downtown','NE Industrial Park'],['Airdrie Hub','Cochrane Gateway','SW Residential']],
 montreal:['Greater Montreal (QC)',.14975,'GST+QST 14.975%',['Montreal Downtown','Vieux-Montréal','Laval Centre'],['Longueuil Hub','Mont-Royal','West Island']]};
 const TIERS={suv:['Courier SUV',45],van:['Cargo Van',85],cube:['16ft Cube Truck',160],truck:['26ft Heavy Truck',290]},PROMOS={HMK20:.2,CANADA15:.15};
-const STAGES=['Confirmed','Driver Assigned','In Transit','Delivered'],NEXT={Confirmed:'Driver Assigned','Driver Assigned':'In Transit','In Transit':'Delivered'},KEY='hmk_v8_adv';
+const STAGES=['Confirmed','Driver Assigned','In Transit','Delivered'],NEXT={Confirmed:'Driver Assigned','Driver Assigned':'In Transit','In Transit':'Delivered'},KEY='hmk_v9_full';
 
 const SEED_STAFF=[
   {name:'HMK Fleet Admin',phone:'+1 (416) 555-0100',email:'hq@hmktrading.ca',role:'admin',wallet:0,earn:0,pass:'AdminHMK#2026',companyIssued:true,notes:[],unread:0},
@@ -458,7 +458,7 @@ function addAddr(){
 function useAddr(addr,target){
   tab('book');csub('book');
   if(target==='pk')$('pa').value=addr;else $('da').value=addr;
-  toast('Applied to '+ (target==='pk'?'pickup':'drop-off') +' address.');
+  toast('Applied to '+(target==='pk'?'pickup':'drop-off')+' address.');
 }
 
 function delAddr(idx){
