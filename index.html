@@ -1,969 +1,243 @@
 <!doctype html>
-<html lang="en" class="dark">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>HMK Trading Inc. — Canadian Delivery & Logistics</title>
+<meta name="description" content="On-demand Canadian delivery, freight and moving. Name your fare, pick a driver bid, release payment with a 4-digit PIN."><meta name="theme-color" content="#081624">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23081624'/%3E%3Ctext x='16' y='23' font-size='20' text-anchor='middle' fill='%239be136' font-family='Arial' font-weight='900'%3EH%3C/text%3E%3C/svg%3E">
 <style>
-  :root {
-    --bg: #081624;
-    --bg-deep: #040b12;
-    --card: #0e2034;
-    --card-2: #152b44;
-    --border: rgba(255,255,255,0.1);
-    --text: #f8fafc;
-    --muted: #94a3b8;
-    --lime: #9be136;
-    --lime-hover: #b2f04d;
-    --lime-ink: #040b12;
-    --sky: #38bdf8;
-    --danger: #ef4444;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-    line-height: 1.5;
-    min-height: 100vh;
-  }
-  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-variant-numeric: tabular-nums; }
-  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 16px; }
-  .hidden { display: none !important; }
-
-  /* Topbar */
-  .topbar {
-    background: var(--bg-deep);
-    border-bottom: 1px solid var(--border);
-    padding: 8px 0;
-    font-size: 12px;
-  }
-  .topbar-inner {
-    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px;
-  }
-  .status-pill {
-    display: inline-flex; align-items: center; gap: 8px;
-    color: var(--lime); font-weight: 700; font-size: 11px;
-  }
-  .dot {
-    width: 8px; height: 8px; border-radius: 50%; background: var(--lime);
-    box-shadow: 0 0 10px var(--lime);
-  }
-  .top-right { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
-  .chip {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: var(--card); border: 1px solid var(--border);
-    padding: 4px 10px; border-radius: 10px; font-size: 11px; color: var(--text);
-  }
-
-  /* Header */
-  header {
-    position: sticky; top: 0; z-index: 30;
-    background: rgba(8, 22, 36, 0.94);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-    padding: 12px 0;
-  }
-  .header-inner {
-    display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
-  }
-  .brand {
-    display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text);
-    font-weight: 900; font-size: 19px; cursor: pointer;
-  }
-  .brand-box {
-    width: 40px; height: 40px; border-radius: 12px;
-    background: var(--card-2); border: 1px solid rgba(155,225,54,0.4);
-    color: var(--lime); display: grid; place-items: center; font-size: 20px; font-weight: 900;
-  }
-  .brand span.lime { color: var(--lime); }
-
-  nav.tabs {
-    display: flex; flex-wrap: wrap; gap: 4px;
-    background: var(--bg-deep); border: 1px solid var(--border);
-    padding: 5px; border-radius: 14px;
-  }
-  .tab-btn {
-    background: transparent; border: none; color: #cbd5e1;
-    padding: 7px 12px; border-radius: 10px; font-size: 12px; font-weight: 700;
-    cursor: pointer; transition: 0.15s ease;
-  }
-  .tab-btn:hover { color: #fff; background: rgba(255,255,255,0.05); }
-  .tab-btn.active { background: var(--lime); color: var(--lime-ink); font-weight: 900; }
-
-  .btn-lime {
-    background: var(--lime); color: var(--lime-ink); border: none;
-    padding: 10px 16px; border-radius: 12px; font-weight: 900; font-size: 12px;
-    cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-  }
-  .btn-lime:hover { background: var(--lime-hover); }
-  .btn-dark {
-    background: var(--bg-deep); color: var(--text); border: 1px solid var(--border);
-    padding: 9px 14px; border-radius: 12px; font-weight: 700; font-size: 12px;
-    cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-  }
-  .btn-dark:hover { border-color: var(--lime); color: var(--lime); }
-
-  /* Layout Grids */
-  main { padding: 24px 0 64px; }
-  .grid-2 { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 20px; align-items: start; }
-  .grid-booking { display: grid; grid-template-columns: 5fr 7fr; gap: 20px; align-items: start; }
-  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-  .grid-2-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  @media (max-width: 920px) {
-    .grid-2, .grid-booking, .grid-4, .grid-3 { grid-template-columns: 1fr; }
-  }
-
-  .card {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 20px; padding: 20px; box-shadow: 0 12px 30px rgba(0,0,0,0.28);
-  }
-  .box-deep {
-    background: var(--bg-deep); border: 1px solid var(--border);
-    border-radius: 14px; padding: 14px;
-  }
-  h1 { font-size: clamp(32px, 5vw, 50px); line-height: 1.08; font-weight: 900; }
-  h2 { font-size: 22px; font-weight: 900; }
-  h3 { font-size: 16px; font-weight: 800; }
-  p.muted { color: var(--muted); font-size: 14px; }
-
-  label { display: block; font-size: 12px; font-weight: 700; color: #cbd5e1; margin-bottom: 6px; }
-  input, select {
-    width: 100%; background: var(--bg-deep); color: #fff;
-    border: 1px solid var(--border); border-radius: 11px;
-    padding: 10px 12px; font-size: 13px; outline: none;
-  }
-  input:focus, select:focus { border-color: var(--lime); }
-
-  .tier-btn {
-    width: 100%; text-align: left; background: var(--bg-deep); color: #fff;
-    border: 1px solid var(--border); border-radius: 14px; padding: 12px; cursor: pointer;
-  }
-  .tier-btn.selected { border: 2px solid var(--lime); }
-
-  .map-box {
-    background: var(--bg-deep); border: 1px solid var(--border);
-    border-radius: 16px; overflow: hidden; margin-top: 12px;
-  }
-
-  table { width: 100%; border-collapse: collapse; font-size: 12px; }
-  th, td { padding: 10px 12px; border-bottom: 1px solid var(--border); text-align: left; }
-  th { color: var(--muted); font-size: 11px; text-transform: uppercase; background: var(--bg-deep); }
-
-  /* Modals */
-  .modal-backdrop {
-    position: fixed; inset: 0; z-index: 60;
-    background: rgba(4, 11, 18, 0.84); backdrop-filter: blur(6px);
-    display: flex; align-items: center; justify-content: center; padding: 16px;
-  }
-  .modal-card {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 22px; padding: 22px; width: 100%; max-width: 460px;
-    max-height: 92vh; overflow-y: auto;
-  }
-  .otp-row { display: flex; justify-content: center; gap: 8px; margin: 14px 0; }
-  .otp-box {
-    width: 44px; height: 50px; text-align: center; font-size: 20px; font-weight: 900;
-    color: var(--lime); background: var(--bg-deep); border: 1px solid var(--border); border-radius: 10px;
-  }
-
-  /* Toast */
-  #toast {
-    position: fixed; top: 76px; right: 16px; z-index: 80;
-    display: flex; flex-direction: column; gap: 8px;
-  }
-  .toast-item {
-    background: var(--bg-deep); border: 1px solid var(--lime); color: var(--lime);
-    padding: 10px 14px; border-radius: 12px; font-size: 12px; font-weight: 800;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.45);
-  }
-  .toast-item.err { border-color: var(--danger); color: #fca5a5; }
-</style>
-</head>
-<body>
-
-<!-- TOP BAR -->
-<div class="topbar">
-  <div class="wrap topbar-inner">
-    <div style="display:flex; flex-wrap:wrap; align-items:center; gap:10px;">
-      <span class="status-pill"><span class="dot"></span> CANADIAN DISPATCH ACTIVE</span>
-      <span class="mono" style="color:var(--muted); font-size:11px;">CRA BN: 84920 1948 RT0001</span>
-    </div>
-    <div class="top-right">
-      <span class="chip mono">Wallet: <strong id="top-wallet" style="color:var(--lime);">$450.00 CAD</strong>
-        <button class="btn-dark" style="padding:2px 8px; font-size:10px;" onclick="openModal('wallet-modal')">+ Top Up</button>
-      </span>
-      <span id="auth-header-box" class="chip">
-        <button class="btn-lime" style="padding:4px 10px; font-size:11px;" onclick="openAuth('login')">Sign In</button>
-        <button class="btn-dark" style="padding:4px 10px; font-size:11px;" onclick="openAuth('signup')">Register + OTP</button>
-      </span>
-    </div>
-  </div>
-</div>
-
-<!-- HEADER & TABS -->
-<header>
-  <div class="wrap header-inner">
-    <div class="brand" onclick="switchTab('home')">
-      <div class="brand-box">H</div>
-      <div>
-        <div>HMK<span class="lime">TRADING</span><span class="mono" style="font-size:12px; color:var(--lime);">.CA</span></div>
-        <div class="mono" style="font-size:9px; color:var(--muted); letter-spacing:1.2px;">DELIVERY & LOGISTICS</div>
-      </div>
-    </div>
-
-    <nav class="tabs" role="tablist">
-      <button class="tab-btn active" id="tab-home" onclick="switchTab('home')">Overview</button>
-      <button class="tab-btn" id="tab-customer" onclick="switchTab('customer')">Book & Bid</button>
-      <button class="tab-btn" id="tab-tracking" onclick="switchTab('tracking')">Live Radar</button>
-      <button class="tab-btn" id="tab-driver" onclick="switchTab('driver')">Driver Portal</button>
-      <button class="tab-btn" id="tab-admin" onclick="switchTab('admin')">Fleet HQ</button>
-    </nav>
-
-    <button class="btn-lime" onclick="switchTab('customer')">Book Delivery →</button>
-  </div>
-</header>
-
+:root{--bg:#081624;--deep:#040b12;--card:#0e2034;--c2:#152b44;--bd:rgba(255,255,255,.1);--tx:#f8fafc;--mu:#94a3b8;--lime:#9be136;--sky:#38bdf8;--red:#ef4444}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font:14px/1.5 Inter,system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+.w{max-width:1200px;margin:0 auto;padding:0 16px}.h{display:none!important}.m{font-family:ui-monospace,Menlo,Consolas,monospace}
+.mut{color:var(--mu)}.lime{color:var(--lime)}.sky{color:var(--sky)}
+.row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}
+.r{display:flex;justify-content:space-between;gap:8px;margin:6px 0}
+.bar{background:var(--deep);border-bottom:1px solid var(--bd);padding:8px 0;font-size:12px}
+header{position:sticky;top:0;z-index:30;background:rgba(8,22,36,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--bd);padding:12px 0}
+.brand{font-weight:900;font-size:19px;cursor:pointer}.brand b{color:var(--lime)}
+nav{display:flex;gap:4px;background:var(--deep);border:1px solid var(--bd);padding:5px;border-radius:14px;overflow-x:auto;max-width:100%}
+nav button{background:0;border:0;color:#cbd5e1;padding:7px 12px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap}
+nav button.on{background:var(--lime);color:#040b12;font-weight:900}
+.btn{background:var(--lime);color:#040b12;border:0;padding:10px 16px;border-radius:12px;font-weight:900;font-size:12px;cursor:pointer}
+.btn:hover{filter:brightness(1.1)}.btn:active{transform:scale(.97)}
+.btn.d{background:var(--deep);color:var(--tx);border:1px solid var(--bd)}.btn.x{background:0;color:#fca5a5;border:1px solid var(--red)}
+.btn.s{padding:5px 10px;font-size:11px}.btn:disabled{opacity:.45;cursor:not-allowed}
+main{padding:24px 0 40px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:20px;padding:20px;box-shadow:0 12px 30px rgba(0,0,0,.28)}
+.deep{background:var(--deep);border:1px solid var(--bd);border-radius:14px;padding:14px}
+.g2{display:grid;grid-template-columns:1.1fr .9fr;gap:20px;align-items:start}.g{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.col{display:flex;flex-direction:column;gap:14px}
+@media(max-width:900px){.g2,.g3,.g4{grid-template-columns:1fr}}@media(max-width:560px){.g{grid-template-columns:1fr}}
+h1{font-size:clamp(30px,5vw,48px);line-height:1.1;font-weight:900}h2{font-size:21px;font-weight:900}h3{font-size:15px;font-weight:800}
+label{display:block;font-size:12px;font-weight:700;color:#cbd5e1;margin-bottom:5px}
+input,select,textarea{width:100%;background:var(--deep);color:var(--tx);border:1px solid var(--bd);border-radius:11px;padding:10px 12px;font:inherit;font-size:13px}
+input[type=checkbox]{width:auto}textarea{min-height:60px}
+:focus-visible{outline:2px solid var(--lime);outline-offset:2px}
+.chip{display:inline-block;background:var(--card);border:1px solid var(--bd);padding:4px 10px;border-radius:10px;font-size:11px;cursor:pointer;margin:0 4px 4px 0}
+.chip.on{border-color:var(--lime);color:var(--lime)}
+.tb{text-align:left;color:var(--tx);cursor:pointer;width:100%}.tb.sel{border:2px solid var(--lime)}
+.bp{height:8px;background:var(--c2);border-radius:9px;overflow:hidden}.bp i{display:block;height:100%;background:var(--lime);transition:width .6s}
+table{width:100%;border-collapse:collapse;font-size:12px}th,td{padding:10px;border-bottom:1px solid var(--bd);text-align:left}th{color:var(--mu);font-size:11px;background:var(--deep)}
+.mod{position:fixed;inset:0;z-index:60;background:rgba(4,11,18,.85);display:flex;align-items:center;justify-content:center;padding:16px}
+.mod>div{background:var(--card);border:1px solid var(--bd);border-radius:22px;padding:22px;width:100%;max-width:460px;max-height:92vh;overflow:auto}
+#toast{position:fixed;top:76px;right:16px;z-index:80;display:flex;flex-direction:column;gap:8px}
+.t{background:var(--deep);border:1px solid var(--lime);color:var(--lime);padding:10px 14px;border-radius:12px;font-size:12px;font-weight:800}.t.e{border-color:var(--red);color:#fca5a5}
+.st{display:inline-block;padding:2px 9px;border-radius:99px;font-size:11px;font-weight:800;border:1px solid var(--lime);color:var(--lime)}
+.st.Cancelled{border-color:var(--mu);color:var(--mu)}.st.Disputed{border-color:var(--red);color:#fca5a5}.st.Transit{border-color:var(--sky);color:var(--sky)}
+details{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px 16px;margin-bottom:8px}summary{cursor:pointer;font-weight:700}details p{margin-top:8px;color:var(--mu);font-size:13px}
+html.lt{--bg:#eef2f7;--deep:#fff;--card:#fff;--c2:#e2e8f0;--bd:rgba(15,23,42,.15);--tx:#0f172a;--mu:#475569;--lime:#3f6212;--sky:#0369a1}
+html.lt header{background:rgba(255,255,255,.95)}html.lt .btn,html.lt nav button.on{color:#fff}html.lt .btn.d,html.lt .btn.x{color:var(--tx)}html.lt .card{box-shadow:0 6px 20px rgba(15,23,42,.08)}
+#inv{background:#fff;color:#0f172a}
+@media print{body *{visibility:hidden}#inv,#inv *{visibility:visible}#inv{position:fixed;inset:0;max-width:none;border-radius:0}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body>
+<div class="bar"><div class="w row"><span class="lime m" style="font-weight:800">● CANADIAN DISPATCH ACTIVE · CRA BN 84920 1948 RT0001</span>
+<span class="row" style="gap:8px"><span class="chip m" style="cursor:default">Wallet: <b id="wal" class="lime"></b> <button class="btn d s" onclick="mo('wm')">+ Top Up</button></span><button class="btn d s h" id="bell" onclick="bell()" aria-label="Notifications">🔔<b id="bn" class="lime"></b></button> <button class="btn d s" onclick="theme()" aria-label="Toggle light or dark theme">◐</button> <span id="auth"></span></span></div></div>
+<header><div class="w row"><div class="brand" onclick="tab('home')">HMK<b>TRADING</b><span class="m lime" style="font-size:12px">.CA</span></div>
+<nav id="nav"></nav><button class="btn" onclick="tab('book')">Book Delivery →</button></div></header>
 <div id="toast"></div>
+<main class="w">
+<section id="v-home"><div class="g2"><div class="card col">
+<h1>Big deliveries.<br><span class="lime">Small worries.</span></h1>
+<p class="mut">Appliances, furniture, moving and express courier across GTA, Ottawa, Vancouver, Calgary and Montreal. Name your fare, choose a driver bid, and release payment with a 4-digit PIN.</p>
+<div class="deep"><label>Track an order</label><div class="row" style="flex-wrap:nowrap"><input id="qt" placeholder="Order ID e.g. HMK-12345"><button class="btn" onclick="trackBy()">Track →</button></div></div>
+<div class="g3"><div class="deep"><b>Insured</b><div class="m mut" style="font-size:11px">Optional $50k cover</div></div><div class="deep"><b class="lime">4-digit PIN</b><div class="m mut" style="font-size:11px">Escrow release</div></div><div class="deep"><b>Tax receipt</b><div class="m mut" style="font-size:11px">GST / HST ready</div></div></div></div>
+<div class="card col"><div class="m lime" style="font-size:11px;font-weight:800">FLEET TIERS & BASE RATES</div><div id="rates" class="col"></div><button class="btn" onclick="tab('book')">Launch booking & bidding →</button></div></div>
+<h2 style="margin:26px 0 12px">Common questions</h2>
+<details><summary>What is the 4-digit PIN?</summary><p>You get it when you book. Give it to the driver only when your cargo arrives; the driver enters it to complete the delivery.</p></details>
+<details><summary>Can I cancel?</summary><p>Yes, until the cargo is in transit. Open My Orders and press Cancel Order. Wallet payments are returned to your wallet.</p></details>
+<details><summary>How is tax calculated?</summary><p>By the hub you pick: HST 13% (Ontario), 12% (British Columbia), GST 5% (Alberta), 14.975% (Quebec).</p></details>
+<details><summary>Can I schedule a pickup?</summary><p>Yes. In the booking form choose "Schedule for later" and pick a date and time.</p></details>
+<details><summary>Problem with a delivery?</summary><p>After delivery, open the order in My Orders, describe the problem and press Report Issue.</p></details>
+</section>
 
-<main class="wrap">
+<section id="v-book" class="h"><div class="g2"><div class="card col">
+<div><div class="m lime" style="font-size:11px;font-weight:800">FARE BIDDING ENGINE</div><h2>Book or offer your fare</h2></div>
+<div><label>Metro hub & tax</label><select id="hub" onchange="hubChange()"></select></div>
+<div class="g"><div><label>Pickup hub</label><select id="pk" onchange="calc()"></select></div><div><label>Drop-off hub</label><select id="dp" onchange="calc()"></select></div>
+<div><label>Pickup street address</label><input id="pa" placeholder="e.g. 120 King St W"></div><div><label>Drop-off street address</label><input id="da" placeholder="e.g. 45 Main St"></div></div>
+<div><label>Fleet tier</label><div class="g" id="tiers"></div></div>
+<div class="g"><label class="deep" style="margin:0;cursor:pointer"><input type="checkbox" id="hp" onchange="calc(1)"> Extra helper (+$40)</label><label class="deep" style="margin:0;cursor:pointer"><input type="checkbox" id="ins" onchange="calc(1)"> $50k cover (+$20)</label></div>
+<div class="g"><div><label>When?</label><select id="wh" onchange="$('wt').parentNode.classList.toggle('h',this.value!=='l')"><option value="n">As soon as possible</option><option value="l">Schedule for later</option></select></div><div class="h"><label>Pickup date & time</label><input type="datetime-local" id="wt"></div></div>
+<div class="g"><div><label>Recipient name</label><input id="rn"></div><div><label>Recipient phone</label><input id="rp" type="tel" placeholder="+1 (416) 555-0192"></div></div>
+<div><label>Delivery notes</label><textarea id="nt" placeholder="Gate code, elevator, fragile..."></textarea></div>
+<div class="g"><div><label>Payment</label><select id="pm"><option>Wallet</option><option>Interac e-Transfer</option><option>Card</option><option>Cash on Delivery</option></select></div>
+<div><label>Promo (HMK20 / CANADA15)</label><div class="row" style="flex-wrap:nowrap"><input id="pc"><button class="btn d" onclick="promoApply()">Apply</button></div></div></div>
+<div class="deep"><div class="row"><label style="margin:0">Your fare offer (before tax)</label><b id="bv" class="m lime"></b></div><input id="sl" type="range" min="30" max="800" step="5" oninput="calc()" style="padding:0;margin-top:8px"></div>
+<button class="btn" style="padding:13px" onclick="getBids()">Broadcast fare & get driver bids →</button>
+<div id="bids" class="col"></div></div>
+<div class="card col"><div><div class="m mut" style="font-size:11px">ROUTE</div><h3 id="mt"></h3></div>
+<svg viewBox="0 0 400 140" width="100%" style="background:var(--deep);border:1px solid var(--bd);border-radius:14px"><path d="M40 105 Q200 20 360 40" fill="none" stroke="#9be136" stroke-width="4" stroke-dasharray="8 6"/><circle cx="40" cy="105" r="8" fill="#9be136"/><circle cx="360" cy="40" r="8" fill="#38bdf8"/></svg>
+<div id="sm" class="deep m" style="font-size:12px"></div></div></div></section>
 
-  <!-- 1. OVERVIEW TAB -->
-  <section id="view-home">
-    <div class="grid-2">
-      <div class="card" style="display:flex; flex-direction:column; gap:18px;">
-        <div class="chip" style="width:max-content; color:var(--lime); border-color:rgba(155,225,54,0.35);">
-          CANADA ON-DEMAND FREIGHT & MOVING
-        </div>
-        <h1>Big deliveries.<br><span style="color:var(--lime);">Small worries.</span></h1>
-        <p class="muted">
-          Appliance delivery, furniture freight, home/office moving, and express courier across GTA, Ottawa, Vancouver, Calgary, and Montreal with live driver counter-bids and 4-digit PIN escrow release.
-        </p>
-
-        <div class="box-deep">
-          <label>Quick Order Track (#HMK-88412 or #HMK-90412)</label>
-          <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <input id="quick-track-input" type="text" placeholder="Enter Order ID..." style="flex:1; min-width:180px;">
-            <button class="btn-lime" onclick="trackOrderById()">Track →</button>
-          </div>
-          <div style="margin-top:8px; display:flex; gap:8px; flex-wrap:wrap;">
-            <button class="btn-dark" style="padding:4px 10px; font-size:11px;" onclick="quickTrack('HMK-88412')">#HMK-88412</button>
-            <button class="btn-dark" style="padding:4px 10px; font-size:11px;" onclick="quickTrack('HMK-90412')">#HMK-90412</button>
-          </div>
-        </div>
-
-        <div class="grid-3">
-          <div class="box-deep">
-            <strong style="font-size:14px;">$50k Insured</strong>
-            <div class="mono" style="font-size:11px; color:var(--muted);">Cargo Protection</div>
-          </div>
-          <div class="box-deep">
-            <strong style="font-size:14px; color:var(--lime);">4-Digit PIN</strong>
-            <div class="mono" style="font-size:11px; color:var(--muted);">Escrow Release</div>
-          </div>
-          <div class="box-deep">
-            <strong style="font-size:14px;">CRA Receipt</strong>
-            <div class="mono" style="font-size:11px; color:var(--muted);">GST / HST Ready</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card" style="display:flex; flex-direction:column; gap:14px;">
-        <div class="mono" style="font-size:11px; color:var(--lime); font-weight:800;">FLEET TIERS & LIVE RATES</div>
-        <div class="box-deep" style="display:flex; justify-content:space-between; align-items:center;">
-          <div><strong>Courier SUV</strong><div class="muted" style="font-size:12px;">Parcels & Urgent Boxes</div></div>
-          <span class="mono" style="color:var(--lime); font-weight:800;">$45.00 CAD</span>
-        </div>
-        <div class="box-deep" style="display:flex; justify-content:space-between; align-items:center;">
-          <div><strong>Cargo Van</strong><div class="muted" style="font-size:12px;">Fridges, Washers & Sofas</div></div>
-          <span class="mono" style="color:var(--lime); font-weight:800;">$85.00 CAD</span>
-        </div>
-        <div class="box-deep" style="display:flex; justify-content:space-between; align-items:center;">
-          <div><strong>16ft Cube Truck</strong><div class="muted" style="font-size:12px;">Condo & House Moves</div></div>
-          <span class="mono" style="color:var(--lime); font-weight:800;">$160.00 CAD</span>
-        </div>
-        <div class="box-deep" style="display:flex; justify-content:space-between; align-items:center;">
-          <div><strong>26ft Heavy Truck</strong><div class="muted" style="font-size:12px;">Full Moves + 2 Movers</div></div>
-          <span class="mono" style="color:var(--lime); font-weight:800;">$290.00 CAD</span>
-        </div>
-        <button class="btn-lime" style="padding:13px;" onclick="switchTab('customer')">Launch Booking & Bidding →</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- 2. BOOK & BID TAB -->
-  <section id="view-customer" class="hidden">
-    <div class="grid-booking">
-      <div class="card" style="display:flex; flex-direction:column; gap:14px;">
-        <div>
-          <div class="mono" style="font-size:11px; color:var(--lime); font-weight:800;">INDRIVE FARE BIDDING ENGINE</div>
-          <h2>Book or Offer Your Fare</h2>
-        </div>
-
-        <div>
-          <label>Canadian Metro Hub & Tax</label>
-          <select id="hub-select" onchange="onHubChange()">
-            <option value="gta">Greater Toronto Area (GTA, ON) — 13% HST</option>
-            <option value="ottawa">Ottawa - Gatineau (ON) — 13% HST</option>
-            <option value="van">Metro Vancouver (BC) — 12% Tax</option>
-            <option value="calgary">Calgary (AB) — 5% GST</option>
-            <option value="montreal">Greater Montreal (QC) — 14.975% Tax</option>
-          </select>
-        </div>
-
-        <div class="grid-2-inner">
-          <div>
-            <label>Pickup Hub</label>
-            <select id="pickup-select" onchange="onRouteChange()"></select>
-          </div>
-          <div>
-            <label>Drop-off Node</label>
-            <select id="dropoff-select" onchange="onRouteChange()"></select>
-          </div>
-        </div>
-
-        <div>
-          <label>Select Fleet Tier</label>
-          <div class="grid-2-inner">
-            <button type="button" class="tier-btn" id="btn-tier-suv" onclick="setTier('suv')">
-              <strong>Courier SUV</strong>
-              <div class="mono" style="font-size:12px; color:var(--lime);">$45.00 CAD</div>
-            </button>
-            <button type="button" class="tier-btn selected" id="btn-tier-van" onclick="setTier('van')">
-              <strong>Cargo Van</strong>
-              <div class="mono" style="font-size:12px; color:var(--lime);">$85.00 CAD</div>
-            </button>
-            <button type="button" class="tier-btn" id="btn-tier-cube" onclick="setTier('cube')">
-              <strong>16ft Cube Truck</strong>
-              <div class="mono" style="font-size:12px; color:var(--lime);">$160.00 CAD</div>
-            </button>
-            <button type="button" class="tier-btn" id="btn-tier-truck" onclick="setTier('truck')">
-              <strong>26ft Heavy Truck</strong>
-              <div class="mono" style="font-size:12px; color:var(--lime);">$290.00 CAD</div>
-            </button>
-          </div>
-        </div>
-
-        <div class="grid-2-inner">
-          <label class="box-deep" style="display:flex; align-items:center; gap:8px; margin:0; cursor:pointer;">
-            <input type="checkbox" id="chk-helper" onchange="recalcFare()" style="width:auto;">
-            <span>+ Extra Helper ($40)</span>
-          </label>
-          <label class="box-deep" style="display:flex; align-items:center; gap:8px; margin:0; cursor:pointer;">
-            <input type="checkbox" id="chk-ins" onchange="recalcFare()" style="width:auto;">
-            <span>$50k Coverage ($20)</span>
-          </label>
-        </div>
-
-        <div class="box-deep mono" style="font-size:12px; display:flex; flex-direction:column; gap:6px;">
-          <div style="display:flex; justify-content:space-between;"><span>Base Rate:</span><span id="fare-base">$85.00</span></div>
-          <div style="display:flex; justify-content:space-between;"><span>Add-ons:</span><span id="fare-addons">$0.00</span></div>
-          <div style="display:flex; justify-content:space-between;"><span id="fare-tax-lbl">Tax (13%):</span><span id="fare-tax">$11.05</span></div>
-          <div style="display:flex; justify-content:space-between; border-top:1px solid var(--border); padding-top:6px; font-weight:900; color:var(--lime);">
-            <span>Recommended Total:</span><span id="fare-total">$96.05 CAD</span>
-          </div>
-        </div>
-
-        <div class="box-deep">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-            <label style="margin:0;">Your Custom Offer (CAD)</label>
-            <strong class="mono" style="color:var(--lime); font-size:17px;">$<span id="bid-val">96</span> CAD</strong>
-          </div>
-          <input id="bid-slider" type="range" min="35" max="500" value="96" oninput="document.getElementById('bid-val').textContent=this.value">
-        </div>
-
-        <button class="btn-lime" style="padding:13px;" onclick="broadcastBids()">Broadcast Fare & Get Driver Bids →</button>
-
-        <div id="bids-box" class="box-deep hidden" style="display:flex; flex-direction:column; gap:10px;">
-          <div class="mono" style="font-size:11px; color:var(--lime); font-weight:800;">LIVE DRIVER COUNTER-BIDS</div>
-          <div id="bids-list"></div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-          <div>
-            <div class="mono" style="font-size:11px; color:var(--muted);">VECTOR ROUTE RADAR</div>
-            <h3 id="map-title">Greater Toronto Area (GTA, ON)</h3>
-          </div>
-          <button class="btn-dark" onclick="animateTruck()">▶ Animate Truck</button>
-        </div>
-
-        <div class="map-box">
-          <svg viewBox="0 0 760 420" width="100%" height="380" style="display:block;">
-            <rect width="760" height="420" fill="#040b12"></rect>
-            <line x1="80" y1="90" x2="680" y2="90" stroke="#152b44" stroke-width="18"></line>
-            <line x1="160" y1="40" x2="160" y2="380" stroke="#152b44" stroke-width="18"></line>
-            <line x1="380" y1="40" x2="380" y2="380" stroke="#152b44" stroke-width="18"></line>
-            <line x1="160" y1="240" x2="620" y2="240" stroke="#152b44" stroke-width="18"></line>
-            <line x1="620" y1="240" x2="620" y2="340" stroke="#152b44" stroke-width="18"></line>
-
-            <polyline points="160,90 380,90 380,240 620,240 620,340" fill="none" stroke="#9be136" stroke-width="5" stroke-dasharray="10 7"></polyline>
-
-            <circle cx="160" cy="90" r="9" fill="#9be136"></circle>
-            <text id="svg-pickup" x="176" y="94" fill="#9be136" font-size="12" font-family="monospace" font-weight="bold">TORONTO DOWNTOWN HUB</text>
-
-            <circle cx="620" cy="340" r="9" fill="#38bdf8"></circle>
-            <text id="svg-dropoff" x="435" y="344" fill="#38bdf8" font-size="12" font-family="monospace" font-weight="bold">MISSISSAUGA CITY CENTRE</text>
-
-            <g id="truck-marker" transform="translate(160, 90)">
-              <circle r="15" fill="#081624" stroke="#9be136" stroke-width="3"></circle>
-              <circle r="5" fill="#9be136"></circle>
-            </g>
-          </svg>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 3. LIVE RADAR TAB -->
-  <section id="view-tracking" class="hidden">
-    <div class="card" style="display:flex; flex-direction:column; gap:16px;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-        <div>
-          <div class="mono" style="font-size:11px; color:var(--lime); font-weight:800;">LIVE SHIPMENT TRACKING</div>
-          <h2 class="mono" id="track-order-id">Order #HMK-88412</h2>
-        </div>
-        <button class="btn-lime" onclick="openModal('invoice-modal')">🖨 CRA Tax Receipt</button>
-      </div>
-
-      <div class="grid-4 mono" style="font-size:12px;">
-        <div class="box-deep" style="border-color:var(--lime); color:var(--lime);">1. BOOKED ✓</div>
-        <div class="box-deep" style="border-color:var(--lime); color:var(--lime);">2. DRIVER ASSIGNED</div>
-        <div class="box-deep" id="track-stage-3" style="border-color:var(--sky); color:var(--sky);">3. IN TRANSIT</div>
-        <div class="box-deep" id="track-stage-4">4. DELIVERED</div>
-      </div>
-
-      <div class="grid-2">
-        <div class="box-deep">
-          <div class="mono" style="font-size:11px; color:var(--muted);">4-DIGIT DELIVERY HANDOFF PIN</div>
-          <div class="mono" id="track-pin" style="font-size:36px; font-weight:900; color:var(--lime); margin:6px 0;">8492</div>
-          <p class="muted" style="font-size:12px;">Share this PIN with your driver upon delivery to release escrow funds.</p>
-        </div>
-        <div class="box-deep mono" style="font-size:12px; display:flex; flex-direction:column; gap:8px;">
-          <div>Route: <strong id="track-route">Toronto Downtown Hub → Mississauga City Centre</strong></div>
-          <div>Fleet: <strong id="track-fleet">Cargo Van</strong></div>
-          <div>Driver: <strong id="track-driver">Marc Tremblay (ON-8492)</strong></div>
-          <div>Fare: <strong id="track-fare" style="color:var(--lime);">$96.05 CAD</strong></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 4. DRIVER PORTAL TAB -->
-  <section id="view-driver" class="hidden">
-    <div class="card" style="display:flex; flex-direction:column; gap:16px;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-        <div>
-          <div class="mono" style="font-size:11px; color:var(--lime); font-weight:800;">DRIVER PARTNER CONSOLE</div>
-          <h2>Marc Tremblay — Ford Transit #ON-8492</h2>
-        </div>
-        <div style="display:flex; gap:8px; align-items:center;">
-          <button class="btn-lime" id="duty-btn" onclick="toggleDuty()">ONLINE</button>
-          <button class="btn-dark" onclick="payoutEarnings()">Interac Payout</button>
-        </div>
-      </div>
-
-      <div class="grid-3 mono">
-        <div class="box-deep">
-          <div style="font-size:11px; color:var(--muted);">TODAY'S EARNINGS</div>
-          <strong id="driver-earn" style="font-size:22px; color:var(--lime);">$342.50 CAD</strong>
-        </div>
-        <div class="box-deep">
-          <div style="font-size:11px; color:var(--muted);">COMPLETED TRIPS</div>
-          <strong style="font-size:22px;">4 Trips</strong>
-        </div>
-        <div class="box-deep">
-          <div style="font-size:11px; color:var(--muted);">ESCROW HELD</div>
-          <strong style="font-size:22px; color:var(--sky);">$96.05 CAD</strong>
-        </div>
-      </div>
-
-      <div class="box-deep" style="display:flex; flex-direction:column; gap:12px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-          <div>
-            <span class="mono" style="font-size:11px; color:var(--lime); font-weight:800;">ACTIVE TRIP #HMK-88412</span>
-            <h3>Toronto Downtown Hub → Mississauga City Centre</h3>
-          </div>
-          <strong class="mono" style="font-size:18px; color:var(--lime);">$96.05 CAD</strong>
-        </div>
-
-        <div>
-          <label>Enter Customer 4-Digit PIN to Complete Delivery (Demo PIN: 8492)</label>
-          <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <input id="driver-pin-input" type="text" maxlength="4" placeholder="8492" style="max-width:140px;" class="mono">
-            <button class="btn-lime" onclick="verifyPinAndComplete()">Verify PIN & Release Escrow</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 5. FLEET HQ TAB -->
-  <section id="view-admin" class="hidden">
-    <div class="card" style="display:flex; flex-direction:column; gap:16px;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-        <div>
-          <div class="mono" style="font-size:11px; color:var(--lime); font-weight:800;">FLEET HQ COMMAND</div>
-          <h2>Operations & Dispatch Ledger</h2>
-        </div>
-        <button class="btn-dark" onclick="downloadCsv()">⬇ Download CSV</button>
-      </div>
-
-      <div class="grid-4 mono">
-        <div class="box-deep"><div style="font-size:11px; color:var(--muted);">ACTIVE FLEET</div><strong style="font-size:20px; color:var(--lime);">48 Units</strong></div>
-        <div class="box-deep"><div style="font-size:11px; color:var(--muted);">REVENUE</div><strong style="font-size:20px;">$18,450 CAD</strong></div>
-        <div class="box-deep"><div style="font-size:11px; color:var(--muted);">ESCROW LOCKED</div><strong style="font-size:20px; color:var(--sky);">$3,840 CAD</strong></div>
-        <div class="box-deep"><div style="font-size:11px; color:var(--muted);">ON-TIME SLA</div><strong style="font-size:20px; color:var(--lime);">99.4%</strong></div>
-      </div>
-
-      <div style="overflow-x:auto;">
-        <table>
-          <thead>
-            <tr>
-              <th>Order ID</th>
-              <th>Hub</th>
-              <th>Tier</th>
-              <th>Driver</th>
-              <th>Fare</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody id="orders-tbody"></tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
+<section id="v-track" class="h"><div class="card col"><div class="row"><div><div class="m lime" style="font-size:11px;font-weight:800">MY ORDERS & LIVE TRACKING</div><h2>Track your shipments</h2></div><button class="btn d" onclick="csv(mine())">⬇ Download CSV</button></div><div id="cs" class="g3"></div><div id="chips"></div><div id="tv"></div></div></section>
+<section id="v-driver" class="h"><div class="card col" id="dv"></div></section>
+<section id="v-admin" class="h"><div class="card col"><div class="row"><div><div class="m lime" style="font-size:11px;font-weight:800">FLEET HQ</div><h2>Operations & dispatch ledger</h2></div><span class="row"><input id="af" placeholder="Search orders..." oninput="aview()" style="width:200px"><button class="btn d" onclick="csv(S.orders)">⬇ CSV</button><button class="btn d" onclick="backup()">Backup</button><label class="btn d" style="margin:0;cursor:pointer">Restore<input type="file" accept="application/json" hidden onchange="restore(this)"></label></span></div><div id="kp" class="g4"></div><div id="an" class="deep"></div><div style="overflow-x:auto"><table><thead><tr><th>User</th><th>Email</th><th>Role</th><th>Wallet</th><th>Status</th><th></th></tr></thead><tbody id="ut"></tbody></table></div><div style="overflow-x:auto"><table><thead><tr><th>Order</th><th>Hub</th><th>Tier</th><th>Driver</th><th>Total</th><th>Payment</th><th>Status</th><th></th></tr></thead><tbody id="tb"></tbody></table></div></div></section>
 </main>
+<footer class="w mut" style="text-align:center;font-size:12px;padding:0 0 28px">© HMK Trading Inc. — Canadian Freight & On-Demand Logistics<br>Demo build: your data is stored only in this browser.</footer>
 
-<!-- AUTH MODAL (SIGN IN + REGISTER WITH ROLE & 6-DIGIT OTP) -->
-<div id="auth-modal" class="modal-backdrop hidden">
-  <div class="modal-card">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-      <h3 id="auth-title">HMK Account Access</h3>
-      <button class="btn-dark" style="padding:4px 10px;" onclick="closeModal('auth-modal')">✕</button>
-    </div>
-
-    <div class="grid-2-inner" style="margin-bottom:14px;">
-      <button type="button" class="btn-lime" id="subtab-login" onclick="setAuthSubtab('login')">Sign In</button>
-      <button type="button" class="btn-dark" id="subtab-signup" onclick="setAuthSubtab('signup')">Register + OTP</button>
-    </div>
-
-    <form id="login-form" onsubmit="submitLogin(event)" style="display:flex; flex-direction:column; gap:12px;">
-      <div>
-        <label>Email</label>
-        <input id="login-email" type="email" required placeholder="user@hmktrading.ca">
-      </div>
-      <div>
-        <label>Password</label>
-        <input id="login-pass" type="password" required placeholder="••••••••">
-      </div>
-      <button class="btn-lime" type="submit" style="padding:12px;">Sign In</button>
-    </form>
-
-    <form id="signup-form" class="hidden" onsubmit="submitSignup(event)" style="display:flex; flex-direction:column; gap:11px;">
-      <div>
-        <label>Select Role</label>
-        <select id="reg-role" onchange="onRegRoleChange()">
-          <option value="customer">Customer (Book & Bid)</option>
-          <option value="driver">Driver Partner (Fleet & Payouts)</option>
-          <option value="admin">Fleet HQ (Dispatch & Audit)</option>
-        </select>
-      </div>
-      <div class="grid-2-inner">
-        <div>
-          <label>Full Name</label>
-          <input id="reg-name" type="text" required placeholder="Usama Khan">
-        </div>
-        <div>
-          <label>Phone Number</label>
-          <input id="reg-phone" type="tel" required placeholder="+1 (416) 555-0192">
-        </div>
-      </div>
-      <div>
-        <label>Email Address</label>
-        <input id="reg-email" type="email" required placeholder="usama@hmktrading.ca">
-      </div>
-
-      <div id="reg-extra-customer" class="box-deep">
-        <label>Preferred Canadian Hub & Postal Code</label>
-        <input id="reg-postal" type="text" placeholder="M5V 2T6 — Toronto, ON">
-      </div>
-      <div id="reg-extra-driver" class="box-deep hidden">
-        <label>Vehicle Plate & License #</label>
-        <input id="reg-plate" type="text" placeholder="ON-8492 · Lic #G8492-19402">
-      </div>
-      <div id="reg-extra-admin" class="box-deep hidden">
-        <label>Depot / HQ Authorization Code</label>
-        <input id="reg-hq" type="text" placeholder="HMK-GTA-HQ-2026">
-      </div>
-
-      <div>
-        <label>Password</label>
-        <input id="reg-pass" type="password" required minlength="6" placeholder="At least 6 characters">
-      </div>
-      <button class="btn-lime" type="submit" style="padding:12px;">Send 6-Digit OTP & Continue →</button>
-    </form>
-  </div>
-</div>
-
-<!-- OTP VERIFICATION MODAL -->
-<div id="otp-modal" class="modal-backdrop hidden">
-  <div class="modal-card" style="text-align:center;">
-    <div style="display:flex; justify-content:space-between; align-items:center;">
-      <h3>6-Digit OTP Verification</h3>
-      <button class="btn-dark" style="padding:4px 10px;" onclick="closeModal('otp-modal')">✕</button>
-    </div>
-    <p class="muted" style="font-size:12px; margin-top:6px;">Sent to <strong id="otp-email-lbl" style="color:var(--lime);"></strong></p>
-    <div class="box-deep mono" style="margin-top:10px; font-size:12px; color:var(--lime);">
-      Demo OTP Code: <strong id="otp-demo-code" style="color:#fff;">123456</strong>
-    </div>
-    <div class="otp-row">
-      <input class="otp-box" maxlength="1" type="text">
-      <input class="otp-box" maxlength="1" type="text">
-      <input class="otp-box" maxlength="1" type="text">
-      <input class="otp-box" maxlength="1" type="text">
-      <input class="otp-box" maxlength="1" type="text">
-      <input class="otp-box" maxlength="1" type="text">
-    </div>
-    <button class="btn-lime" style="width:100%; padding:12px;" onclick="confirmOtp()">Verify & Activate Account</button>
-  </div>
-</div>
-
-<!-- WALLET MODAL -->
-<div id="wallet-modal" class="modal-backdrop hidden">
-  <div class="modal-card">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-      <h3>HMK CAD Wallet Top-Up</h3>
-      <button class="btn-dark" style="padding:4px 10px;" onclick="closeModal('wallet-modal')">✕</button>
-    </div>
-    <label>Amount (CAD $)</label>
-    <input id="topup-amt" type="number" value="100" min="10" style="margin-bottom:12px;" class="mono">
-    <button class="btn-lime" style="width:100%; padding:12px;" onclick="addWalletFunds()">Add Funds via Interac</button>
-  </div>
-</div>
-
-<!-- CRA INVOICE MODAL -->
-<div id="invoice-modal" class="modal-backdrop hidden">
-  <div class="modal-card" style="background:#ffffff; color:#0f172a; max-width:540px;">
-    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #e2e8f0; padding-bottom:10px; margin-bottom:12px;">
-      <strong>HMK TRADING INC. — CRA TAX RECEIPT</strong>
-      <button onclick="closeModal('invoice-modal')" style="background:#0f172a; color:#fff; border:none; border-radius:8px; padding:4px 10px; cursor:pointer;">✕</button>
-    </div>
-    <div class="mono" style="font-size:12px; display:flex; flex-direction:column; gap:6px;">
-      <div>CRA Business No: <strong>BN 84920 1948 RT0001</strong></div>
-      <div>Order ID: <strong id="inv-id">#HMK-88412</strong></div>
-      <div>Route: <strong id="inv-route">Toronto Downtown Hub → Mississauga City Centre</strong></div>
-      <div>Total Paid (Tax Included): <strong id="inv-total" style="color:#059669;">$96.05 CAD</strong></div>
-      <div>Delivery PIN: <strong id="inv-pin">8492</strong></div>
-    </div>
-    <div style="margin-top:14px; display:flex; justify-content:flex-end;">
-      <button onclick="window.print()" style="background:#0f172a; color:#fff; border:none; border-radius:10px; padding:8px 14px; font-weight:700; cursor:pointer;">Print Receipt</button>
-    </div>
-  </div>
-</div>
+<div id="am" class="mod h" role="dialog" aria-modal="true"><div><div class="row"><h3>HMK account</h3><button class="btn d s" onclick="mc('am')">✕</button></div>
+<div class="g" style="margin:12px 0"><button class="btn" id="ti" onclick="authMode('in')">Sign In</button><button class="btn d" id="tu" onclick="authMode('up')">Register + OTP</button></div>
+<form id="lf" onsubmit="login(event)" class="col"><div><label>Email</label><input id="le" type="email" required></div><div><label>Password</label><input id="lp" type="password" required></div><button class="btn" style="padding:12px">Sign In</button></form>
+<form id="sf" class="col h" onsubmit="signup(event)"><div><label>Role</label><select id="sr" onchange="$('sh').parentNode.classList.toggle('h',this.value!=='admin')"><option value="customer">Customer</option><option value="driver">Driver partner</option><option value="admin">Fleet HQ</option></select></div>
+<div class="g"><div><label>Full name</label><input id="sn" required></div><div><label>Phone</label><input id="sp" type="tel" required></div></div>
+<div><label>Email</label><input id="se" type="email" required></div><div class="h"><label>HQ code</label><input id="sh"></div>
+<div><label>Password (min 6)</label><input id="sw" type="password" minlength="6" required></div><button class="btn" style="padding:12px">Send 6-digit OTP →</button></form></div></div>
+<div id="om" class="mod h" role="dialog" aria-modal="true"><div style="text-align:center"><div class="row"><h3>OTP verification</h3><button class="btn d s" onclick="mc('om')">✕</button></div>
+<p class="mut" style="margin:8px 0">Sent to <b id="oe" class="lime"></b></p><div class="deep m lime">Demo OTP: <b id="oc" style="color:var(--tx)"></b></div>
+<input id="oi" maxlength="6" inputmode="numeric" placeholder="000000" class="m" style="text-align:center;font-size:22px;letter-spacing:8px;margin:14px 0"><button class="btn" style="width:100%;padding:12px" onclick="otp()">Verify & activate</button></div></div>
+<div id="wm" class="mod h" role="dialog" aria-modal="true"><div><div class="row"><h3>Wallet top-up</h3><button class="btn d s" onclick="mc('wm')">✕</button></div><label style="margin-top:12px">Amount (CAD)</label><input id="ta" type="number" value="100" min="1" max="50000"><button class="btn" style="width:100%;padding:12px;margin-top:12px" onclick="topup()">Add funds</button></div></div>
+<div id="nm" class="mod h" role="dialog" aria-modal="true"><div><div class="row"><h3>Notifications</h3><button class="btn d s" onclick="mc('nm')">✕</button></div><div id="nl" class="col" style="margin-top:12px"></div></div></div>
+<div id="pf" class="mod h" role="dialog" aria-modal="true"><div><div class="row"><h3>My profile</h3><button class="btn d s" onclick="mc('pf')">✕</button></div><div class="col" style="margin-top:12px"><div><label>Full name</label><input id="fn"></div><div><label>Phone</label><input id="fp" type="tel"></div><div><label>New password (optional)</label><input id="fw" type="password" minlength="6"></div><div class="m mut" id="fi" style="font-size:12px"></div><button class="btn" onclick="saveProf()">Save changes</button><button class="btn x" onclick="delAcc()">Delete my account</button></div></div></div>
+<div id="im" class="mod h" role="dialog" aria-modal="true"><div id="inv" style="max-width:540px"><div class="row"><b>HMK TRADING INC. — TAX INVOICE</b><span><button class="btn s" onclick="print()">Print</button> <button class="btn d s" onclick="mc('im')">✕</button></span></div><div id="ib" class="m" style="font-size:12px;margin-top:12px"></div></div></div>
 
 <script>
-  const HUBS = {
-    gta: { name: 'Greater Toronto Area (GTA, ON)', tax: 0.13, taxLbl: 'HST (13%)', pickups: ['Toronto Downtown Hub', 'Scarborough Centre', 'Markham Hub'], dropoffs: ['Mississauga City Centre', 'Brampton Hub', 'Oakville South'] },
-    ottawa: { name: 'Ottawa - Gatineau (ON)', tax: 0.13, taxLbl: 'HST (13%)', pickups: ['Ottawa Downtown Hub', 'Orléans Hub', 'Nepean Hub'], dropoffs: ['Kanata Tech Park', 'Barrhaven South', 'Gatineau Sector'] },
-    van: { name: 'Metro Vancouver (BC)', tax: 0.12, taxLbl: 'Tax (12%)', pickups: ['Vancouver Downtown', 'Richmond Terminal', 'Kitsilano'], dropoffs: ['Burnaby Metrotown', 'Surrey Central', 'North Vancouver'] },
-    calgary: { name: 'Calgary (AB)', tax: 0.05, taxLbl: 'GST (5%)', pickups: ['Calgary Downtown', 'NE Industrial Park'], dropoffs: ['Airdrie Hub', 'Cochrane Gateway', 'SW Residential'] },
-    montreal: { name: 'Greater Montreal (QC)', tax: 0.14975, taxLbl: 'Tax (14.975%)', pickups: ['Montreal Downtown', 'Vieux-Montréal', 'Laval Centre'], dropoffs: ['Longueuil Hub', 'Mont-Royal', 'West Island'] }
-  };
-  const TIERS = {
-    suv: { name: 'Courier SUV', rate: 45 },
-    van: { name: 'Cargo Van', rate: 85 },
-    cube: { name: '16ft Cube Truck', rate: 160 },
-    truck: { name: '26ft Heavy Truck', rate: 290 }
-  };
-
-  const state = {
-    wallet: 450,
-    tier: 'van',
-    hub: 'gta',
-    pickup: 'Toronto Downtown Hub',
-    dropoff: 'Mississauga City Centre',
-    totalFare: 96.05,
-    pin: '8492',
-    orderId: 'HMK-88412',
-    driverOnline: true,
-    driverEarn: 342.50,
-    pendingReg: null,
-    user: null,
-    orders: [
-      { id: 'HMK-88412', hub: 'GTA (ON)', tier: 'Cargo Van', driver: 'Marc Tremblay', fare: '$96.05 CAD', status: 'In Transit' },
-      { id: 'HMK-90412', hub: 'Ottawa (ON)', tier: '16ft Cube Truck', driver: 'Luc Robitaille', fare: '$180.80 CAD', status: 'Assigned' },
-      { id: 'HMK-99201', hub: 'Vancouver (BC)', tier: 'Courier SUV', driver: 'Devon Miller', fare: '$50.40 CAD', status: 'Delivered' }
-    ]
-  };
-
-  function toast(msg, isErr = false) {
-    const box = document.getElementById('toast');
-    const el = document.createElement('div');
-    el.className = 'toast-item' + (isErr ? ' err' : '');
-    el.textContent = msg;
-    box.appendChild(el);
-    setTimeout(() => el.remove(), 3000);
-  }
-
-  function switchTab(name) {
-    ['home', 'customer', 'tracking', 'driver', 'admin'].forEach(t => {
-      document.getElementById('view-' + t).classList.toggle('hidden', t !== name);
-      document.getElementById('tab-' + t).classList.toggle('active', t === name);
-    });
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
-  function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
-
-  function openAuth(mode) {
-    setAuthSubtab(mode);
-    openModal('auth-modal');
-  }
-  function setAuthSubtab(mode) {
-    const isLogin = mode === 'login';
-    document.getElementById('login-form').classList.toggle('hidden', !isLogin);
-    document.getElementById('signup-form').classList.toggle('hidden', isLogin);
-    document.getElementById('subtab-login').className = isLogin ? 'btn-lime' : 'btn-dark';
-    document.getElementById('subtab-signup').className = !isLogin ? 'btn-lime' : 'btn-dark';
-  }
-  function onRegRoleChange() {
-    const r = document.getElementById('reg-role').value;
-    document.getElementById('reg-extra-customer').classList.toggle('hidden', r !== 'customer');
-    document.getElementById('reg-extra-driver').classList.toggle('hidden', r !== 'driver');
-    document.getElementById('reg-extra-admin').classList.toggle('hidden', r !== 'admin');
-  }
-
-  function submitLogin(e) {
-    e.preventDefault();
-    const email = document.getElementById('login-email').value.trim();
-    state.user = { name: email.split('@')[0] || 'Member', email, role: 'customer' };
-    renderAuthBadge();
-    closeModal('auth-modal');
-    toast('Signed in as ' + state.user.name);
-  }
-
-  function submitSignup(e) {
-    e.preventDefault();
-    const role = document.getElementById('reg-role').value;
-    const name = document.getElementById('reg-name').value.trim();
-    const phone = document.getElementById('reg-phone').value.trim();
-    const email = document.getElementById('reg-email').value.trim();
-    const otp = String(Math.floor(100000 + Math.random() * 900000));
-    state.pendingReg = { role, name, phone, email, otp };
-    document.getElementById('otp-email-lbl').textContent = email;
-    document.getElementById('otp-demo-code').textContent = otp;
-    document.querySelectorAll('.otp-box').forEach(b => b.value = '');
-    closeModal('auth-modal');
-    openModal('otp-modal');
-    document.querySelector('.otp-box').focus();
-    toast('6-digit OTP generated for ' + email);
-  }
-
-  function confirmOtp() {
-    const code = Array.from(document.querySelectorAll('.otp-box')).map(b => b.value).join('');
-    if (code.length < 6) return toast('Enter all 6 OTP digits', true);
-    state.user = { ...state.pendingReg };
-    state.pendingReg = null;
-    renderAuthBadge();
-    closeModal('otp-modal');
-    toast('Account verified (' + state.user.role.toUpperCase() + ')!');
-    if (state.user.role === 'driver') switchTab('driver');
-    else if (state.user.role === 'admin') switchTab('admin');
-    else switchTab('customer');
-  }
-
-  function logoutUser() {
-    state.user = null;
-    renderAuthBadge();
-    toast('Signed out');
-  }
-
-  function renderAuthBadge() {
-    const box = document.getElementById('auth-header-box');
-    if (state.user) {
-      box.innerHTML = `<span class="mono" style="color:var(--lime); font-weight:800;">${state.user.name} (${state.user.role.toUpperCase()})</span>
-        <button class="btn-dark" style="padding:3px 8px; font-size:10px;" onclick="logoutUser()">Exit</button>`;
-    } else {
-      box.innerHTML = `<button class="btn-lime" style="padding:4px 10px; font-size:11px;" onclick="openAuth('login')">Sign In</button>
-        <button class="btn-dark" style="padding:4px 10px; font-size:11px;" onclick="openAuth('signup')">Register + OTP</button>`;
-    }
-  }
-
-  function onHubChange() {
-    state.hub = document.getElementById('hub-select').value;
-    const h = HUBS[state.hub];
-    document.getElementById('map-title').textContent = h.name;
-    document.getElementById('pickup-select').innerHTML = h.pickups.map(p => `<option>${p}</option>`).join('');
-    document.getElementById('dropoff-select').innerHTML = h.dropoffs.map(d => `<option>${d}</option>`).join('');
-    onRouteChange();
-  }
-
-  function onRouteChange() {
-    state.pickup = document.getElementById('pickup-select').value;
-    state.dropoff = document.getElementById('dropoff-select').value;
-    document.getElementById('svg-pickup').textContent = state.pickup.toUpperCase();
-    document.getElementById('svg-dropoff').textContent = state.dropoff.toUpperCase();
-    recalcFare();
-  }
-
-  function setTier(t) {
-    state.tier = t;
-    Object.keys(TIERS).forEach(k => {
-      document.getElementById('btn-tier-' + k).classList.toggle('selected', k === t);
-    });
-    recalcFare();
-  }
-
-  function recalcFare() {
-    const base = TIERS[state.tier].rate;
-    const addons = (document.getElementById('chk-helper').checked ? 40 : 0) + (document.getElementById('chk-ins').checked ? 20 : 0);
-    const h = HUBS[state.hub];
-    const tax = (base + addons) * h.tax;
-    const total = base + addons + tax;
-    state.totalFare = total;
-
-    document.getElementById('fare-base').textContent = `$${base.toFixed(2)}`;
-    document.getElementById('fare-addons').textContent = `$${addons.toFixed(2)}`;
-    document.getElementById('fare-tax-lbl').textContent = h.taxLbl + ':';
-    document.getElementById('fare-tax').textContent = `$${tax.toFixed(2)}`;
-    document.getElementById('fare-total').textContent = `$${total.toFixed(2)} CAD`;
-
-    const bid = Math.round(total);
-    document.getElementById('bid-slider').value = bid;
-    document.getElementById('bid-val').textContent = bid;
-  }
-
-  function broadcastBids() {
-    const offer = Number(document.getElementById('bid-val').textContent);
-    const box = document.getElementById('bids-box');
-    const list = document.getElementById('bids-list');
-    box.classList.remove('hidden');
-    list.innerHTML = `
-      <div class="box-deep" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-        <div><strong>Marc Tremblay ⭐ 4.98</strong><div class="muted" style="font-size:11px;">Ford Transit · 6 mins away</div></div>
-        <div style="text-align:right;">
-          <div class="mono" style="color:var(--lime); font-weight:900;">$${offer}.00 CAD</div>
-          <button class="btn-lime" style="padding:5px 10px; font-size:11px; margin-top:4px;" onclick="acceptBid('Marc Tremblay', ${offer})">Accept & Lock</button>
-        </div>
-      </div>
-      <div class="box-deep" style="display:flex; justify-content:space-between; align-items:center;">
-        <div><strong>Devon Miller ⭐ 4.92</strong><div class="muted" style="font-size:11px;">16ft Cube Truck · 11 mins away</div></div>
-        <div style="text-align:right;">
-          <div class="mono" style="font-weight:900;">$${offer + 15}.00 CAD</div>
-          <button class="btn-dark" style="padding:5px 10px; font-size:11px; margin-top:4px;" onclick="acceptBid('Devon Miller', ${offer + 15})">Accept & Lock</button>
-        </div>
-      </div>`;
-    toast('Live driver bids received!');
-  }
-
-  function acceptBid(driver, amt) {
-    state.orderId = 'HMK-' + Math.floor(10000 + Math.random() * 90000);
-    state.pin = String(Math.floor(1000 + Math.random() * 9000));
-    state.totalFare = amt;
-    document.getElementById('track-order-id').textContent = 'Order #' + state.orderId;
-    document.getElementById('track-pin').textContent = state.pin;
-    document.getElementById('track-route').textContent = `${state.pickup} → ${state.dropoff}`;
-    document.getElementById('track-fleet').textContent = TIERS[state.tier].name;
-    document.getElementById('track-driver').textContent = driver;
-    document.getElementById('track-fare').textContent = `$${amt.toFixed(2)} CAD`;
-
-    document.getElementById('inv-id').textContent = '#' + state.orderId;
-    document.getElementById('inv-route').textContent = `${state.pickup} → ${state.dropoff}`;
-    document.getElementById('inv-total').textContent = `$${amt.toFixed(2)} CAD`;
-    document.getElementById('inv-pin').textContent = state.pin;
-
-    state.orders.unshift({ id: state.orderId, hub: HUBS[state.hub].name, tier: TIERS[state.tier].name, driver, fare: `$${amt.toFixed(2)} CAD`, status: 'Escrow Locked' });
-    renderOrders();
-    switchTab('tracking');
-    toast(`Booked #${state.orderId} with ${driver}! PIN: ${state.pin}`);
-  }
-
-  function animateTruck() {
-    const m = document.getElementById('truck-marker');
-    m.setAttribute('transform', 'translate(380, 90)');
-    setTimeout(() => m.setAttribute('transform', 'translate(380, 240)'), 500);
-    setTimeout(() => m.setAttribute('transform', 'translate(620, 340)'), 1000);
-  }
-
-  function quickTrack(id) {
-    document.getElementById('quick-track-input').value = id;
-    trackOrderById();
-  }
-  function trackOrderById() {
-    const val = document.getElementById('quick-track-input').value.trim().replace(/^#/, '') || 'HMK-88412';
-    document.getElementById('track-order-id').textContent = 'Order #' + val;
-    switchTab('tracking');
-  }
-
-  function toggleDuty() {
-    state.driverOnline = !state.driverOnline;
-    const b = document.getElementById('duty-btn');
-    b.textContent = state.driverOnline ? 'ONLINE' : 'OFFLINE';
-    b.className = state.driverOnline ? 'btn-lime' : 'btn-dark';
-    toast('Driver status: ' + (state.driverOnline ? 'ONLINE' : 'OFFLINE'));
-  }
-
-  function verifyPinAndComplete() {
-    const entered = document.getElementById('driver-pin-input').value.trim();
-    if (entered !== state.pin && entered !== '8492') return toast('Invalid PIN! Try ' + state.pin + ' or 8492', true);
-    state.driverEarn += state.totalFare;
-    document.getElementById('driver-earn').textContent = `$${state.driverEarn.toFixed(2)} CAD`;
-    document.getElementById('track-stage-4').style.borderColor = 'var(--lime)';
-    document.getElementById('track-stage-4').style.color = 'var(--lime)';
-    document.getElementById('track-stage-4').textContent = '4. DELIVERED ✓';
-    toast('PIN verified! Escrow released to driver.');
-  }
-
-  function payoutEarnings() {
-    toast(`Interac payout of $${state.driverEarn.toFixed(2)} CAD sent!`);
-    state.driverEarn = 0;
-    document.getElementById('driver-earn').textContent = '$0.00 CAD';
-  }
-
-  function addWalletFunds() {
-    const amt = Number(document.getElementById('topup-amt').value) || 0;
-    if (amt <= 0) return;
-    state.wallet += amt;
-    document.getElementById('top-wallet').textContent = `$${state.wallet.toFixed(2)} CAD`;
-    closeModal('wallet-modal');
-    toast(`Added $${amt.toFixed(2)} CAD to wallet!`);
-  }
-
-  function renderOrders() {
-    document.getElementById('orders-tbody').innerHTML = state.orders.map(o => `
-      <tr>
-        <td class="mono" style="color:var(--lime); font-weight:800;">#${o.id}</td>
-        <td>${o.hub}</td>
-        <td>${o.tier}</td>
-        <td>${o.driver}</td>
-        <td class="mono">${o.fare}</td>
-        <td><span class="chip" style="color:var(--lime); border-color:rgba(155,225,54,0.35);">${o.status}</span></td>
-      </tr>`).join('');
-  }
-
-  function downloadCsv() {
-    const rows = ['Order ID,Hub,Tier,Driver,Fare,Status'].concat(state.orders.map(o => `${o.id},"${o.hub}","${o.tier}","${o.driver}","${o.fare}","${o.status}"`));
-    const blob = new Blob([rows.join('\n')], { type: 'text/csv' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'HMK-Trading-Orders.csv';
-    a.click();
-  }
-
-  document.querySelectorAll('.otp-box').forEach((box, idx, arr) => {
-    box.addEventListener('input', () => {
-      if (box.value && idx < arr.length - 1) arr[idx + 1].focus();
-    });
-  });
-
-  onHubChange();
-  renderOrders();
-  renderAuthBadge();
-</script>
-</body>
-</html>
+const $=i=>document.getElementById(i),esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const HUBS={gta:['Greater Toronto Area (ON)',.13,'HST 13%',['Toronto Downtown Hub','Scarborough Centre','Markham Hub'],['Mississauga City Centre','Brampton Hub','Oakville South']],
+ottawa:['Ottawa - Gatineau (ON)',.13,'HST 13%',['Ottawa Downtown Hub','Orléans Hub','Nepean Hub'],['Kanata Tech Park','Barrhaven South','Gatineau Sector']],
+van:['Metro Vancouver (BC)',.12,'GST+PST 12%',['Vancouver Downtown','Richmond Terminal','Kitsilano'],['Burnaby Metrotown','Surrey Central','North Vancouver']],
+calgary:['Calgary (AB)',.05,'GST 5%',['Calgary Downtown','NE Industrial Park'],['Airdrie Hub','Cochrane Gateway','SW Residential']],
+montreal:['Greater Montreal (QC)',.14975,'GST+QST 14.975%',['Montreal Downtown','Vieux-Montréal','Laval Centre'],['Longueuil Hub','Mont-Royal','West Island']]};
+const TIERS={suv:['Courier SUV',45],van:['Cargo Van',85],cube:['16ft Cube Truck',160],truck:['26ft Heavy Truck',290]},PROMOS={HMK20:.2,CANADA15:.15};
+const STAGES=['Confirmed','Driver Assigned','In Transit','Delivered'],NEXT={Confirmed:'Driver Assigned','Driver Assigned':'In Transit','In Transit':'Delivered'},KEY='hmk_v6';
+let S=load(),tier='van',promo='',bids=[],cur='',cancelId='',pend=null,chatOpen='';
+function props(){const g=k=>({get(){const u=S.user;return u?+u[k]||0:0},set(v){const u=S.user;if(u)u[k]=v},configurable:true,enumerable:false});
+Object.defineProperties(S,{user:{get(){return S.users.find(x=>x.email===S.me&&!x.ban)||null},set(u){S.me=u?u.email:null},configurable:true,enumerable:false},wallet:g('wallet'),earn:g('earn')})}
+props();
+async function hp(p,salt){try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(salt+p));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){let h=5381;for(const c of salt+p)h=(h*33^c.charCodeAt(0))>>>0;return'f'+h}}
+const can=t=>t==='driver'?!!S.user&&S.user.role==='driver':t==='admin'?!!S.user&&S.user.role==='admin':true;
+function setSt(o,s){o.status=s;(o.log=o.log||[]).push({s,t:new Date().toLocaleString()});note(o.owner,'Order '+o.id+': '+s)}
+function note(em,t){const u=S.users.find(x=>x.email===em);if(!u)return;u.notes=(u.notes||[]).concat({t,at:new Date().toLocaleString()}).slice(-30);u.unread=(u.unread||0)+1}
+const kmOf=(k,a,b)=>{const h=HUBS[k];return 8+(h[3].indexOf(a)*7+h[4].indexOf(b)*5)%24};
+function load(){try{const r=JSON.parse(localStorage.getItem(KEY));if(r)return r}catch(e){}return{me:null,users:[],orders:[],online:true}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function toast(t,e){const d=document.createElement('div');d.className='t'+(e?' e':'');d.textContent=t;$('toast').appendChild(d);setTimeout(()=>d.remove(),3500)}
+function mo(i){$(i).classList.remove('h')}function mc(i){$(i).classList.add('h')}
+const money=n=>'$'+Number(n).toFixed(2),now=()=>new Date().toLocaleString();
+function tab(n){if(!can(n)){toast('Sign in with the right account to open that area.',1);n='home'}['home','book','track','driver','admin'].forEach(t=>$('v-'+t).classList.toggle('h',t!==n));document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.t===n));render();scrollTo({top:0,behavior:'smooth'})}
+function mine(){const u=S.user;return u&&u.role==='customer'?S.orders.filter(o=>o.owner===u.email):S.orders}
+// auth
+function authMode(m){$('lf').classList.toggle('h',m!=='in');$('sf').classList.toggle('h',m!=='up');$('ti').className='btn'+(m==='in'?'':' d');$('tu').className='btn'+(m==='up'?'':' d')}
+function openAuth(m){authMode(m);mo('am')}
+async function login(e){e.preventDefault();const u=S.users.find(x=>x.email===$('le').value.trim().toLowerCase());if(u&&u.ban)return toast('This account is suspended.',1);if(!u||u.pass!==await hp($('lp').value,u.salt))return toast('Wrong email or password.',1);S.user=u;save();mc('am');render();toast('Signed in as '+u.name)}
+async function signup(e){e.preventDefault();const em=$('se').value.trim().toLowerCase(),r=$('sr').value;
+if(S.users.some(x=>x.email===em))return toast('This email is already registered. Sign in instead.',1);
+if(r==='admin'&&$('sh').value.trim()!=='HMK-GTA-HQ-2026')return toast('Wrong HQ authorization code.',1);
+const c=String(Math.floor(1e5+Math.random()*9e5)),salt=Math.random().toString(36).slice(2)+Date.now();pend={code:c,tries:0,u:{wallet:0,earn:0,name:$('sn').value.trim(),phone:$('sp').value.trim(),email:em,role:r,pass:await hp($('sw').value,salt),salt}};
+$('oe').textContent=em;$('oc').textContent=c;$('oi').value='';mc('am');mo('om')}
+function otp(){if(!pend)return;if($('oi').value.trim()!==pend.code){if(++pend.tries>=5){pend=null;mc('om');return toast('Too many wrong codes. Register again.',1)}return toast('Wrong OTP code.',1)}S.users.push(pend.u);S.user=pend.u;pend=null;save();mc('om');render();toast('Account verified.');tab(S.user.role==='driver'?'driver':S.user.role==='admin'?'admin':'book')}
+function logout(){S.user=null;save();render();tab('home')}
+function topup(){if(!S.user){mc('wm');openAuth('in');return toast('Sign in to top up your wallet.',1)}const a=+$('ta').value;if(!(a>0))return toast('Enter a valid amount.',1);S.wallet=+(S.wallet+a).toFixed(2);save();mc('wm');render();toast('Added '+money(a)+' to your wallet.')}
+// booking
+function hubChange(){const h=HUBS[$('hub').value];$('pk').innerHTML=h[3].map(x=>`<option>${x}</option>`).join('');$('dp').innerHTML=h[4].map(x=>`<option>${x}</option>`).join('');$('mt').textContent=h[0];calc(1)}
+function setTier(k){tier=k;drawTiers();calc(1)}
+function drawTiers(){$('tiers').innerHTML=Object.entries(TIERS).map(([k,t])=>`<button type="button" class="deep tb ${k===tier?'sel':''}" onclick="setTier('${k}')"><b>${t[0]}</b><div class="m lime">${money(t[1])} CAD</div></button>`).join('')}
+function price(a){const h=HUBS[$('hub').value],d=+(a*(PROMOS[promo]||0)).toFixed(2),tax=+((a-d)*h[1]).toFixed(2);return{h,d,tax,total:+(a-d+tax).toFixed(2)}}
+function calc(reset){if(reset)$('sl').value=TIERS[tier][1]+($('hp').checked?40:0)+($('ins').checked?20:0);const a=+$('sl').value,p=price(a);$('bv').textContent=money(a)+' CAD';
+$('sm').innerHTML=`<div class=r><span>Est. distance / ETA</span><span>${kmOf($('hub').value,$('pk').value,$('dp').value)} km · ${2*kmOf($('hub').value,$('pk').value,$('dp').value)} min</span></div><div class=r><span>Fare offer</span><span>${money(a)}</span></div><div class=r><span>Promo ${esc(promo)}</span><span>-${money(p.d)}</span></div><div class=r><span>${p.h[2]}</span><span>${money(p.tax)}</span></div><div class="r lime" style="border-top:1px dashed var(--bd);padding-top:8px;font-weight:900"><span>Total</span><span>${money(p.total)} CAD</span></div>`;return p}
+function promoApply(){const c=$('pc').value.trim().toUpperCase();promo=PROMOS[c]?c:'';calc();toast(promo?'Promo '+c+' applied.':'Invalid promo code.',!promo)}
+function check(){if(!S.user){openAuth('in');toast('Sign in to book a delivery.',1);return 0}
+if($('pk').value===$('dp').value&&$('pa').value.trim().toLowerCase()===$('da').value.trim().toLowerCase()){toast('Pickup and drop-off cannot be the same.',1);return 0}
+if(!$('rn').value.trim()){toast('Enter the recipient name.',1);return 0}
+if($('rp').value.replace(/\D/g,'').length<10){toast('Enter a valid recipient phone (10 digits).',1);return 0}
+if($('wh').value==='l'&&(!$('wt').value||new Date($('wt').value)<new Date())){toast('Choose a future pickup date and time.',1);return 0}return 1}
+function getBids(){if(!check())return;const a=+$('sl').value;bids=[['Sophie Lavoie','Economy',Math.max(30,a-5),'14 mins'],['Marc Tremblay','Standard',a,'9 mins'],['Devon Miller','Express',a+10,'5 mins']];
+$('bids').innerHTML='<div class="m lime" style="font-size:11px;font-weight:800">SIMULATED DRIVER BIDS (DEMO)</div>'+bids.map((b,i)=>`<div class="deep row"><div><b>${b[0]}</b> <span class="mut">${b[1]} · ETA ${b[3]}</span></div><div><b class="m lime">${money(b[2])}</b> <button class="btn s" onclick="accept(${i})">Accept & lock</button></div></div>`).join('')}
+function accept(i){if(!check())return;const b=bids[i],p=price(b[2]),pm=$('pm').value,hk=$('hub').value;
+if(pm==='Wallet'){if(S.wallet<p.total){toast('Wallet balance too low ('+money(S.wallet)+'). Top up first.',1);mo('wm');return}S.wallet=+(S.wallet-p.total).toFixed(2)}
+const o={id:'HMK-'+Math.floor(1e4+Math.random()*9e4),pin:String(Math.floor(1e3+Math.random()*9e3)),hk,tk:tier,hub:p.h[0],tier:TIERS[tier][0],pk:$('pk').value,dp:$('dp').value,pa:$('pa').value.trim(),da:$('da').value.trim(),
+sub:b[2],disc:p.d,tax:p.tax,total:p.total,taxLbl:p.h[2],pm,ps:pm==='Wallet'?'Paid from wallet (escrow held)':pm==='Cash on Delivery'?'Collect on delivery':'Payment pending',
+status:'Confirmed',log:[{s:'Order placed',t:now()}],km:kmOf(hk,$('pk').value,$('dp').value),driver:b[0],rn:$('rn').value.trim(),rp:$('rp').value.trim(),nt:$('nt').value.trim(),when:$('wh').value==='l'?$('wt').value:'',owner:S.user.email,at:now(),rev:'',rate:5,dis:''};
+S.orders.unshift(o);cur=o.id;save();['pa','da','rn','rp','nt','wt','pc'].forEach(x=>$(x).value='');$('wh').value='n';$('wt').parentNode.classList.add('h');promo='';bids=[];$('bids').innerHTML='';calc(1);tab('track');toast('Booked '+o.id+' — your PIN is '+o.pin)}
+function rebook(id){const o=S.orders.find(x=>x.id===id);if(!o)return;$('hub').value=o.hk;hubChange();$('pk').value=o.pk;$('dp').value=o.dp;$('pa').value=o.pa;$('da').value=o.da;tier=o.tk;drawTiers();$('rn').value=o.rn;$('rp').value=o.rp;$('nt').value=o.nt;calc(1);tab('book');toast('Details copied. Check the fare and get bids.')}
+// tracking
+function sel(id){cur=id;render()}
+function trackBy(){const id=$('qt').value.trim().toUpperCase().replace(/^#/,''),o=mine().find(x=>x.id===id);if(!o)return toast('No order found with that ID on this device.',1);cur=o.id;tab('track')}
+function copy(t){navigator.clipboard?navigator.clipboard.writeText(t).then(()=>toast('Copied.'),()=>toast('Could not copy.',1)):toast('Copy not supported.',1)}
+function cancel(id){const o=S.orders.find(x=>x.id===id);if(!S.user||o&&S.user.role!=='admin'&&o.owner!==S.user.email)return;if(!o||!['Confirmed','Driver Assigned'].includes(o.status))return toast('This order can no longer be cancelled.',1);
+if(cancelId!==id){cancelId=id;render();setTimeout(()=>{if(cancelId===id){cancelId='';render()}},5000);return}
+cancelId='';const w=o.pm==='Wallet',ow=S.users.find(x=>x.email===o.owner);if(w&&ow)ow.wallet=+((+ow.wallet||0)+o.total).toFixed(2);setSt(o,'Cancelled');o.ps=w?'Refunded to wallet':'Cancelled (no charge)';save();render();toast('Order '+id+' cancelled.'+(w?' '+money(o.total)+' returned to wallet.':''))}
+function review(id){const o=S.orders.find(x=>x.id===id);if(!S.user||!o||o.owner!==S.user.email)return toast('Only the customer can review this order.',1);o.rate=+$('rv').value;o.rated=1;o.rev=$('rt').value.trim();save();toast('Review saved.')}
+function dispute(id){const o=S.orders.find(x=>x.id===id),r=$('dr').value.trim();if(!S.user||!o||o.owner!==S.user.email)return toast('Only the customer can report an issue.',1);if(!r)return toast('Describe the issue first.',1);o.dis=r;save();render();toast('Issue reported. Support will review it.')}
+function showInv(id){const o=S.orders.find(x=>x.id===id);if(!o)return;$('ib').innerHTML=`<div class=r><span>Order</span><b>#${esc(o.id)}</b></div><div class=r><span>Date</span><span>${esc(o.at)}</span></div><div class=r><span>Route</span><span>${esc(o.pk)} → ${esc(o.dp)}</span></div><div class=r><span>Vehicle</span><span>${esc(o.tier)}</span></div><div class=r><span>Freight service</span><span>${money(o.sub)}</span></div><div class=r><span>Promo</span><span>-${money(o.disc)}</span></div><div class=r><span>${esc(o.taxLbl)}</span><span>${money(o.tax)}</span></div><div class=r style="border-top:1px solid #ccc;padding-top:6px"><b>Total (${esc(o.pm)})</b><b>${money(o.total)} CAD</b></div><div class=r><span>Payment status</span><span>${esc(o.ps)}</span></div><div class=r><span>CRA BN</span><span>84920 1948 RT0001</span></div>`;mo('im')}
+function tview(){const L=mine();$('cs').innerHTML=[['ORDERS',L.length],['DELIVERED',L.filter(o=>o.status==='Delivered').length],['SPENT',money(L.filter(o=>o.status!=='Cancelled').reduce((a,o)=>a+o.total,0))]].map(k=>`<div class="deep m"><div class="mut" style="font-size:11px">${k[0]}</div><b class="lime" style="font-size:20px">${k[1]}</b></div>`).join('');$('chips').innerHTML=L.length?L.slice(0,10).map(o=>`<span class="chip ${o.id===cur?'on':''}" onclick="sel('${o.id}')">#${o.id}</span>`).join(''):'<p class="mut">No orders yet. Press "Book Delivery" to create one.</p>';
+const o=L.find(x=>x.id===cur)||L[0];if(!o){$('tv').innerHTML='';return}cur=o.id;const i=STAGES.indexOf(o.status),p=o.status==='Cancelled'?0:[10,40,75,100][i],can=['Confirmed','Driver Assigned'].includes(o.status);
+$('tv').innerHTML=`<div class="row"><div><h3 class="m">Order #${o.id}</h3><span class="mut">${esc(o.pk)} → ${esc(o.dp)} · ${esc(o.tier)}</span></div><span class="st ${o.dis?'Disputed':o.status}">${o.dis?'Disputed':o.status}</span></div>
+<svg viewBox="0 0 400 44" width="100%"><line x1="30" y1="22" x2="370" y2="22" stroke="#152b44" stroke-width="6"/><circle cx="30" cy="22" r="7" fill="#9be136"/><circle cx="370" cy="22" r="7" fill="#38bdf8"/><circle cx="${30+3.4*p}" cy="22" r="10" fill="#081624" stroke="#9be136" stroke-width="3"/></svg><div class="bp"><i style="width:${p}%"></i></div><div class="g4 m" style="font-size:11px">${STAGES.map((s,k)=>`<div class="deep ${k<=i&&o.status!=='Cancelled'?'lime':'mut'}">${k+1}. ${s}</div>`).join('')}</div>
+<div class="g"><div class="deep"><div class="m mut" style="font-size:11px">DELIVERY PIN</div><div class="m lime" style="font-size:34px;font-weight:900">${o.pin}</div><button class="btn d s" onclick="copy('Order ${o.id} - ${o.status}. PIN: ${o.pin}')">Copy details</button></div>
+<div class="deep m" style="font-size:12px"><div>Driver: <b>${esc(o.driver)}</b></div><div>Total: <b class="lime">${money(o.total)} CAD</b></div><div>Payment: ${esc(o.ps)}</div><div>Pickup: ${o.when?esc(new Date(o.when).toLocaleString()):'As soon as possible'}</div><div>Recipient: ${esc(o.rn)} (${esc(o.rp)})</div>${o.nt?`<div>Notes: ${esc(o.nt)}</div>`:''}${o.pa||o.da?`<div>${esc(o.pa)} → ${esc(o.da)}</div>`:''}</div></div>
+${o.status==='Confirmed'?'<div class="deep sky">Your order is live. A driver will accept it soon.</div>':''}
+${o.pod&&/^data:image\//.test(o.pod)?`<div class="deep"><b>Proof of delivery</b><br><img src="${esc(o.pod)}" alt="Proof of delivery photo" style="max-width:100%;border-radius:10px;margin-top:8px"></div>`:''}
+<div class="row" style="justify-content:flex-start"><button class="btn s" onclick="showInv('${o.id}')">Tax invoice</button><button class="btn d s" onclick="rebook('${o.id}')">Book again</button><a class="btn d s" style="text-decoration:none" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent((o.pa||o.pk)+', '+o.hub)}&destination=${encodeURIComponent((o.da||o.dp)+', '+o.hub)}">Directions</a><a class="btn d s" style="text-decoration:none" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent('HMK order '+o.id+' - '+o.status+'. Delivery PIN: '+o.pin)}">WhatsApp</a>${can?`<button class="btn x s" onclick="cancel('${o.id}')">${cancelId===o.id?'Tap again to confirm cancel':'Cancel order'}</button>`:''}</div>
+${chatBox(o,'t')}<details><summary>Timeline${o.km?' · est. '+o.km+' km':''}</summary>${(o.log||[]).map(l=>`<p>${esc(l.t)} — ${esc(l.s)}</p>`).join('')}</details>
+${o.status==='Delivered'?`<div class="deep col"><b>Review & issues</b><div class="g"><div><label>Rate your driver</label><select id="rv">${[5,4,3,2,1].map(n=>`<option value="${n}" ${n===o.rate?'selected':''}>${'★'.repeat(n)}</option>`).join('')}</select></div><div><label>Review</label><input id="rt" value="${esc(o.rev)}"></div></div><div><label>Issue details (only to report a problem)</label><textarea id="dr">${esc(o.dis)}</textarea></div><div class="row" style="justify-content:flex-start"><select id="tp" style="width:auto" aria-label="Tip amount"><option>2</option><option>5</option><option>10</option></select><button class="btn d s" onclick="tip('${o.id}')">${o.tip?'Tipped '+money(o.tip):'Tip driver'}</button><button class="btn s" onclick="review('${o.id}')">Save review</button><button class="btn x s" onclick="dispute('${o.id}')">Report issue</button></div></div>`:''}`}
+function chatBox(o,p){const m=(o.msgs||[]).slice(-30);return`<details ${chatOpen===p+o.id?'open':''}><summary>Chat (${m.length})</summary><div class="col" style="margin-top:8px">${m.map(x=>`<div class="deep" style="padding:8px"><b class="${x.r==='customer'?'':'lime'}">${esc(x.n)}</b> <span class="mut">${esc(x.r)} · ${esc(x.at)}</span><div>${esc(x.t)}</div></div>`).join('')}<div class="row" style="flex-wrap:nowrap"><input id="c${p}${o.id}" maxlength="300" placeholder="Type a message"><button class="btn s" onclick="chat('${o.id}','${p}')">Send</button></div></div></details>`}
+function chat(id,p){const o=S.orders.find(x=>x.id===id),u=S.user,t=($('c'+p+id).value||'').trim();if(!o||!u||!t)return;if(u.role!=='admin'&&o.owner!==u.email&&o.de!==u.email)return toast('You are not part of this order.',1);
+(o.msgs=o.msgs||[]).push({n:u.name,r:u.role,t,at:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})});[o.owner,o.de].filter(e=>e&&e!==u.email).forEach(e=>note(e,'New message on '+o.id));chatOpen=p+id;save();render()}
+function res(id){const o=S.orders.find(x=>x.id===id);if(!o||!S.user||S.user.role!=='admin')return;(o.log=o.log||[]).push({s:'Issue resolved by HQ',t:now()});o.dis='';save();render();toast('Issue marked resolved.')}
+function shrink(f){return new Promise(r=>{const im=new Image,u=URL.createObjectURL(f);im.onload=()=>{const k=Math.min(1,360/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);r(c.toDataURL('image/jpeg',.6))};im.onerror=()=>r('');im.src=u})}
+function tip(id){const o=S.orders.find(x=>x.id===id),u=S.user,a=+$('tp').value;if(!u||!o||o.owner!==u.email||o.status!=='Delivered'||o.tip)return toast('Tip not available.',1);const d=S.users.find(x=>x.email===o.de);if(!d)return toast('Driver account not found.',1);if((+u.wallet||0)<a)return toast('Wallet balance too low. Top up first.',1);u.wallet=+(u.wallet-a).toFixed(2);d.earn=+((+d.earn||0)+a).toFixed(2);o.tip=a;note(d.email,'You received a '+money(a)+' tip on '+o.id);save();render();toast('Thank you! '+money(a)+' tip sent to the driver.')}
+function theme(){const l=document.documentElement.classList.toggle('lt');try{localStorage.setItem('hmk_theme',l?'l':'d')}catch(e){}}
+function bell(){const u=S.user;if(!u)return;$('nl').innerHTML=(u.notes||[]).slice().reverse().map(n=>`<div class="deep"><div>${esc(n.t)}</div><div class="mut" style="font-size:11px">${esc(n.at)}</div></div>`).join('')||'<p class="mut">No notifications yet.</p>';u.unread=0;save();render();mo('nm')}
+function prof(){const u=S.user;$('fn').value=u.name;$('fp').value=u.phone||'';$('fw').value='';$('fi').textContent=u.email+' · wallet '+money(u.wallet||0);mo('pf')}
+async function saveProf(){const u=S.user,n=$('fn').value.trim(),p=$('fw').value;if(!n)return toast('Name cannot be empty.',1);if(p&&p.length<6)return toast('Password must be at least 6 characters.',1);u.name=n;u.phone=$('fp').value.trim();if(p){u.salt=Math.random().toString(36).slice(2)+Date.now();u.pass=await hp(p,u.salt)}save();mc('pf');render();toast('Profile updated.')}
+function delAcc(){const u=S.user;if(S.orders.some(o=>(o.owner===u.email||o.de===u.email)&&!['Delivered','Cancelled'].includes(o.status)))return toast('Finish or cancel your open orders first.',1);if(!confirm('Delete your account permanently? Your wallet balance will be lost.'))return;S.users=S.users.filter(x=>x.email!==u.email);S.me=null;save();mc('pf');render();tab('home');toast('Account deleted.')}
+function ban(i){const u=S.users[i];if(!u||!S.user||S.user.role!=='admin'||u.email===S.user.email)return;u.ban=!u.ban;save();render();toast(u.ban?'Account suspended.':'Account reactivated.')}
+function analytics(all){const hv={};all.filter(o=>o.status!=='Cancelled').forEach(o=>hv[o.hub]=(hv[o.hub]||0)+o.total);const mx=Math.max(1,...Object.values(hv));
+$('an').innerHTML='<b>Revenue by hub</b>'+(Object.keys(hv).length?Object.entries(hv).map(([k,v])=>`<div class="r"><span>${esc(k)}</span><b class="m">${money(v)}</b></div><div class="bp"><i style="width:${v/mx*100}%"></i></div>`).join(''):'<p class="mut">No revenue yet.</p>');
+$('ut').innerHTML=S.users.map((u,i)=>`<tr><td>${esc(u.name)}</td><td>${esc(u.email)}</td><td>${u.role}</td><td class="m">${money(u.wallet||0)}</td><td>${u.ban?'<span class="st Cancelled">Suspended</span>':'Active'}</td><td>${S.user&&u.email===S.user.email?'':`<button class="btn d s" onclick="ban(${i})">${u.ban?'Reactivate':'Suspend'}</button>`}</td></tr>`).join('')}
+function backup(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({users:S.users,orders:S.orders})],{type:'application/json'}));a.download='hmk-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();URL.revokeObjectURL(a.href)}
+function restore(inp){const f=inp.files[0];if(!f||!S.user||S.user.role!=='admin')return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!Array.isArray(d.users)||!Array.isArray(d.orders)||d.users.some(u=>typeof u.email!=='string')||d.orders.some(o=>typeof o.id!=='string'))throw 0;if(!confirm('Replace all current users and orders with this backup?'))return;const me=S.user.email;S.users=d.users;S.orders=d.orders;S.me=S.users.some(u=>u.email===me)?me:null;save();render();toast('Backup restored.')}catch(e){toast('This is not a valid HMK backup file.',1)}};r.readAsText(f);inp.value=''}
+// driver & admin
+function dview(){const n=S.user&&S.user.role==='driver'?S.user.name:'Demo Driver',em=S.user&&S.user.email,open=S.orders.filter(o=>!['Delivered','Cancelled'].includes(o.status)&&(!o.de||o.de===em)),done=S.orders.filter(o=>o.status==='Delivered'&&o.de===em).length;
+$('dv').innerHTML=`<div class="row"><div><div class="m lime" style="font-size:11px;font-weight:800">DRIVER CONSOLE</div><h2>${esc(n)}</h2></div><span><button class="btn ${S.online?'':'d'}" onclick="duty()">${S.online?'ONLINE':'OFFLINE'}</button> <button class="btn d" onclick="payout()">Interac payout</button></span></div>
+<div class="g4 m"><div class="deep"><div class="mut" style="font-size:11px">EARNINGS</div><b class="lime" style="font-size:22px">${money(S.earn)}</b></div><div class="deep"><div class="mut" style="font-size:11px">COMPLETED</div><b style="font-size:22px">${done}</b></div><div class="deep"><div class="mut" style="font-size:11px">OPEN JOBS</div><b style="font-size:22px">${open.length}</b></div><div class="deep"><div class="mut" style="font-size:11px">RATING</div><b style="font-size:22px">${(r=>r.length?(r.reduce((a,o)=>a+o.rate,0)/r.length).toFixed(1)+' ★':'—')(S.orders.filter(o=>o.de===em&&o.rated))}</b></div></div>
+${open.length?open.map(o=>`<div class="deep col"><div class="row"><div><b class="m lime">#${o.id}</b> <span class="st ${o.status}">${o.status}</span><div class="mut">${esc(o.pk)} → ${esc(o.dp)} · ${esc(o.tier)}</div></div><b class="m lime">${money(o.sub-o.disc)}</b></div>
+<div class="row" style="justify-content:flex-start">${o.status==='Confirmed'?`<button class="btn s" ${S.online?'':'disabled'} onclick="job('${o.id}','Driver Assigned')">Accept job</button>`:''}${o.status==='Driver Assigned'?`<button class="btn s" onclick="job('${o.id}','In Transit')">Start transit</button>`:''}
+${o.status!=='Confirmed'?`<input type="file" accept="image/*" id="f${o.id}" aria-label="Proof of delivery photo" style="max-width:200px"><input id="p${o.id}" maxlength="4" inputmode="numeric" placeholder="Customer PIN" style="max-width:130px" class="m"><button class="btn d s" onclick="finish('${o.id}')">Verify PIN & deliver</button>`:''}</div>${chatBox(o,'d')}</div>`).join(''):'<p class="mut">No open jobs right now.</p>'}`}
+function job(id,st){const o=S.orders.find(x=>x.id===id),u=S.user;if(!u||u.role!=='driver')return toast('Sign in as a driver.',1);if(!o||o.status==='Cancelled')return toast('This order was cancelled.',1);if(o.de&&o.de!==u.email)return toast('This job belongs to another driver.',1);o.de=u.email;o.driver=u.name;setSt(o,st);save();render();toast('#'+id+' is now '+st)}
+async function finish(id){const o=S.orders.find(x=>x.id===id);if(!o||o.status==='Cancelled')return toast('This order was cancelled.',1);if(!S.user||S.user.role!=='driver'||o.de!==S.user.email)return toast('Only the assigned driver can complete this job.',1);if($('p'+id).value.trim()!==o.pin)return toast('Wrong customer PIN.',1);const fl=$('f'+id).files[0];if(fl)o.pod=await shrink(fl);setSt(o,'Delivered');if(o.pm!=='Cash on Delivery')o.ps='Settled (escrow released)';S.earn=+(S.earn+o.sub-o.disc).toFixed(2);save();render();toast('Delivered. '+money(o.sub-o.disc)+' added to earnings.')}
+function duty(){S.online=!S.online;save();render()}
+function payout(){if(S.earn<=0)return toast('No earnings to pay out.',1);toast('Interac payout of '+money(S.earn)+' requested (demo).');S.earn=0;save();render()}
+function adv(id){const o=S.orders.find(x=>x.id===id);if(!S.user||S.user.role!=='admin')return;if(!o||!NEXT[o.status])return;setSt(o,NEXT[o.status]);if(o.status==='Delivered'&&o.pm!=='Cash on Delivery')o.ps='Settled (escrow released)';save();render()}
+function aview(){const all=S.orders,q=($('af').value||'').toLowerCase(),L=q?all.filter(o=>[o.id,o.hub,o.driver,o.status,o.owner].join(' ').toLowerCase().includes(q)):all,a=all.filter(o=>!['Delivered','Cancelled'].includes(o.status)).length;
+$('kp').innerHTML=[['ORDERS',all.length],['ACTIVE',a],['DELIVERED',all.filter(o=>o.status==='Delivered').length],['VOLUME',money(all.filter(o=>o.status!=='Cancelled').reduce((s,o)=>s+o.total,0))]].map(k=>`<div class="deep m"><div class="mut" style="font-size:11px">${k[0]}</div><b class="lime" style="font-size:20px">${k[1]}</b></div>`).join('');
+analytics(all);
+$('tb').innerHTML=L.length?L.map(o=>`<tr><td class="m lime">#${o.id}</td><td>${esc(o.hub)}</td><td>${esc(o.tier)}</td><td>${esc(o.driver)}</td><td class="m">${money(o.total)}</td><td>${esc(o.ps)}</td><td><span class="st ${o.status}">${o.status}</span></td><td>${NEXT[o.status]?`<button class="btn d s" onclick="adv('${o.id}')">Advance</button>`:''} ${o.dis?`<button class="btn x s" onclick="res('${o.id}')">Resolve</button>`:''}</td></tr>`).join(''):'<tr><td colspan="8" class="mut">No matching orders.</td></tr>'}
+function csv(L){if(!L.length)return toast('No orders to download yet.',1);const c=v=>{let t=String(v??'');if(/^[=+\-@]/.test(t))t="'"+t;return'"'+t.replace(/"/g,'""')+'"'};
+const rows=[['Order','Hub','Tier','Route','Driver','Total CAD','Payment','Status']].concat(L.map(o=>[o.id,o.hub,o.tier,o.pk+' > '+o.dp,o.driver,o.total.toFixed(2),o.ps,o.status])).map(r=>r.map(c).join(',')).join('\n');
+const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([rows],{type:'text/csv'}));a.download='hmk-orders.csv';a.click();URL.revokeObjectURL(a.href)}
+function render(){const u=S.user;$('bell').classList.toggle('h',!u);$('bn').textContent=u&&u.unread?' '+u.unread:'';$('wal').textContent=money(S.wallet)+' CAD';
+$('auth').innerHTML=u?`<button class="btn d s" onclick="prof()">${esc(u.name)} (${u.role})</button> <button class="btn d s" onclick="logout()">Exit</button>`:'<button class="btn s" onclick="openAuth(\'in\')">Sign In</button> <button class="btn d s" onclick="openAuth(\'up\')">Register</button>';
+const t=[['home','Overview'],['book','Book & Bid'],['track','My Orders'],['driver','Driver'],['admin','Fleet HQ']],act=(document.querySelector('section:not(.h)')||{id:'v-home'}).id.slice(2);
+$('nav').innerHTML=t.filter(x=>can(x[0])).map(x=>`<button data-t="${x[0]}" class="${x[0]===act?'on':''}" onclick="tab('${x[0]}')">${x[1]}</button>`).join('');
+tview();dview();aview()}
+$('hub').innerHTML=Object.entries(HUBS).map(([k,h])=>`<option value="${k}">${h[0]} — ${h[2]}</option>`).join('');
+$('rates').innerHTML=Object.values(TIERS).map(t=>`<div class="deep row"><b>${t[0]}</b><span class="m lime">${money(t[1])} CAD</span></div>`).join('');
+addEventListener('storage',e=>{if(e.key!==KEY)return;const a=document.activeElement;if(a&&/INPUT|TEXTAREA|SELECT/.test(a.tagName))return;S=load();props();render()});
+addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.mod').forEach(m=>m.classList.add('h'))});
+try{if(localStorage.getItem('hmk_theme')==='l')document.documentElement.classList.add('lt')}catch(e){}
+addEventListener('offline',()=>toast('You are offline. Changes are saved on this device.',1));addEventListener('online',()=>toast('Back online.'));
+let idle;const arm=()=>{clearTimeout(idle);idle=setTimeout(()=>{if(S.user){logout();toast('Signed out after 30 minutes of inactivity.',1)}},18e5)};['click','keydown','touchstart'].forEach(e=>addEventListener(e,arm,{passive:true}));arm();
+drawTiers();hubChange();render();
+</script></body></html>
