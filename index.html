@@ -4,11 +4,11 @@
 <meta name="description" content="On-demand Canadian delivery, freight and moving. Name your fare, pick a driver bid, release payment with a 4-digit PIN."><meta name="theme-color" content="#081624">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23081624'/%3E%3Ctext x='16' y='23' font-size='20' text-anchor='middle' fill='%239be136' font-family='Arial' font-weight='900'%3EH%3C/text%3E%3C/svg%3E">
 <style>
-:root{--bg:#081624;--deep:#040b12;--card:#0e2034;--c2:#152b44;--bd:rgba(255,255,255,.1);--tx:#f8fafc;--mu:#94a3b8;--lime:#9be136;--sky:#38bdf8;--red:#ef4444}
+:root{--bg:#081624;--deep:#040b12;--card:#0e2034;--c2:#152b44;--bd:rgba(255,255,255,.1);--tx:#f8fafc;--mu:#94a3b8;--lime:#9be136;--sky:#38bdf8;--red:#ef4444;--amber:#f59e0b}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--tx);font:14px/1.5 Inter,system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
-.w{max-width:1200px;margin:0 auto;padding:0 16px}.h{display:none!important}.m{font-family:ui-monospace,Menlo,Consolas,monospace}
-.mut{color:var(--mu)}.lime{color:var(--lime)}.sky{color:var(--sky)}
+.w{max-width:1240px;margin:0 auto;padding:0 16px}.h{display:none!important}.m{font-family:ui-monospace,Menlo,Consolas,monospace}
+.mut{color:var(--mu)}.lime{color:var(--lime)}.sky{color:var(--sky)}.amb{color:var(--amber)}
 .row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}
 .r{display:flex;justify-content:space-between;gap:8px;margin:6px 0}
 .bar{background:var(--deep);border-bottom:1px solid var(--bd);padding:8px 0;font-size:12px}
@@ -17,14 +17,17 @@ header{position:sticky;top:0;z-index:30;background:rgba(8,22,36,.95);backdrop-fi
 nav{display:flex;gap:4px;background:var(--deep);border:1px solid var(--bd);padding:5px;border-radius:14px;overflow-x:auto;max-width:100%}
 nav button{background:0;border:0;color:#cbd5e1;padding:7px 12px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap}
 nav button.on{background:var(--lime);color:#040b12;font-weight:900}
-.btn{background:var(--lime);color:#040b12;border:0;padding:10px 16px;border-radius:12px;font-weight:900;font-size:12px;cursor:pointer}
+.subnav{display:flex;flex-wrap:wrap;gap:6px;padding-bottom:8px;border-bottom:1px solid var(--bd)}
+.subnav button{background:var(--deep);color:#cbd5e1;border:1px solid var(--bd);padding:6px 12px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer}
+.subnav button.on{background:var(--c2);border-color:var(--lime);color:var(--lime)}
+.btn{background:var(--lime);color:#040b12;border:0;padding:10px 16px;border-radius:12px;font-weight:900;font-size:12px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px}
 .btn:hover{filter:brightness(1.1)}.btn:active{transform:scale(.97)}
 .btn.d{background:var(--deep);color:var(--tx);border:1px solid var(--bd)}.btn.x{background:0;color:#fca5a5;border:1px solid var(--red)}
 .btn.s{padding:5px 10px;font-size:11px}.btn:disabled{opacity:.45;cursor:not-allowed}
 main{padding:24px 0 40px}
 .card{background:var(--card);border:1px solid var(--bd);border-radius:20px;padding:20px;box-shadow:0 12px 30px rgba(0,0,0,.28)}
 .deep{background:var(--deep);border:1px solid var(--bd);border-radius:14px;padding:14px}
-.g2{display:grid;grid-template-columns:1.1fr .9fr;gap:20px;align-items:start}.g{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.g2{display:grid;grid-template-columns:1.15fr .85fr;gap:20px;align-items:start}.g{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .col{display:flex;flex-direction:column;gap:14px}
 @media(max-width:900px){.g2,.g3,.g4{grid-template-columns:1fr}}@media(max-width:560px){.g{grid-template-columns:1fr}}
@@ -39,30 +42,32 @@ input[type=checkbox]{width:auto}textarea{min-height:60px}
 .bp{height:8px;background:var(--c2);border-radius:9px;overflow:hidden}.bp i{display:block;height:100%;background:var(--lime);transition:width .6s}
 table{width:100%;border-collapse:collapse;font-size:12px}th,td{padding:10px;border-bottom:1px solid var(--bd);text-align:left}th{color:var(--mu);font-size:11px;background:var(--deep)}
 .mod{position:fixed;inset:0;z-index:60;background:rgba(4,11,18,.85);display:flex;align-items:center;justify-content:center;padding:16px}
-.mod>div{background:var(--card);border:1px solid var(--bd);border-radius:22px;padding:22px;width:100%;max-width:460px;max-height:92vh;overflow:auto}
+.mod>div{background:var(--card);border:1px solid var(--bd);border-radius:22px;padding:22px;width:100%;max-width:490px;max-height:92vh;overflow:auto}
 #toast{position:fixed;top:76px;right:16px;z-index:80;display:flex;flex-direction:column;gap:8px}
 .t{background:var(--deep);border:1px solid var(--lime);color:var(--lime);padding:10px 14px;border-radius:12px;font-size:12px;font-weight:800}.t.e{border-color:var(--red);color:#fca5a5}
 .st{display:inline-block;padding:2px 9px;border-radius:99px;font-size:11px;font-weight:800;border:1px solid var(--lime);color:var(--lime)}
 .st.Cancelled{border-color:var(--mu);color:var(--mu)}.st.Disputed{border-color:var(--red);color:#fca5a5}.st.Transit{border-color:var(--sky);color:var(--sky)}
 details{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px 16px;margin-bottom:8px}summary{cursor:pointer;font-weight:700}details p{margin-top:8px;color:var(--mu);font-size:13px}
-html.lt{--bg:#eef2f7;--deep:#fff;--card:#fff;--c2:#e2e8f0;--bd:rgba(15,23,42,.15);--tx:#0f172a;--mu:#475569;--lime:#3f6212;--sky:#0369a1}
+html.lt{--bg:#eef2f7;--deep:#fff;--card:#fff;--c2:#e2e8f0;--bd:rgba(15,23,42,.15);--tx:#0f172a;--mu:#475569;--lime:#3f6212;--sky:#0369a1;--amber:#b45309}
 html.lt header{background:rgba(255,255,255,.95)}html.lt .btn,html.lt nav button.on{color:#fff}html.lt .btn.d,html.lt .btn.x{color:var(--tx)}html.lt .card{box-shadow:0 6px 20px rgba(15,23,42,.08)}
 #inv{background:#fff;color:#0f172a}
 @media print{body *{visibility:hidden}#inv,#inv *{visibility:visible}#inv{position:fixed;inset:0;max-width:none;border-radius:0}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style></head><body>
 <div class="bar"><div class="w row"><span class="lime m" style="font-weight:800">● CANADIAN DISPATCH ACTIVE · CRA BN 84920 1948 RT0001</span>
-<span class="row" style="gap:8px"><span class="chip m" style="cursor:default">Wallet: <b id="wal" class="lime"></b> <button class="btn d s" onclick="mo('wm')">+ Top Up</button></span><button class="btn d s h" id="bell" onclick="bell()" aria-label="Notifications">🔔<b id="bn" class="lime"></b></button> <button class="btn d s" onclick="theme()" aria-label="Toggle light or dark theme">◐</button> <span id="auth"></span></span></div></div>
-<header><div class="w row"><div class="brand" onclick="tab('home')">HMK<b>TRADING</b><span class="m lime" style="font-size:12px">.CA</span></div>
-<nav id="nav"></nav><button class="btn" onclick="tab('book')">Book Delivery →</button></div></header>
+<span class="row" style="gap:8px"><span id="wal-wrap" class="chip m" style="cursor:default">Wallet: <b id="wal" class="lime"></b> <button type="button" class="btn d s" onclick="mo('wm')">+ Top Up</button></span><button type="button" class="btn d s h" id="bell" onclick="bell()" aria-label="Notifications">🔔<b id="bn" class="lime"></b></button> <button type="button" class="btn d s" onclick="theme()" aria-label="Toggle light or dark theme">◐</button> <span id="auth"></span></span></div></div>
+<header><div class="w row"><div class="brand" onclick="homeBrand()">HMK<b>TRADING</b><span class="m lime" style="font-size:12px">.CA</span></div>
+<nav id="nav"></nav><span id="hdr-cta"></span></div></header>
 <div id="toast"></div>
 <main class="w">
+
+<!-- CUSTOMER OVERVIEW -->
 <section id="v-home"><div class="g2"><div class="card col">
 <h1>Big deliveries.<br><span class="lime">Small worries.</span></h1>
 <p class="mut">Appliances, furniture, moving and express courier across GTA, Ottawa, Vancouver, Calgary and Montreal. Name your fare, choose a driver bid, and release payment with a 4-digit PIN.</p>
-<div class="deep"><label>Track an order</label><div class="row" style="flex-wrap:nowrap"><input id="qt" placeholder="Order ID e.g. HMK-12345"><button class="btn" onclick="trackBy()">Track →</button></div></div>
+<div class="deep"><label>Track an order</label><div class="row" style="flex-wrap:nowrap"><input id="qt" placeholder="Order ID e.g. HMK-12345"><button type="button" class="btn" onclick="trackBy()">Track →</button></div></div>
 <div class="g3"><div class="deep"><b>Insured</b><div class="m mut" style="font-size:11px">Optional $50k cover</div></div><div class="deep"><b class="lime">4-digit PIN</b><div class="m mut" style="font-size:11px">Escrow release</div></div><div class="deep"><b>Tax receipt</b><div class="m mut" style="font-size:11px">GST / HST ready</div></div></div></div>
-<div class="card col"><div class="m lime" style="font-size:11px;font-weight:800">FLEET TIERS & BASE RATES</div><div id="rates" class="col"></div><button class="btn" onclick="tab('book')">Launch booking & bidding →</button></div></div>
+<div class="card col"><div class="m lime" style="font-size:11px;font-weight:800">FLEET TIERS & BASE RATES</div><div id="rates" class="col"></div><button type="button" class="btn" onclick="tab('book')">Launch booking & bidding →</button></div></div>
 <h2 style="margin:26px 0 12px">Common questions</h2>
 <details><summary>What is the 4-digit PIN?</summary><p>You get it when you book. Give it to the driver only when your cargo arrives; the driver enters it to complete the delivery.</p></details>
 <details><summary>Can I cancel?</summary><p>Yes, until the cargo is in transit. Open My Orders and press Cancel Order. Wallet payments are returned to your wallet.</p></details>
@@ -71,173 +76,597 @@ html.lt header{background:rgba(255,255,255,.95)}html.lt .btn,html.lt nav button.
 <details><summary>Problem with a delivery?</summary><p>After delivery, open the order in My Orders, describe the problem and press Report Issue.</p></details>
 </section>
 
-<section id="v-book" class="h"><div class="g2"><div class="card col">
-<div><div class="m lime" style="font-size:11px;font-weight:800">FARE BIDDING ENGINE</div><h2>Book or offer your fare</h2></div>
-<div><label>Metro hub & tax</label><select id="hub" onchange="hubChange()"></select></div>
-<div class="g"><div><label>Pickup hub</label><select id="pk" onchange="calc()"></select></div><div><label>Drop-off hub</label><select id="dp" onchange="calc()"></select></div>
-<div><label>Pickup street address</label><input id="pa" placeholder="e.g. 120 King St W"></div><div><label>Drop-off street address</label><input id="da" placeholder="e.g. 45 Main St"></div></div>
-<div><label>Fleet tier</label><div class="g" id="tiers"></div></div>
-<div class="g"><label class="deep" style="margin:0;cursor:pointer"><input type="checkbox" id="hp" onchange="calc(1)"> Extra helper (+$40)</label><label class="deep" style="margin:0;cursor:pointer"><input type="checkbox" id="ins" onchange="calc(1)"> $50k cover (+$20)</label></div>
-<div class="g"><div><label>When?</label><select id="wh" onchange="$('wt').parentNode.classList.toggle('h',this.value!=='l')"><option value="n">As soon as possible</option><option value="l">Schedule for later</option></select></div><div class="h"><label>Pickup date & time</label><input type="datetime-local" id="wt"></div></div>
-<div class="g"><div><label>Recipient name</label><input id="rn"></div><div><label>Recipient phone</label><input id="rp" type="tel" placeholder="+1 (416) 555-0192"></div></div>
-<div><label>Delivery notes</label><textarea id="nt" placeholder="Gate code, elevator, fragile..."></textarea></div>
-<div class="g"><div><label>Payment</label><select id="pm"><option>Wallet</option><option>Interac e-Transfer</option><option>Card</option><option>Cash on Delivery</option></select></div>
-<div><label>Promo (HMK20 / CANADA15)</label><div class="row" style="flex-wrap:nowrap"><input id="pc"><button class="btn d" onclick="promoApply()">Apply</button></div></div></div>
-<div class="deep"><div class="row"><label style="margin:0">Your fare offer (before tax)</label><b id="bv" class="m lime"></b></div><input id="sl" type="range" min="30" max="800" step="5" oninput="calc()" style="padding:0;margin-top:8px"></div>
-<button class="btn" style="padding:13px" onclick="getBids()">Broadcast fare & get driver bids →</button>
-<div id="bids" class="col"></div></div>
-<div class="card col"><div><div class="m mut" style="font-size:11px">ROUTE</div><h3 id="mt"></h3></div>
-<svg viewBox="0 0 400 140" width="100%" style="background:var(--deep);border:1px solid var(--bd);border-radius:14px"><path d="M40 105 Q200 20 360 40" fill="none" stroke="#9be136" stroke-width="4" stroke-dasharray="8 6"/><circle cx="40" cy="105" r="8" fill="#9be136"/><circle cx="360" cy="40" r="8" fill="#38bdf8"/></svg>
-<div id="sm" class="deep m" style="font-size:12px"></div></div></div></section>
+<!-- CUSTOMER BOOKING, ADDRESS BOOK & ORDERS -->
+<section id="v-book" class="h">
+<div class="card col">
+  <div class="subnav">
+    <button type="button" id="csub-book" class="on" onclick="csub('book')">Book & Bid</button>
+    <button type="button" id="csub-orders" onclick="csub('orders')">My Orders</button>
+    <button type="button" id="csub-addr" onclick="csub('addr')">Saved Addresses</button>
+  </div>
 
-<section id="v-track" class="h"><div class="card col"><div class="row"><div><div class="m lime" style="font-size:11px;font-weight:800">MY ORDERS & LIVE TRACKING</div><h2>Track your shipments</h2></div><button class="btn d" onclick="csv(mine())">⬇ Download CSV</button></div><div id="cs" class="g3"></div><div id="chips"></div><div id="tv"></div></div></section>
-<section id="v-driver" class="h"><div class="card col" id="dv"></div></section>
-<section id="v-admin" class="h"><div class="card col"><div class="row"><div><div class="m lime" style="font-size:11px;font-weight:800">FLEET HQ</div><h2>Operations & dispatch ledger</h2></div><span class="row"><input id="af" placeholder="Search orders..." oninput="aview()" style="width:200px"><button class="btn d" onclick="csv(S.orders)">⬇ CSV</button><button class="btn d" onclick="backup()">Backup</button><label class="btn d" style="margin:0;cursor:pointer">Restore<input type="file" accept="application/json" hidden onchange="restore(this)"></label></span></div><div id="kp" class="g4"></div><div id="an" class="deep"></div><div style="overflow-x:auto"><table><thead><tr><th>User</th><th>Email</th><th>Role</th><th>Wallet</th><th>Status</th><th></th></tr></thead><tbody id="ut"></tbody></table></div><div style="overflow-x:auto"><table><thead><tr><th>Order</th><th>Hub</th><th>Tier</th><th>Driver</th><th>Total</th><th>Payment</th><th>Status</th><th></th></tr></thead><tbody id="tb"></tbody></table></div></div></section>
+  <div id="cview-book"><div class="g2"><div class="col">
+  <div><div class="m lime" style="font-size:11px;font-weight:800">ADVANCE FARE BIDDING ENGINE</div><h2>Book or offer your fare</h2></div>
+  <div><label>Metro hub & tax</label><select id="hub" onchange="hubChange()"></select></div>
+  <div class="g"><div><label>Pickup hub</label><select id="pk" onchange="calc()"></select></div><div><label>Drop-off hub</label><select id="dp" onchange="calc()"></select></div>
+  <div><label>Pickup street address</label><input id="pa" placeholder="e.g. 120 King St W"></div><div><label>Drop-off street address</label><input id="da" placeholder="e.g. 45 Main St"></div></div>
+  <div class="g"><div><label>Cargo category</label><select id="cg" onchange="calc(1)"><option>Appliances</option><option>Furniture</option><option>Home / Office Move</option><option>Express Parcel</option><option>Commercial Freight</option></select></div>
+  <div><label>Estimated weight (kg)</label><input id="wt-kg" type="number" min="1" max="5000" value="35" oninput="calc(1)"></div></div>
+  <div><label>Fleet tier</label><div class="g" id="tiers"></div></div>
+  <div class="g3">
+    <label class="deep" style="margin:0;cursor:pointer"><input type="checkbox" id="hp" onchange="calc(1)"> Extra helper (+$40)</label>
+    <label class="deep" style="margin:0;cursor:pointer"><input type="checkbox" id="ins" onchange="calc(1)"> $50k cover (+$20)</label>
+    <label class="deep" style="margin:0;cursor:pointer"><input type="checkbox" id="frg" onchange="calc(1)"> Fragile / Stairs (+$15)</label>
+  </div>
+  <div class="g"><div><label>When?</label><select id="wh" onchange="$('wt').parentNode.classList.toggle('h',this.value!=='l')"><option value="n">As soon as possible</option><option value="l">Schedule for later</option></select></div><div class="h"><label>Pickup date & time</label><input type="datetime-local" id="wt"></div></div>
+  <div class="g"><div><label>Recipient name</label><input id="rn"></div><div><label>Recipient phone</label><input id="rp" type="tel" placeholder="+1 (416) 555-0192"></div></div>
+  <div><label>Delivery notes</label><textarea id="nt" placeholder="Gate code, elevator, fragile..."></textarea></div>
+  <div class="g"><div><label>Payment</label><select id="pm"><option>Wallet</option><option>Interac e-Transfer</option><option>Card</option><option>Cash on Delivery</option></select></div>
+  <div><label>Promo (HMK20 / CANADA15)</label><div class="row" style="flex-wrap:nowrap"><input id="pc"><button type="button" class="btn d" onclick="promoApply()">Apply</button></div></div></div>
+  <div class="deep"><div class="row"><label style="margin:0">Your fare offer (before tax)</label><b id="bv" class="m lime"></b></div><input id="sl" type="range" min="30" max="800" step="5" oninput="calc()" style="padding:0;margin-top:8px"></div>
+  <button type="button" class="btn" style="padding:13px" onclick="getBids()">Broadcast fare & get driver bids →</button>
+  <div id="bids" class="col"></div></div>
+  <div class="deep col"><div><div class="m mut" style="font-size:11px">ROUTE & FARE BREAKDOWN</div><h3 id="mt"></h3></div>
+  <svg viewBox="0 0 400 140" width="100%" style="background:var(--bg);border:1px solid var(--bd);border-radius:14px"><path d="M40 105 Q200 20 360 40" fill="none" stroke="#9be136" stroke-width="4" stroke-dasharray="8 6"/><circle cx="40" cy="105" r="8" fill="#9be136"/><circle cx="360" cy="40" r="8" fill="#38bdf8"/></svg>
+  <div id="sm" class="m" style="font-size:12px"></div></div></div></div>
+
+  <div id="cview-orders" class="h col">
+    <div class="row"><div><div class="m lime" style="font-size:11px;font-weight:800">MY ORDERS & LIVE TRACKING</div><h2>Track your shipments</h2></div><button type="button" class="btn d" onclick="csv(mine())">⬇ Download CSV</button></div>
+    <div id="cs" class="g3"></div><div id="chips"></div><div id="tv"></div>
+  </div>
+
+  <div id="cview-addr" class="h col">
+    <div><div class="m lime" style="font-size:11px;font-weight:800">SAVED ADDRESS BOOK</div><h2>Quick pickup & drop-off spots</h2></div>
+    <div class="g">
+      <div><label>Label (e.g. Home Condo, Warehouse)</label><input id="al" placeholder="Home Condo"></div>
+      <div><label>Street Address</label><input id="aa" placeholder="250 Bremner Blvd, Toronto"></div>
+    </div>
+    <button type="button" class="btn s" style="width:max-content" onclick="addAddr()">+ Save Address</button>
+    <div id="addr-list" class="col"></div>
+  </div>
+</div>
+</section>
+
+<!-- DRIVER ONLY PORTAL (WITH SUB-TABS) -->
+<section id="v-driver" class="h">
+<div class="card col">
+  <div class="subnav">
+    <button type="button" id="dsub-jobs" class="on" onclick="dsub('jobs')">Dispatch & Trips</button>
+    <button type="button" id="dsub-earn" onclick="dsub('earn')">Earnings & Payouts</button>
+    <button type="button" id="dsub-veh" onclick="dsub('veh')">Vehicle & Compliance</button>
+  </div>
+  <div id="dv"></div>
+</div>
+</section>
+
+<!-- ADMIN / FLEET HQ ONLY PORTAL (WITH SUB-TABS) -->
+<section id="v-admin" class="h">
+<div class="card col">
+  <div class="subnav">
+    <button type="button" id="asub-ops" class="on" onclick="asub('ops')">Overview & Analytics</button>
+    <button type="button" id="asub-disp" onclick="asub('disp')">Dispatch & Disputes</button>
+    <button type="button" id="asub-staff" onclick="asub('staff')">Users & Staff</button>
+  </div>
+  <div class="row"><div><div class="m lime" style="font-size:11px;font-weight:800">FLEET HQ — ADMIN ONLY</div><h2>Operations & dispatch ledger</h2></div><span class="row"><input id="af" placeholder="Search orders..." oninput="aview()" style="width:200px"><button type="button" class="btn d" onclick="csv(S.orders)">⬇ CSV</button><button type="button" class="btn d" onclick="backup()">Backup</button><label class="btn d" style="margin:0;cursor:pointer">Restore<input type="file" accept="application/json" hidden onchange="restore(this)"></label></span></div>
+  <div id="aview-body" class="col"></div>
+</div>
+</section>
+
 </main>
-<footer class="w mut" style="text-align:center;font-size:12px;padding:0 0 28px">© HMK Trading Inc. — Canadian Freight & On-Demand Logistics<br>Demo build: your data is stored only in this browser.</footer>
+<footer class="w mut" style="text-align:center;font-size:12px;padding:0 0 28px">© HMK Trading Inc. — Canadian Freight & On-Demand Logistics<br>Demo build: role-isolated workspace stored in this browser.</footer>
 
-<div id="am" class="mod h" role="dialog" aria-modal="true"><div><div class="row"><h3>HMK account</h3><button class="btn d s" onclick="mc('am')">✕</button></div>
-<div class="g" style="margin:12px 0"><button class="btn" id="ti" onclick="authMode('in')">Sign In</button><button class="btn d" id="tu" onclick="authMode('up')">Register + OTP</button></div>
-<form id="lf" onsubmit="login(event)" class="col"><div><label>Email</label><input id="le" type="email" required></div><div><label>Password</label><input id="lp" type="password" required></div><button class="btn" style="padding:12px">Sign In</button></form>
-<form id="sf" class="col h" onsubmit="signup(event)"><div><label>Role</label><select id="sr" onchange="$('sh').parentNode.classList.toggle('h',this.value!=='admin')"><option value="customer">Customer</option><option value="driver">Driver partner</option><option value="admin">Fleet HQ</option></select></div>
-<div class="g"><div><label>Full name</label><input id="sn" required></div><div><label>Phone</label><input id="sp" type="tel" required></div></div>
-<div><label>Email</label><input id="se" type="email" required></div><div class="h"><label>HQ code</label><input id="sh"></div>
-<div><label>Password (min 6)</label><input id="sw" type="password" minlength="6" required></div><button class="btn" style="padding:12px">Send 6-digit OTP →</button></form></div></div>
-<div id="om" class="mod h" role="dialog" aria-modal="true"><div style="text-align:center"><div class="row"><h3>OTP verification</h3><button class="btn d s" onclick="mc('om')">✕</button></div>
+<!-- AUTH MODAL (SIGN IN FOR ALL ROLES + CUSTOMER OTP SIGNUP) -->
+<div id="am" class="mod h" role="dialog" aria-modal="true"><div><div class="row"><h3>HMK account</h3><button type="button" class="btn d s" onclick="mc('am')">✕</button></div>
+<div class="g" style="margin:12px 0"><button type="button" class="btn" id="ti" onclick="authMode('in')">Sign In</button><button type="button" class="btn d" id="tu" onclick="authMode('up')">Customer Register</button></div>
+<form id="lf" onsubmit="login(event)" class="col">
+  <div><label>Email</label><input id="le" type="email" required placeholder="Enter your email"></div>
+  <div><label>Password</label><input id="lp" type="password" required placeholder="Enter password"></div>
+  <button type="submit" class="btn" style="padding:12px">Sign In</button>
+  <div class="deep m" style="font-size:11px">
+    <div class="lime" style="font-weight:800;margin-bottom:4px">COMPANY CREDENTIALS (ADMIN & DRIVER)</div>
+    <div>Admin HQ: <b>hq@hmktrading.ca</b> / <b>AdminHMK#2026</b></div>
+    <div>Driver 1: <b>marc@hmktrading.ca</b> / <b>DriverHMK#2026</b></div>
+    <div>Driver 2: <b>devon@hmktrading.ca</b> / <b>DriverHMK#2026</b></div>
+    <div class="row" style="justify-content:flex-start;margin-top:8px">
+      <button type="button" class="btn d s" onclick="fillCred('hq@hmktrading.ca','AdminHMK#2026')">Fill Admin</button>
+      <button type="button" class="btn d s" onclick="fillCred('marc@hmktrading.ca','DriverHMK#2026')">Fill Driver</button>
+    </div>
+  </div>
+</form>
+<form id="sf" class="col h" onsubmit="signup(event)">
+  <div class="deep sky" style="font-size:12px">Customer registration only. Driver & Fleet HQ logins are issued directly by HMK Trading Inc.</div>
+  <div class="g"><div><label>Full name</label><input id="sn" required></div><div><label>Phone</label><input id="sp" type="tel" required></div></div>
+  <div><label>Email</label><input id="se" type="email" required></div>
+  <div><label>Password (min 6)</label><input id="sw" type="password" minlength="6" required></div>
+  <button type="submit" class="btn" style="padding:12px">Send 6-digit OTP →</button>
+</form></div></div>
+
+<div id="om" class="mod h" role="dialog" aria-modal="true"><div style="text-align:center"><div class="row"><h3>OTP verification</h3><button type="button" class="btn d s" onclick="mc('om')">✕</button></div>
 <p class="mut" style="margin:8px 0">Sent to <b id="oe" class="lime"></b></p><div class="deep m lime">Demo OTP: <b id="oc" style="color:var(--tx)"></b></div>
-<input id="oi" maxlength="6" inputmode="numeric" placeholder="000000" class="m" style="text-align:center;font-size:22px;letter-spacing:8px;margin:14px 0"><button class="btn" style="width:100%;padding:12px" onclick="otp()">Verify & activate</button></div></div>
-<div id="wm" class="mod h" role="dialog" aria-modal="true"><div><div class="row"><h3>Wallet top-up</h3><button class="btn d s" onclick="mc('wm')">✕</button></div><label style="margin-top:12px">Amount (CAD)</label><input id="ta" type="number" value="100" min="1" max="50000"><button class="btn" style="width:100%;padding:12px;margin-top:12px" onclick="topup()">Add funds</button></div></div>
-<div id="nm" class="mod h" role="dialog" aria-modal="true"><div><div class="row"><h3>Notifications</h3><button class="btn d s" onclick="mc('nm')">✕</button></div><div id="nl" class="col" style="margin-top:12px"></div></div></div>
-<div id="pf" class="mod h" role="dialog" aria-modal="true"><div><div class="row"><h3>My profile</h3><button class="btn d s" onclick="mc('pf')">✕</button></div><div class="col" style="margin-top:12px"><div><label>Full name</label><input id="fn"></div><div><label>Phone</label><input id="fp" type="tel"></div><div><label>New password (optional)</label><input id="fw" type="password" minlength="6"></div><div class="m mut" id="fi" style="font-size:12px"></div><button class="btn" onclick="saveProf()">Save changes</button><button class="btn x" onclick="delAcc()">Delete my account</button></div></div></div>
-<div id="im" class="mod h" role="dialog" aria-modal="true"><div id="inv" style="max-width:540px"><div class="row"><b>HMK TRADING INC. — TAX INVOICE</b><span><button class="btn s" onclick="print()">Print</button> <button class="btn d s" onclick="mc('im')">✕</button></span></div><div id="ib" class="m" style="font-size:12px;margin-top:12px"></div></div></div>
+<input id="oi" maxlength="6" inputmode="numeric" placeholder="000000" class="m" style="text-align:center;font-size:22px;letter-spacing:8px;margin:14px 0"><button type="button" class="btn" style="width:100%;padding:12px" onclick="otp()">Verify & activate</button></div></div>
+
+<div id="wm" class="mod h" role="dialog" aria-modal="true"><div><div class="row"><h3>Customer wallet top-up</h3><button type="button" class="btn d s" onclick="mc('wm')">✕</button></div><label style="margin-top:12px">Amount (CAD)</label><input id="ta" type="number" value="100" min="1" max="50000"><button type="button" class="btn" style="width:100%;padding:12px;margin-top:12px" onclick="topup()">Add funds</button></div></div>
+<div id="nm" class="mod h" role="dialog" aria-modal="true"><div><div class="row"><h3>Notifications</h3><button type="button" class="btn d s" onclick="mc('nm')">✕</button></div><div id="nl" class="col" style="margin-top:12px"></div></div></div>
+<div id="pf" class="mod h" role="dialog" aria-modal="true"><div><div class="row"><h3>My profile</h3><button type="button" class="btn d s" onclick="mc('pf')">✕</button></div><div class="col" style="margin-top:12px"><div><label>Full name</label><input id="fn"></div><div><label>Phone</label><input id="fp" type="tel"></div><div><label>New password (optional)</label><input id="fw" type="password" minlength="6"></div><div class="m mut" id="fi" style="font-size:12px"></div><button type="button" class="btn" onclick="saveProf()">Save changes</button><button type="button" class="btn x" id="del-btn" onclick="delAcc()">Delete my account</button></div></div></div>
+<div id="im" class="mod h" role="dialog" aria-modal="true"><div id="inv" style="max-width:540px"><div class="row"><b>HMK TRADING INC. — TAX INVOICE</b><span><button type="button" class="btn s" onclick="print()">Print</button> <button type="button" class="btn d s" onclick="mc('im')">✕</button></span></div><div id="ib" class="m" style="font-size:12px;margin-top:12px"></div></div></div>
 
 <script>
-const $=i=>document.getElementById(i),esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const $=i=>document.getElementById(i),esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&','<':'<','>':'>','"':'"',"'":'''}[c]));
 const HUBS={gta:['Greater Toronto Area (ON)',.13,'HST 13%',['Toronto Downtown Hub','Scarborough Centre','Markham Hub'],['Mississauga City Centre','Brampton Hub','Oakville South']],
 ottawa:['Ottawa - Gatineau (ON)',.13,'HST 13%',['Ottawa Downtown Hub','Orléans Hub','Nepean Hub'],['Kanata Tech Park','Barrhaven South','Gatineau Sector']],
 van:['Metro Vancouver (BC)',.12,'GST+PST 12%',['Vancouver Downtown','Richmond Terminal','Kitsilano'],['Burnaby Metrotown','Surrey Central','North Vancouver']],
 calgary:['Calgary (AB)',.05,'GST 5%',['Calgary Downtown','NE Industrial Park'],['Airdrie Hub','Cochrane Gateway','SW Residential']],
 montreal:['Greater Montreal (QC)',.14975,'GST+QST 14.975%',['Montreal Downtown','Vieux-Montréal','Laval Centre'],['Longueuil Hub','Mont-Royal','West Island']]};
 const TIERS={suv:['Courier SUV',45],van:['Cargo Van',85],cube:['16ft Cube Truck',160],truck:['26ft Heavy Truck',290]},PROMOS={HMK20:.2,CANADA15:.15};
-const STAGES=['Confirmed','Driver Assigned','In Transit','Delivered'],NEXT={Confirmed:'Driver Assigned','Driver Assigned':'In Transit','In Transit':'Delivered'},KEY='hmk_v6';
-let S=load(),tier='van',promo='',bids=[],cur='',cancelId='',pend=null,chatOpen='';
-function props(){const g=k=>({get(){const u=S.user;return u?+u[k]||0:0},set(v){const u=S.user;if(u)u[k]=v},configurable:true,enumerable:false});
-Object.defineProperties(S,{user:{get(){return S.users.find(x=>x.email===S.me&&!x.ban)||null},set(u){S.me=u?u.email:null},configurable:true,enumerable:false},wallet:g('wallet'),earn:g('earn')})}
+const STAGES=['Confirmed','Driver Assigned','In Transit','Delivered'],NEXT={Confirmed:'Driver Assigned','Driver Assigned':'In Transit','In Transit':'Delivered'},KEY='hmk_v8_adv';
+
+const SEED_STAFF=[
+  {name:'HMK Fleet Admin',phone:'+1 (416) 555-0100',email:'hq@hmktrading.ca',role:'admin',wallet:0,earn:0,pass:'AdminHMK#2026',companyIssued:true,notes:[],unread:0},
+  {name:'Marc Tremblay',phone:'+1 (416) 555-0148',email:'marc@hmktrading.ca',role:'driver',wallet:0,earn:342.5,vehicle:'Ford Transit Cargo Van · #ON-8492',license:'G8492-19402-88',insurance:'Commercial Cargo $2M · Active',companyIssued:true,payouts:[],notes:[],unread:0},
+  {name:'Devon Miller',phone:'+1 (604) 555-0182',email:'devon@hmktrading.ca',role:'driver',wallet:0,earn:185.0,vehicle:'16ft Hino Cube Truck · #BC-4410',license:'B4410-77210-12',insurance:'Commercial Cargo $2M · Active',companyIssued:true,payouts:[],notes:[],unread:0}
+];
+
+let S=load(),tier='van',promo='',bids=[],cur='',cancelId='',pend=null,activeTab='home',custSub='book',drvSub='jobs',admSub='ops';
+
+function props(){
+  const g=k=>({get(){const u=S.user;return u?+u[k]||0:0},set(v){const u=S.user;if(u)u[k]=v},configurable:true,enumerable:false});
+  Object.defineProperties(S,{
+    user:{get(){return S.users.find(x=>x.email===S.me&&!x.ban)||null},set(u){S.me=u?u.email:null},configurable:true,enumerable:false},
+    wallet:g('wallet'),
+    earn:g('earn')
+  });
+}
 props();
-async function hp(p,salt){try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(salt+p));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){let h=5381;for(const c of salt+p)h=(h*33^c.charCodeAt(0))>>>0;return'f'+h}}
-const can=t=>t==='driver'?!!S.user&&S.user.role==='driver':t==='admin'?!!S.user&&S.user.role==='admin':true;
-function setSt(o,s){o.status=s;(o.log=o.log||[]).push({s,t:new Date().toLocaleString()});note(o.owner,'Order '+o.id+': '+s)}
-function note(em,t){const u=S.users.find(x=>x.email===em);if(!u)return;u.notes=(u.notes||[]).concat({t,at:new Date().toLocaleString()}).slice(-30);u.unread=(u.unread||0)+1}
-const kmOf=(k,a,b)=>{const h=HUBS[k];return 8+(h[3].indexOf(a)*7+h[4].indexOf(b)*5)%24};
-function load(){try{const r=JSON.parse(localStorage.getItem(KEY));if(r)return r}catch(e){}return{me:null,users:[],orders:[],online:true}}
+
+function ensureStaff(){
+  SEED_STAFF.forEach(st=>{
+    if(!S.users.some(x=>x.email===st.email)) S.users.push({...st});
+  });
+}
+
+async function hp(p,salt){
+  if(!salt) return p;
+  try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(salt+p));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+  catch(e){let h=5381;for(const c of salt+p)h=(h*33^c.charCodeAt(0))>>>0;return'f'+h}
+}
+
+async function verifyPass(u, raw){
+  if(!u) return false;
+  if(!u.salt) return u.pass === raw;
+  return u.pass === await hp(raw, u.salt);
+}
+
+function allowedTabs(role){
+  if(role==='driver') return [['driver','Driver Workspace']];
+  if(role==='admin') return [['admin','Fleet HQ Workspace']];
+  return [['home','Overview'],['book','Customer Portal']];
+}
+
+function defaultTab(role){
+  if(role==='driver') return 'driver';
+  if(role==='admin') return 'admin';
+  return 'home';
+}
+
+const can=t=>allowedTabs(S.user?.role||'customer').some(x=>x[0]===t);
+
+function setSt(o,s){o.status=s;(o.log=o.log||[]).push({s,t:now()});note(o.owner,'Order '+o.id+': '+s)}
+function note(em,t){const u=S.users.find(x=>x.email===em);if(!u)return;u.notes=(u.notes||[]).concat({t,at:now()}).slice(-30);u.unread=(u.unread||0)+1}
+const kmOf=(k,a,b)=>{const h=HUBS[k];return 8+(Math.max(0,h[3].indexOf(a))*7+Math.max(0,h[4].indexOf(b))*5)%24};
+
+function load(){
+  try{const r=JSON.parse(localStorage.getItem(KEY));if(r&&Array.isArray(r.users)&&Array.isArray(r.orders))return r}catch(e){}
+  return{me:null,users:[],orders:[],online:true}
+}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 function toast(t,e){const d=document.createElement('div');d.className='t'+(e?' e':'');d.textContent=t;$('toast').appendChild(d);setTimeout(()=>d.remove(),3500)}
 function mo(i){$(i).classList.remove('h')}function mc(i){$(i).classList.add('h')}
-const money=n=>'$'+Number(n).toFixed(2),now=()=>new Date().toLocaleString();
-function tab(n){if(!can(n)){toast('Sign in with the right account to open that area.',1);n='home'}['home','book','track','driver','admin'].forEach(t=>$('v-'+t).classList.toggle('h',t!==n));document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.t===n));render();scrollTo({top:0,behavior:'smooth'})}
-function mine(){const u=S.user;return u&&u.role==='customer'?S.orders.filter(o=>o.owner===u.email):S.orders}
-// auth
+const money=n=>'$'+Number(n||0).toFixed(2),now=()=>new Date().toLocaleString();
+function theme(){document.documentElement.classList.toggle('lt');toast('Theme switched.')}
+
+function homeBrand(){
+  const r=S.user?.role||'customer';
+  tab(r==='driver'?'driver':r==='admin'?'admin':'home');
+}
+
+function tab(n){
+  if(!can(n)){n=defaultTab(S.user?.role||'customer');toast('Access restricted to your account role.',1)}
+  activeTab=n;
+  ['home','book','driver','admin'].forEach(t=>$('v-'+t).classList.toggle('h',t!==n));
+  render();
+  scrollTo({top:0,behavior:'smooth'});
+}
+
+function csub(s){
+  custSub=s;
+  ['book','orders','addr'].forEach(k=>{
+    $('csub-'+k).classList.toggle('on',k===s);
+    $('cview-'+k).classList.toggle('h',k!==s);
+  });
+  if(s==='orders')tview();
+  if(s==='addr')renderAddr();
+}
+function dsub(s){drvSub=s;['jobs','earn','veh'].forEach(k=>$('dsub-'+k).classList.toggle('on',k===s));dview()}
+function asub(s){admSub=s;['ops','disp','staff'].forEach(k=>$('asub-'+k).classList.toggle('on',k===s));aview()}
+
+function mine(){const u=S.user;return u&&u.role==='customer'?S.orders.filter(o=>o.owner===u.email):[]}
+
+// auth & profile
+function fillCred(em,pw){$('le').value=em;$('lp').value=pw}
 function authMode(m){$('lf').classList.toggle('h',m!=='in');$('sf').classList.toggle('h',m!=='up');$('ti').className='btn'+(m==='in'?'':' d');$('tu').className='btn'+(m==='up'?'':' d')}
 function openAuth(m){authMode(m);mo('am')}
-async function login(e){e.preventDefault();const u=S.users.find(x=>x.email===$('le').value.trim().toLowerCase());if(u&&u.ban)return toast('This account is suspended.',1);if(!u||u.pass!==await hp($('lp').value,u.salt))return toast('Wrong email or password.',1);S.user=u;save();mc('am');render();toast('Signed in as '+u.name)}
-async function signup(e){e.preventDefault();const em=$('se').value.trim().toLowerCase(),r=$('sr').value;
-if(S.users.some(x=>x.email===em))return toast('This email is already registered. Sign in instead.',1);
-if(r==='admin'&&$('sh').value.trim()!=='HMK-GTA-HQ-2026')return toast('Wrong HQ authorization code.',1);
-const c=String(Math.floor(1e5+Math.random()*9e5)),salt=Math.random().toString(36).slice(2)+Date.now();pend={code:c,tries:0,u:{wallet:0,earn:0,name:$('sn').value.trim(),phone:$('sp').value.trim(),email:em,role:r,pass:await hp($('sw').value,salt),salt}};
-$('oe').textContent=em;$('oc').textContent=c;$('oi').value='';mc('am');mo('om')}
-function otp(){if(!pend)return;if($('oi').value.trim()!==pend.code){if(++pend.tries>=5){pend=null;mc('om');return toast('Too many wrong codes. Register again.',1)}return toast('Wrong OTP code.',1)}S.users.push(pend.u);S.user=pend.u;pend=null;save();mc('om');render();toast('Account verified.');tab(S.user.role==='driver'?'driver':S.user.role==='admin'?'admin':'book')}
-function logout(){S.user=null;save();render();tab('home')}
-function topup(){if(!S.user){mc('wm');openAuth('in');return toast('Sign in to top up your wallet.',1)}const a=+$('ta').value;if(!(a>0))return toast('Enter a valid amount.',1);S.wallet=+(S.wallet+a).toFixed(2);save();mc('wm');render();toast('Added '+money(a)+' to your wallet.')}
-// booking
+
+async function login(e){
+  e.preventDefault();
+  const em=$('le').value.trim().toLowerCase(),pw=$('lp').value;
+  const u=S.users.find(x=>x.email===em);
+  if(u&&u.ban)return toast('This account is suspended.',1);
+  if(!u||!(await verifyPass(u,pw)))return toast('Invalid email or password.',1);
+  S.user=u;
+  activeTab=defaultTab(u.role);
+  if(u.role==='customer')custSub='book';
+  if(u.role==='driver')drvSub='jobs';
+  if(u.role==='admin')admSub='ops';
+  save();mc('am');render();
+  toast('Signed in as '+u.name+' ('+u.role.toUpperCase()+')');
+}
+
+async function signup(e){
+  e.preventDefault();
+  const em=$('se').value.trim().toLowerCase();
+  if(S.users.some(x=>x.email===em))return toast('Email already registered. Sign in instead.',1);
+  const c=String(Math.floor(1e5+Math.random()*9e5)),salt=Math.random().toString(36).slice(2)+Date.now();
+  pend={code:c,tries:0,u:{wallet:0,earn:0,name:$('sn').value.trim(),phone:$('sp').value.trim(),email:em,role:'customer',pass:await hp($('sw').value,salt),salt,addrs:[],notes:[],unread:0}};
+  $('oe').textContent=em;$('oc').textContent=c;$('oi').value='';mc('am');mo('om');
+}
+
+function otp(){
+  if(!pend)return;
+  if($('oi').value.trim()!==pend.code){
+    if(++pend.tries>=5){pend=null;mc('om');return toast('Too many wrong codes. Register again.',1)}
+    return toast('Wrong OTP code.',1);
+  }
+  S.users.push(pend.u);S.user=pend.u;pend=null;activeTab='book';custSub='book';
+  save();mc('om');render();toast('Customer account verified.');
+}
+
+function logout(){S.user=null;activeTab='home';save();render();toast('Signed out.')}
+
+function topup(){
+  if(!S.user){mc('wm');openAuth('in');return toast('Sign in as a customer to top up wallet.',1)}
+  if(S.user.role!=='customer')return toast('Only customer accounts use the booking wallet.',1);
+  const a=+$('ta').value;if(!(a>0))return toast('Enter a valid amount.',1);
+  S.wallet=+(S.wallet+a).toFixed(2);save();mc('wm');render();toast('Added '+money(a)+' to your wallet.');
+}
+
+function openProf(){
+  const u=S.user;if(!u)return;
+  $('fn').value=u.name;$('fp').value=u.phone;$('fw').value='';
+  $('fi').textContent='Role: '+u.role.toUpperCase()+' · '+u.email;
+  $('del-btn').classList.toggle('h',u.role!=='customer');
+  mo('pf');
+}
+
+async function saveProf(){
+  const u=S.user;if(!u)return;
+  u.name=$('fn').value.trim()||u.name;
+  u.phone=$('fp').value.trim()||u.phone;
+  if($('fw').value.trim()){
+    if($('fw').value.length<6)return toast('Password must be at least 6 characters.',1);
+    const salt=Math.random().toString(36).slice(2);
+    u.salt=salt;u.pass=await hp($('fw').value,salt);
+  }
+  save();mc('pf');render();toast('Profile updated.');
+}
+
+function delAcc(){
+  const u=S.user;if(!u||u.role!=='customer')return toast('Company accounts cannot be self-deleted.',1);
+  S.users=S.users.filter(x=>x.email!==u.email);S.me=null;activeTab='home';
+  save();mc('pf');render();toast('Customer account deleted.');
+}
+
+function bell(){
+  if(!S.user)return;S.user.unread=0;save();render();
+  const ns=(S.user.notes||[]).slice().reverse();
+  $('nl').innerHTML=ns.length?ns.map(n=>`<div class="deep"><div class="m mut" style="font-size:11px">${esc(n.at)}</div><div>${esc(n.t)}</div></div>`).join(''):'<p class="mut">No notifications yet.</p>';
+  mo('nm');
+}
+
+// customer booking & address book
 function hubChange(){const h=HUBS[$('hub').value];$('pk').innerHTML=h[3].map(x=>`<option>${x}</option>`).join('');$('dp').innerHTML=h[4].map(x=>`<option>${x}</option>`).join('');$('mt').textContent=h[0];calc(1)}
 function setTier(k){tier=k;drawTiers();calc(1)}
 function drawTiers(){$('tiers').innerHTML=Object.entries(TIERS).map(([k,t])=>`<button type="button" class="deep tb ${k===tier?'sel':''}" onclick="setTier('${k}')"><b>${t[0]}</b><div class="m lime">${money(t[1])} CAD</div></button>`).join('')}
+
+function addonCost(){
+  const kg=Math.max(1,+($('wt-kg')?.value||35));
+  const wtFee=kg>100?Math.ceil((kg-100)/50)*15:0;
+  return ($('hp')?.checked?40:0)+($('ins')?.checked?20:0)+($('frg')?.checked?15:0)+wtFee;
+}
+
 function price(a){const h=HUBS[$('hub').value],d=+(a*(PROMOS[promo]||0)).toFixed(2),tax=+((a-d)*h[1]).toFixed(2);return{h,d,tax,total:+(a-d+tax).toFixed(2)}}
-function calc(reset){if(reset)$('sl').value=TIERS[tier][1]+($('hp').checked?40:0)+($('ins').checked?20:0);const a=+$('sl').value,p=price(a);$('bv').textContent=money(a)+' CAD';
-$('sm').innerHTML=`<div class=r><span>Est. distance / ETA</span><span>${kmOf($('hub').value,$('pk').value,$('dp').value)} km · ${2*kmOf($('hub').value,$('pk').value,$('dp').value)} min</span></div><div class=r><span>Fare offer</span><span>${money(a)}</span></div><div class=r><span>Promo ${esc(promo)}</span><span>-${money(p.d)}</span></div><div class=r><span>${p.h[2]}</span><span>${money(p.tax)}</span></div><div class="r lime" style="border-top:1px dashed var(--bd);padding-top:8px;font-weight:900"><span>Total</span><span>${money(p.total)} CAD</span></div>`;return p}
+
+function calc(reset){
+  if(reset)$('sl').value=TIERS[tier][1]+addonCost();
+  const a=+$('sl').value,p=price(a),kg=Math.max(1,+($('wt-kg')?.value||35)),cg=$('cg')?.value||'General Freight';
+  $('bv').textContent=money(a)+' CAD';
+  $('sm').innerHTML=`<div class=r><span>Cargo / Weight</span><span>${esc(cg)} (${kg} kg)</span></div><div class=r><span>Est. distance / ETA</span><span>${kmOf($('hub').value,$('pk').value,$('dp').value)} km · ${2*kmOf($('hub').value,$('pk').value,$('dp').value)} min</span></div><div class=r><span>Fare offer</span><span>${money(a)}</span></div><div class=r><span>Promo ${esc(promo)}</span><span>-${money(p.d)}</span></div><div class=r><span>${p.h[2]}</span><span>${money(p.tax)}</span></div><div class="r lime" style="border-top:1px dashed var(--bd);padding-top:8px;font-weight:900"><span>Total</span><span>${money(p.total)} CAD</span></div>`;
+  return p;
+}
+
 function promoApply(){const c=$('pc').value.trim().toUpperCase();promo=PROMOS[c]?c:'';calc();toast(promo?'Promo '+c+' applied.':'Invalid promo code.',!promo)}
-function check(){if(!S.user){openAuth('in');toast('Sign in to book a delivery.',1);return 0}
-if($('pk').value===$('dp').value&&$('pa').value.trim().toLowerCase()===$('da').value.trim().toLowerCase()){toast('Pickup and drop-off cannot be the same.',1);return 0}
-if(!$('rn').value.trim()){toast('Enter the recipient name.',1);return 0}
-if($('rp').value.replace(/\D/g,'').length<10){toast('Enter a valid recipient phone (10 digits).',1);return 0}
-if($('wh').value==='l'&&(!$('wt').value||new Date($('wt').value)<new Date())){toast('Choose a future pickup date and time.',1);return 0}return 1}
-function getBids(){if(!check())return;const a=+$('sl').value;bids=[['Sophie Lavoie','Economy',Math.max(30,a-5),'14 mins'],['Marc Tremblay','Standard',a,'9 mins'],['Devon Miller','Express',a+10,'5 mins']];
-$('bids').innerHTML='<div class="m lime" style="font-size:11px;font-weight:800">SIMULATED DRIVER BIDS (DEMO)</div>'+bids.map((b,i)=>`<div class="deep row"><div><b>${b[0]}</b> <span class="mut">${b[1]} · ETA ${b[3]}</span></div><div><b class="m lime">${money(b[2])}</b> <button class="btn s" onclick="accept(${i})">Accept & lock</button></div></div>`).join('')}
-function accept(i){if(!check())return;const b=bids[i],p=price(b[2]),pm=$('pm').value,hk=$('hub').value;
-if(pm==='Wallet'){if(S.wallet<p.total){toast('Wallet balance too low ('+money(S.wallet)+'). Top up first.',1);mo('wm');return}S.wallet=+(S.wallet-p.total).toFixed(2)}
-const o={id:'HMK-'+Math.floor(1e4+Math.random()*9e4),pin:String(Math.floor(1e3+Math.random()*9e3)),hk,tk:tier,hub:p.h[0],tier:TIERS[tier][0],pk:$('pk').value,dp:$('dp').value,pa:$('pa').value.trim(),da:$('da').value.trim(),
-sub:b[2],disc:p.d,tax:p.tax,total:p.total,taxLbl:p.h[2],pm,ps:pm==='Wallet'?'Paid from wallet (escrow held)':pm==='Cash on Delivery'?'Collect on delivery':'Payment pending',
-status:'Confirmed',log:[{s:'Order placed',t:now()}],km:kmOf(hk,$('pk').value,$('dp').value),driver:b[0],rn:$('rn').value.trim(),rp:$('rp').value.trim(),nt:$('nt').value.trim(),when:$('wh').value==='l'?$('wt').value:'',owner:S.user.email,at:now(),rev:'',rate:5,dis:''};
-S.orders.unshift(o);cur=o.id;save();['pa','da','rn','rp','nt','wt','pc'].forEach(x=>$(x).value='');$('wh').value='n';$('wt').parentNode.classList.add('h');promo='';bids=[];$('bids').innerHTML='';calc(1);tab('track');toast('Booked '+o.id+' — your PIN is '+o.pin)}
-function rebook(id){const o=S.orders.find(x=>x.id===id);if(!o)return;$('hub').value=o.hk;hubChange();$('pk').value=o.pk;$('dp').value=o.dp;$('pa').value=o.pa;$('da').value=o.da;tier=o.tk;drawTiers();$('rn').value=o.rn;$('rp').value=o.rp;$('nt').value=o.nt;calc(1);tab('book');toast('Details copied. Check the fare and get bids.')}
-// tracking
-function sel(id){cur=id;render()}
-function trackBy(){const id=$('qt').value.trim().toUpperCase().replace(/^#/,''),o=mine().find(x=>x.id===id);if(!o)return toast('No order found with that ID on this device.',1);cur=o.id;tab('track')}
+
+function check(){
+  if(!S.user){openAuth('in');toast('Sign in as a customer to book a delivery.',1);return 0}
+  if(S.user.role!=='customer'){toast('Only customer accounts can create bookings.',1);return 0}
+  if($('pk').value===$('dp').value&&$('pa').value.trim().toLowerCase()===$('da').value.trim().toLowerCase()){toast('Pickup and drop-off cannot be the same.',1);return 0}
+  if(!$('rn').value.trim()){toast('Enter the recipient name.',1);return 0}
+  if($('rp').value.replace(/\D/g,'').length<10){toast('Enter a valid recipient phone (10 digits).',1);return 0}
+  if($('wh').value==='l'&&(!$('wt').value||new Date($('wt').value)<new Date())){toast('Choose a future pickup date and time.',1);return 0}
+  return 1;
+}
+
+function getBids(){
+  if(!check())return;const a=+$('sl').value;
+  bids=[
+    ['Marc Tremblay','Standard · ★ 4.98',a,'9 mins','marc@hmktrading.ca'],
+    ['Devon Miller','Express · ★ 4.94',a+10,'5 mins','devon@hmktrading.ca'],
+    ['Marc Tremblay','Economy · ★ 4.91',Math.max(30,a-5),'14 mins','marc@hmktrading.ca']
+  ];
+  $('bids').innerHTML='<div class="m lime" style="font-size:11px;font-weight:800">LIVE DRIVER COUNTER-BIDS</div>'+bids.map((b,i)=>`<div class="deep row"><div><b>${esc(b[0])}</b> <span class="mut">${esc(b[1])} · ETA ${esc(b[3])}</span></div><div><b class="m lime">${money(b[2])}</b> <button type="button" class="btn s" onclick="accept(${i})">Accept & lock</button></div></div>`).join('');
+}
+
+function accept(i){
+  if(!check())return;const b=bids[i],p=price(b[2]),pm=$('pm').value,hk=$('hub').value;
+  if(pm==='Wallet'){if(S.wallet<p.total){toast('Wallet balance too low ('+money(S.wallet)+'). Top up first.',1);mo('wm');return}S.wallet=+(S.wallet-p.total).toFixed(2)}
+  const o={
+    id:'HMK-'+Math.floor(1e4+Math.random()*9e4),pin:String(Math.floor(1e3+Math.random()*9e3)),
+    hk,tk:tier,hub:p.h[0],tier:TIERS[tier][0],cargo:$('cg').value,kg:Math.max(1,+($('wt-kg').value||35)),
+    pk:$('pk').value,dp:$('dp').value,pa:$('pa').value.trim(),da:$('da').value.trim(),
+    sub:b[2],disc:p.d,tax:p.tax,total:p.total,taxLbl:p.h[2],pm,
+    ps:pm==='Wallet'?'Paid from wallet (escrow held)':pm==='Cash on Delivery'?'Collect on delivery':'Payment pending',
+    status:'Confirmed',log:[{s:'Order placed & PIN generated',t:now()}],
+    km:kmOf(hk,$('pk').value,$('dp').value),driver:b[0],driverEmail:b[4],
+    rn:$('rn').value.trim(),rp:$('rp').value.trim(),nt:$('nt').value.trim(),
+    when:$('wh').value==='l'?$('wt').value:'',owner:S.user.email,at:now(),rev:'',rate:5,dis:'',pod:''
+  };
+  S.orders.unshift(o);cur=o.id;save();
+  ['pa','da','rn','rp','nt','wt','pc'].forEach(x=>$(x).value='');
+  $('wh').value='n';$('wt').parentNode.classList.add('h');$('hp').checked=false;$('ins').checked=false;$('frg').checked=false;
+  promo='';bids=[];$('bids').innerHTML='';calc(1);
+  tab('book');csub('orders');
+  toast('Booked '+o.id+' — your PIN is '+o.pin);
+}
+
+function rebook(id){
+  const o=S.orders.find(x=>x.id===id);if(!o)return;
+  $('hub').value=o.hk;hubChange();$('pk').value=o.pk;$('dp').value=o.dp;$('pa').value=o.pa||'';$('da').value=o.da||'';
+  tier=o.tk||'van';drawTiers();if(o.cargo)$('cg').value=o.cargo;if(o.kg)$('wt-kg').value=o.kg;
+  $('rn').value=o.rn;$('rp').value=o.rp;$('nt').value=o.nt||'';calc(1);
+  tab('book');csub('book');toast('Order details loaded.');
+}
+
+function addAddr(){
+  if(!S.user||S.user.role!=='customer'){openAuth('in');return toast('Sign in as a customer to save addresses.',1)}
+  const lbl=$('al').value.trim(),addr=$('aa').value.trim();
+  if(!lbl||!addr)return toast('Enter both label and address.',1);
+  S.user.addrs=S.user.addrs||[];
+  S.user.addrs.unshift({lbl,addr});
+  $('al').value='';$('aa').value='';
+  save();renderAddr();toast('Address saved.');
+}
+
+function useAddr(addr,target){
+  tab('book');csub('book');
+  if(target==='pk')$('pa').value=addr;else $('da').value=addr;
+  toast('Applied to '+ (target==='pk'?'pickup':'drop-off') +' address.');
+}
+
+function delAddr(idx){
+  if(!S.user||!S.user.addrs)return;
+  S.user.addrs.splice(idx,1);save();renderAddr();
+}
+
+function renderAddr(){
+  const box=$('addr-list');if(!box)return;
+  if(!S.user||S.user.role!=='customer'){box.innerHTML='<p class="mut">Sign in as a customer to manage saved addresses.</p>';return}
+  const list=S.user.addrs||[];
+  box.innerHTML=list.length?list.map((a,i)=>`<div class="deep row"><div><b>${esc(a.lbl)}</b><div class="m mut" style="font-size:12px">${esc(a.addr)}</div></div><div class="row"><button type="button" class="btn d s" onclick="useAddr('${esc(a.addr)}','pk')">Set Pickup</button><button type="button" class="btn d s" onclick="useAddr('${esc(a.addr)}','dp')">Set Drop-off</button><button type="button" class="btn x s" onclick="delAddr(${i})">✕</button></div></div>`).join(''):'<p class="mut">No saved addresses yet.</p>';
+}
+
+// customer tracking
+function sel(id){cur=id;tview()}
+function trackBy(){if(!S.user||S.user.role!=='customer'){openAuth('in');return toast('Sign in as a customer to track orders.',1)}const id=$('qt').value.trim().toUpperCase().replace(/^#/,''),o=mine().find(x=>x.id===id);if(!o)return toast('No order found with that ID.',1);cur=o.id;tab('book');csub('orders')}
 function copy(t){navigator.clipboard?navigator.clipboard.writeText(t).then(()=>toast('Copied.'),()=>toast('Could not copy.',1)):toast('Copy not supported.',1)}
-function cancel(id){const o=S.orders.find(x=>x.id===id);if(!S.user||o&&S.user.role!=='admin'&&o.owner!==S.user.email)return;if(!o||!['Confirmed','Driver Assigned'].includes(o.status))return toast('This order can no longer be cancelled.',1);
-if(cancelId!==id){cancelId=id;render();setTimeout(()=>{if(cancelId===id){cancelId='';render()}},5000);return}
-cancelId='';const w=o.pm==='Wallet',ow=S.users.find(x=>x.email===o.owner);if(w&&ow)ow.wallet=+((+ow.wallet||0)+o.total).toFixed(2);setSt(o,'Cancelled');o.ps=w?'Refunded to wallet':'Cancelled (no charge)';save();render();toast('Order '+id+' cancelled.'+(w?' '+money(o.total)+' returned to wallet.':''))}
-function review(id){const o=S.orders.find(x=>x.id===id);if(!S.user||!o||o.owner!==S.user.email)return toast('Only the customer can review this order.',1);o.rate=+$('rv').value;o.rated=1;o.rev=$('rt').value.trim();save();toast('Review saved.')}
-function dispute(id){const o=S.orders.find(x=>x.id===id),r=$('dr').value.trim();if(!S.user||!o||o.owner!==S.user.email)return toast('Only the customer can report an issue.',1);if(!r)return toast('Describe the issue first.',1);o.dis=r;save();render();toast('Issue reported. Support will review it.')}
-function showInv(id){const o=S.orders.find(x=>x.id===id);if(!o)return;$('ib').innerHTML=`<div class=r><span>Order</span><b>#${esc(o.id)}</b></div><div class=r><span>Date</span><span>${esc(o.at)}</span></div><div class=r><span>Route</span><span>${esc(o.pk)} → ${esc(o.dp)}</span></div><div class=r><span>Vehicle</span><span>${esc(o.tier)}</span></div><div class=r><span>Freight service</span><span>${money(o.sub)}</span></div><div class=r><span>Promo</span><span>-${money(o.disc)}</span></div><div class=r><span>${esc(o.taxLbl)}</span><span>${money(o.tax)}</span></div><div class=r style="border-top:1px solid #ccc;padding-top:6px"><b>Total (${esc(o.pm)})</b><b>${money(o.total)} CAD</b></div><div class=r><span>Payment status</span><span>${esc(o.ps)}</span></div><div class=r><span>CRA BN</span><span>84920 1948 RT0001</span></div>`;mo('im')}
-function tview(){const L=mine();$('cs').innerHTML=[['ORDERS',L.length],['DELIVERED',L.filter(o=>o.status==='Delivered').length],['SPENT',money(L.filter(o=>o.status!=='Cancelled').reduce((a,o)=>a+o.total,0))]].map(k=>`<div class="deep m"><div class="mut" style="font-size:11px">${k[0]}</div><b class="lime" style="font-size:20px">${k[1]}</b></div>`).join('');$('chips').innerHTML=L.length?L.slice(0,10).map(o=>`<span class="chip ${o.id===cur?'on':''}" onclick="sel('${o.id}')">#${o.id}</span>`).join(''):'<p class="mut">No orders yet. Press "Book Delivery" to create one.</p>';
-const o=L.find(x=>x.id===cur)||L[0];if(!o){$('tv').innerHTML='';return}cur=o.id;const i=STAGES.indexOf(o.status),p=o.status==='Cancelled'?0:[10,40,75,100][i],can=['Confirmed','Driver Assigned'].includes(o.status);
-$('tv').innerHTML=`<div class="row"><div><h3 class="m">Order #${o.id}</h3><span class="mut">${esc(o.pk)} → ${esc(o.dp)} · ${esc(o.tier)}</span></div><span class="st ${o.dis?'Disputed':o.status}">${o.dis?'Disputed':o.status}</span></div>
-<svg viewBox="0 0 400 44" width="100%"><line x1="30" y1="22" x2="370" y2="22" stroke="#152b44" stroke-width="6"/><circle cx="30" cy="22" r="7" fill="#9be136"/><circle cx="370" cy="22" r="7" fill="#38bdf8"/><circle cx="${30+3.4*p}" cy="22" r="10" fill="#081624" stroke="#9be136" stroke-width="3"/></svg><div class="bp"><i style="width:${p}%"></i></div><div class="g4 m" style="font-size:11px">${STAGES.map((s,k)=>`<div class="deep ${k<=i&&o.status!=='Cancelled'?'lime':'mut'}">${k+1}. ${s}</div>`).join('')}</div>
-<div class="g"><div class="deep"><div class="m mut" style="font-size:11px">DELIVERY PIN</div><div class="m lime" style="font-size:34px;font-weight:900">${o.pin}</div><button class="btn d s" onclick="copy('Order ${o.id} - ${o.status}. PIN: ${o.pin}')">Copy details</button></div>
-<div class="deep m" style="font-size:12px"><div>Driver: <b>${esc(o.driver)}</b></div><div>Total: <b class="lime">${money(o.total)} CAD</b></div><div>Payment: ${esc(o.ps)}</div><div>Pickup: ${o.when?esc(new Date(o.when).toLocaleString()):'As soon as possible'}</div><div>Recipient: ${esc(o.rn)} (${esc(o.rp)})</div>${o.nt?`<div>Notes: ${esc(o.nt)}</div>`:''}${o.pa||o.da?`<div>${esc(o.pa)} → ${esc(o.da)}</div>`:''}</div></div>
-${o.status==='Confirmed'?'<div class="deep sky">Your order is live. A driver will accept it soon.</div>':''}
-${o.pod&&/^data:image\//.test(o.pod)?`<div class="deep"><b>Proof of delivery</b><br><img src="${esc(o.pod)}" alt="Proof of delivery photo" style="max-width:100%;border-radius:10px;margin-top:8px"></div>`:''}
-<div class="row" style="justify-content:flex-start"><button class="btn s" onclick="showInv('${o.id}')">Tax invoice</button><button class="btn d s" onclick="rebook('${o.id}')">Book again</button><a class="btn d s" style="text-decoration:none" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent((o.pa||o.pk)+', '+o.hub)}&destination=${encodeURIComponent((o.da||o.dp)+', '+o.hub)}">Directions</a><a class="btn d s" style="text-decoration:none" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent('HMK order '+o.id+' - '+o.status+'. Delivery PIN: '+o.pin)}">WhatsApp</a>${can?`<button class="btn x s" onclick="cancel('${o.id}')">${cancelId===o.id?'Tap again to confirm cancel':'Cancel order'}</button>`:''}</div>
-${chatBox(o,'t')}<details><summary>Timeline${o.km?' · est. '+o.km+' km':''}</summary>${(o.log||[]).map(l=>`<p>${esc(l.t)} — ${esc(l.s)}</p>`).join('')}</details>
-${o.status==='Delivered'?`<div class="deep col"><b>Review & issues</b><div class="g"><div><label>Rate your driver</label><select id="rv">${[5,4,3,2,1].map(n=>`<option value="${n}" ${n===o.rate?'selected':''}>${'★'.repeat(n)}</option>`).join('')}</select></div><div><label>Review</label><input id="rt" value="${esc(o.rev)}"></div></div><div><label>Issue details (only to report a problem)</label><textarea id="dr">${esc(o.dis)}</textarea></div><div class="row" style="justify-content:flex-start"><select id="tp" style="width:auto" aria-label="Tip amount"><option>2</option><option>5</option><option>10</option></select><button class="btn d s" onclick="tip('${o.id}')">${o.tip?'Tipped '+money(o.tip):'Tip driver'}</button><button class="btn s" onclick="review('${o.id}')">Save review</button><button class="btn x s" onclick="dispute('${o.id}')">Report issue</button></div></div>`:''}`}
-function chatBox(o,p){const m=(o.msgs||[]).slice(-30);return`<details ${chatOpen===p+o.id?'open':''}><summary>Chat (${m.length})</summary><div class="col" style="margin-top:8px">${m.map(x=>`<div class="deep" style="padding:8px"><b class="${x.r==='customer'?'':'lime'}">${esc(x.n)}</b> <span class="mut">${esc(x.r)} · ${esc(x.at)}</span><div>${esc(x.t)}</div></div>`).join('')}<div class="row" style="flex-wrap:nowrap"><input id="c${p}${o.id}" maxlength="300" placeholder="Type a message"><button class="btn s" onclick="chat('${o.id}','${p}')">Send</button></div></div></details>`}
-function chat(id,p){const o=S.orders.find(x=>x.id===id),u=S.user,t=($('c'+p+id).value||'').trim();if(!o||!u||!t)return;if(u.role!=='admin'&&o.owner!==u.email&&o.de!==u.email)return toast('You are not part of this order.',1);
-(o.msgs=o.msgs||[]).push({n:u.name,r:u.role,t,at:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})});[o.owner,o.de].filter(e=>e&&e!==u.email).forEach(e=>note(e,'New message on '+o.id));chatOpen=p+id;save();render()}
-function res(id){const o=S.orders.find(x=>x.id===id);if(!o||!S.user||S.user.role!=='admin')return;(o.log=o.log||[]).push({s:'Issue resolved by HQ',t:now()});o.dis='';save();render();toast('Issue marked resolved.')}
-function shrink(f){return new Promise(r=>{const im=new Image,u=URL.createObjectURL(f);im.onload=()=>{const k=Math.min(1,360/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);r(c.toDataURL('image/jpeg',.6))};im.onerror=()=>r('');im.src=u})}
-function tip(id){const o=S.orders.find(x=>x.id===id),u=S.user,a=+$('tp').value;if(!u||!o||o.owner!==u.email||o.status!=='Delivered'||o.tip)return toast('Tip not available.',1);const d=S.users.find(x=>x.email===o.de);if(!d)return toast('Driver account not found.',1);if((+u.wallet||0)<a)return toast('Wallet balance too low. Top up first.',1);u.wallet=+(u.wallet-a).toFixed(2);d.earn=+((+d.earn||0)+a).toFixed(2);o.tip=a;note(d.email,'You received a '+money(a)+' tip on '+o.id);save();render();toast('Thank you! '+money(a)+' tip sent to the driver.')}
-function theme(){const l=document.documentElement.classList.toggle('lt');try{localStorage.setItem('hmk_theme',l?'l':'d')}catch(e){}}
-function bell(){const u=S.user;if(!u)return;$('nl').innerHTML=(u.notes||[]).slice().reverse().map(n=>`<div class="deep"><div>${esc(n.t)}</div><div class="mut" style="font-size:11px">${esc(n.at)}</div></div>`).join('')||'<p class="mut">No notifications yet.</p>';u.unread=0;save();render();mo('nm')}
-function prof(){const u=S.user;$('fn').value=u.name;$('fp').value=u.phone||'';$('fw').value='';$('fi').textContent=u.email+' · wallet '+money(u.wallet||0);mo('pf')}
-async function saveProf(){const u=S.user,n=$('fn').value.trim(),p=$('fw').value;if(!n)return toast('Name cannot be empty.',1);if(p&&p.length<6)return toast('Password must be at least 6 characters.',1);u.name=n;u.phone=$('fp').value.trim();if(p){u.salt=Math.random().toString(36).slice(2)+Date.now();u.pass=await hp(p,u.salt)}save();mc('pf');render();toast('Profile updated.')}
-function delAcc(){const u=S.user;if(S.orders.some(o=>(o.owner===u.email||o.de===u.email)&&!['Delivered','Cancelled'].includes(o.status)))return toast('Finish or cancel your open orders first.',1);if(!confirm('Delete your account permanently? Your wallet balance will be lost.'))return;S.users=S.users.filter(x=>x.email!==u.email);S.me=null;save();mc('pf');render();tab('home');toast('Account deleted.')}
-function ban(i){const u=S.users[i];if(!u||!S.user||S.user.role!=='admin'||u.email===S.user.email)return;u.ban=!u.ban;save();render();toast(u.ban?'Account suspended.':'Account reactivated.')}
-function analytics(all){const hv={};all.filter(o=>o.status!=='Cancelled').forEach(o=>hv[o.hub]=(hv[o.hub]||0)+o.total);const mx=Math.max(1,...Object.values(hv));
-$('an').innerHTML='<b>Revenue by hub</b>'+(Object.keys(hv).length?Object.entries(hv).map(([k,v])=>`<div class="r"><span>${esc(k)}</span><b class="m">${money(v)}</b></div><div class="bp"><i style="width:${v/mx*100}%"></i></div>`).join(''):'<p class="mut">No revenue yet.</p>');
-$('ut').innerHTML=S.users.map((u,i)=>`<tr><td>${esc(u.name)}</td><td>${esc(u.email)}</td><td>${u.role}</td><td class="m">${money(u.wallet||0)}</td><td>${u.ban?'<span class="st Cancelled">Suspended</span>':'Active'}</td><td>${S.user&&u.email===S.user.email?'':`<button class="btn d s" onclick="ban(${i})">${u.ban?'Reactivate':'Suspend'}</button>`}</td></tr>`).join('')}
-function backup(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({users:S.users,orders:S.orders})],{type:'application/json'}));a.download='hmk-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();URL.revokeObjectURL(a.href)}
-function restore(inp){const f=inp.files[0];if(!f||!S.user||S.user.role!=='admin')return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!Array.isArray(d.users)||!Array.isArray(d.orders)||d.users.some(u=>typeof u.email!=='string')||d.orders.some(o=>typeof o.id!=='string'))throw 0;if(!confirm('Replace all current users and orders with this backup?'))return;const me=S.user.email;S.users=d.users;S.orders=d.orders;S.me=S.users.some(u=>u.email===me)?me:null;save();render();toast('Backup restored.')}catch(e){toast('This is not a valid HMK backup file.',1)}};r.readAsText(f);inp.value=''}
-// driver & admin
-function dview(){const n=S.user&&S.user.role==='driver'?S.user.name:'Demo Driver',em=S.user&&S.user.email,open=S.orders.filter(o=>!['Delivered','Cancelled'].includes(o.status)&&(!o.de||o.de===em)),done=S.orders.filter(o=>o.status==='Delivered'&&o.de===em).length;
-$('dv').innerHTML=`<div class="row"><div><div class="m lime" style="font-size:11px;font-weight:800">DRIVER CONSOLE</div><h2>${esc(n)}</h2></div><span><button class="btn ${S.online?'':'d'}" onclick="duty()">${S.online?'ONLINE':'OFFLINE'}</button> <button class="btn d" onclick="payout()">Interac payout</button></span></div>
-<div class="g4 m"><div class="deep"><div class="mut" style="font-size:11px">EARNINGS</div><b class="lime" style="font-size:22px">${money(S.earn)}</b></div><div class="deep"><div class="mut" style="font-size:11px">COMPLETED</div><b style="font-size:22px">${done}</b></div><div class="deep"><div class="mut" style="font-size:11px">OPEN JOBS</div><b style="font-size:22px">${open.length}</b></div><div class="deep"><div class="mut" style="font-size:11px">RATING</div><b style="font-size:22px">${(r=>r.length?(r.reduce((a,o)=>a+o.rate,0)/r.length).toFixed(1)+' ★':'—')(S.orders.filter(o=>o.de===em&&o.rated))}</b></div></div>
-${open.length?open.map(o=>`<div class="deep col"><div class="row"><div><b class="m lime">#${o.id}</b> <span class="st ${o.status}">${o.status}</span><div class="mut">${esc(o.pk)} → ${esc(o.dp)} · ${esc(o.tier)}</div></div><b class="m lime">${money(o.sub-o.disc)}</b></div>
-<div class="row" style="justify-content:flex-start">${o.status==='Confirmed'?`<button class="btn s" ${S.online?'':'disabled'} onclick="job('${o.id}','Driver Assigned')">Accept job</button>`:''}${o.status==='Driver Assigned'?`<button class="btn s" onclick="job('${o.id}','In Transit')">Start transit</button>`:''}
-${o.status!=='Confirmed'?`<input type="file" accept="image/*" id="f${o.id}" aria-label="Proof of delivery photo" style="max-width:200px"><input id="p${o.id}" maxlength="4" inputmode="numeric" placeholder="Customer PIN" style="max-width:130px" class="m"><button class="btn d s" onclick="finish('${o.id}')">Verify PIN & deliver</button>`:''}</div>${chatBox(o,'d')}</div>`).join(''):'<p class="mut">No open jobs right now.</p>'}`}
-function job(id,st){const o=S.orders.find(x=>x.id===id),u=S.user;if(!u||u.role!=='driver')return toast('Sign in as a driver.',1);if(!o||o.status==='Cancelled')return toast('This order was cancelled.',1);if(o.de&&o.de!==u.email)return toast('This job belongs to another driver.',1);o.de=u.email;o.driver=u.name;setSt(o,st);save();render();toast('#'+id+' is now '+st)}
-async function finish(id){const o=S.orders.find(x=>x.id===id);if(!o||o.status==='Cancelled')return toast('This order was cancelled.',1);if(!S.user||S.user.role!=='driver'||o.de!==S.user.email)return toast('Only the assigned driver can complete this job.',1);if($('p'+id).value.trim()!==o.pin)return toast('Wrong customer PIN.',1);const fl=$('f'+id).files[0];if(fl)o.pod=await shrink(fl);setSt(o,'Delivered');if(o.pm!=='Cash on Delivery')o.ps='Settled (escrow released)';S.earn=+(S.earn+o.sub-o.disc).toFixed(2);save();render();toast('Delivered. '+money(o.sub-o.disc)+' added to earnings.')}
-function duty(){S.online=!S.online;save();render()}
-function payout(){if(S.earn<=0)return toast('No earnings to pay out.',1);toast('Interac payout of '+money(S.earn)+' requested (demo).');S.earn=0;save();render()}
-function adv(id){const o=S.orders.find(x=>x.id===id);if(!S.user||S.user.role!=='admin')return;if(!o||!NEXT[o.status])return;setSt(o,NEXT[o.status]);if(o.status==='Delivered'&&o.pm!=='Cash on Delivery')o.ps='Settled (escrow released)';save();render()}
-function aview(){const all=S.orders,q=($('af').value||'').toLowerCase(),L=q?all.filter(o=>[o.id,o.hub,o.driver,o.status,o.owner].join(' ').toLowerCase().includes(q)):all,a=all.filter(o=>!['Delivered','Cancelled'].includes(o.status)).length;
-$('kp').innerHTML=[['ORDERS',all.length],['ACTIVE',a],['DELIVERED',all.filter(o=>o.status==='Delivered').length],['VOLUME',money(all.filter(o=>o.status!=='Cancelled').reduce((s,o)=>s+o.total,0))]].map(k=>`<div class="deep m"><div class="mut" style="font-size:11px">${k[0]}</div><b class="lime" style="font-size:20px">${k[1]}</b></div>`).join('');
-analytics(all);
-$('tb').innerHTML=L.length?L.map(o=>`<tr><td class="m lime">#${o.id}</td><td>${esc(o.hub)}</td><td>${esc(o.tier)}</td><td>${esc(o.driver)}</td><td class="m">${money(o.total)}</td><td>${esc(o.ps)}</td><td><span class="st ${o.status}">${o.status}</span></td><td>${NEXT[o.status]?`<button class="btn d s" onclick="adv('${o.id}')">Advance</button>`:''} ${o.dis?`<button class="btn x s" onclick="res('${o.id}')">Resolve</button>`:''}</td></tr>`).join(''):'<tr><td colspan="8" class="mut">No matching orders.</td></tr>'}
-function csv(L){if(!L.length)return toast('No orders to download yet.',1);const c=v=>{let t=String(v??'');if(/^[=+\-@]/.test(t))t="'"+t;return'"'+t.replace(/"/g,'""')+'"'};
-const rows=[['Order','Hub','Tier','Route','Driver','Total CAD','Payment','Status']].concat(L.map(o=>[o.id,o.hub,o.tier,o.pk+' > '+o.dp,o.driver,o.total.toFixed(2),o.ps,o.status])).map(r=>r.map(c).join(',')).join('\n');
-const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([rows],{type:'text/csv'}));a.download='hmk-orders.csv';a.click();URL.revokeObjectURL(a.href)}
-function render(){const u=S.user;$('bell').classList.toggle('h',!u);$('bn').textContent=u&&u.unread?' '+u.unread:'';$('wal').textContent=money(S.wallet)+' CAD';
-$('auth').innerHTML=u?`<button class="btn d s" onclick="prof()">${esc(u.name)} (${u.role})</button> <button class="btn d s" onclick="logout()">Exit</button>`:'<button class="btn s" onclick="openAuth(\'in\')">Sign In</button> <button class="btn d s" onclick="openAuth(\'up\')">Register</button>';
-const t=[['home','Overview'],['book','Book & Bid'],['track','My Orders'],['driver','Driver'],['admin','Fleet HQ']],act=(document.querySelector('section:not(.h)')||{id:'v-home'}).id.slice(2);
-$('nav').innerHTML=t.filter(x=>can(x[0])).map(x=>`<button data-t="${x[0]}" class="${x[0]===act?'on':''}" onclick="tab('${x[0]}')">${x[1]}</button>`).join('');
-tview();dview();aview()}
-$('hub').innerHTML=Object.entries(HUBS).map(([k,h])=>`<option value="${k}">${h[0]} — ${h[2]}</option>`).join('');
+function cancel(id){const o=S.orders.find(x=>x.id===id);if(!S.user||!o||o.owner!==S.user.email)return;if(!['Confirmed','Driver Assigned'].includes(o.status))return toast('Cannot cancel once in transit or delivered.',1);
+if(cancelId!==id){cancelId=id;tview();setTimeout(()=>{if(cancelId===id){cancelId='';tview()}},5000);return}
+cancelId='';const w=o.pm==='Wallet',ow=S.users.find(x=>x.email===o.owner);if(w&&ow)ow.wallet=+((+ow.wallet||0)+o.total).toFixed(2);setSt(o,'Cancelled');o.ps=w?'Refunded to wallet':'Cancelled (no charge)';save();tview();toast('Order '+id+' cancelled.')}
+function review(id){const o=S.orders.find(x=>x.id===id);if(!S.user||!o||o.owner!==S.user.email)return;o.rate=+$('rv').value;o.rated=1;o.rev=$('rt').value.trim();save();toast('Review saved.')}
+function dispute(id){const o=S.orders.find(x=>x.id===id),r=$('dr').value.trim();if(!S.user||!o||o.owner!==S.user.email)return;if(!r)return toast('Describe the issue first.',1);o.dis=r;save();tview();toast('Issue reported to Fleet HQ.')}
+function showInv(id){const o=S.orders.find(x=>x.id===id);if(!o)return;$('ib').innerHTML=`<div class=r><span>Order</span><b>#${esc(o.id)}</b></div><div class=r><span>Date</span><span>${esc(o.at)}</span></div><div class=r><span>Cargo</span><span>${esc(o.cargo||'Freight')} (${esc(o.kg||35)} kg)</span></div><div class=r><span>Route</span><span>${esc(o.pk)} → ${esc(o.dp)}</span></div><div class=r><span>Vehicle</span><span>${esc(o.tier)}</span></div><div class=r><span>Freight service</span><span>${money(o.sub)}</span></div><div class=r><span>Promo</span><span>-${money(o.disc)}</span></div><div class=r><span>${esc(o.taxLbl)}</span><span>${money(o.tax)}</span></div><div class=r style="border-top:1px solid #ccc;padding-top:6px"><b>Total (${esc(o.pm)})</b><b>${money(o.total)} CAD</b></div><div class=r><span>Payment status</span><span>${esc(o.ps)}</span></div><div class=r><span>CRA BN</span><span>84920 1948 RT0001</span></div>`;mo('im')}
+
+function tview(){
+  if(!S.user||S.user.role!=='customer'){$('cs').innerHTML='';$('chips').innerHTML='<div class="deep">Please <button type="button" class="btn s" onclick="openAuth(\'in\')">Sign In</button> as a Customer to view your orders & PINs.</div>';$('tv').innerHTML='';return}
+  const L=mine();
+  $('cs').innerHTML=[['MY ORDERS',L.length],['DELIVERED',L.filter(o=>o.status==='Delivered').length],['SPENT',money(L.filter(o=>o.status!=='Cancelled').reduce((a,o)=>a+(+o.total||0),0))]].map(k=>`<div class="deep m"><div class="mut" style="font-size:11px">${k[0]}</div><b class="lime" style="font-size:20px">${k[1]}</b></div>`).join('');
+  $('chips').innerHTML=L.length?L.slice(0,12).map(o=>`<span class="chip ${o.id===cur?'on':''}" onclick="sel('${o.id}')">#${esc(o.id)}</span>`).join(''):'<p class="mut">No orders yet. Switch to "Book & Bid" to create one.</p>';
+  const o=L.find(x=>x.id===cur)||L[0];if(!o){$('tv').innerHTML='';return}cur=o.id;const i=STAGES.indexOf(o.status),p=o.status==='Cancelled'?0:[10,40,75,100][Math.max(0,i)],canC=['Confirmed','Driver Assigned'].includes(o.status);
+  const origin=encodeURIComponent([o.pa,o.pk,o.hub].filter(Boolean).join(', ')),dest=encodeURIComponent([o.da,o.dp,o.hub].filter(Boolean).join(', '));
+  $('tv').innerHTML=`<div class="col">
+  <div class="row"><div><h3 class="m">Order #${esc(o.id)}</h3><span class="mut">${esc(o.pk)} → ${esc(o.dp)} · ${esc(o.tier)} (${esc(o.cargo||'Freight')}, ${esc(o.kg||35)} kg)</span></div><span class="st ${o.dis?'Disputed':o.status==='In Transit'?'Transit':o.status}">${o.dis?'Disputed':esc(o.status)}</span></div>
+  <div class="bp"><i style="width:${p}%"></i></div>
+  <div class="g4 m" style="font-size:11px">${STAGES.map((s,k)=>`<div class="deep ${k<=i&&o.status!=='Cancelled'?'lime':'mut'}">${k+1}. ${s}</div>`).join('')}</div>
+  <div class="g"><div class="deep"><div class="m mut" style="font-size:11px">DELIVERY PIN</div><div class="m lime" style="font-size:34px;font-weight:900">${esc(o.pin)}</div><button type="button" class="btn d s" onclick="copy('Order ${esc(o.id)} - ${esc(o.status)}. PIN: ${esc(o.pin)}')">Copy details</button></div>
+  <div class="deep m" style="font-size:12px"><div>Driver: <b>${esc(o.driver)}</b></div><div>Total: <b class="lime">${money(o.total)} CAD</b></div><div>Payment: ${esc(o.ps)}</div><div>Pickup: ${o.when?esc(new Date(o.when).toLocaleString()):'As soon as possible'}</div><div>Recipient: ${esc(o.rn)} (${esc(o.rp)})</div>${o.nt?`<div>Notes: ${esc(o.nt)}</div>`:''}${o.pa||o.da?`<div>${esc(o.pa)} → ${esc(o.da)}</div>`:''}</div></div>
+  ${o.log&&o.log.length?`<div class="deep m" style="font-size:11px"><div class="lime" style="font-weight:800;margin-bottom:4px">ACTIVITY LOG</div>${o.log.map(x=>`<div>• ${esc(x.t)} — <b>${esc(x.s)}</b></div>`).join('')}</div>`:''}
+  ${o.pod&&/^data:image\//.test(o.pod)?`<div class="deep"><b>Proof of delivery</b><br><img src="${esc(o.pod)}" alt="Proof of delivery photo" style="max-width:100%;max-height:240px;border-radius:10px;margin-top:8px"></div>`:''}
+  <div class="row" style="justify-content:flex-start"><button type="button" class="btn s" onclick="showInv('${o.id}')">Tax invoice</button><button type="button" class="btn d s" onclick="rebook('${o.id}')">Book again</button><a class="btn d s" style="text-decoration:none" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${dest}">Open in Maps ↗</a>${canC?`<button type="button" class="btn x s" onclick="cancel('${o.id}')">${cancelId===o.id?'Confirm cancel?':'Cancel order'}</button>`:''}</div>
+  ${o.status==='Delivered'?`<div class="deep col"><b>Rate delivery</b><div class="g"><div><label>Rating</label><select id="rv"><option value="5">★★★★★ (5)</option><option value="4">★★★★☆ (4)</option><option value="3">★★★☆☆ (3)</option><option value="2">★★☆☆☆ (2)</option><option value="1">★☆☆☆☆ (1)</option></select></div><div><label>Comment</label><input id="rt" value="${esc(o.rev||'')}" placeholder="Great service..."></div></div><button type="button" class="btn s" style="width:max-content" onclick="review('${o.id}')">Save review</button></div>`:''}
+  ${o.status==='Delivered'?`<div class="deep col"><b>Report an issue</b><input id="dr" value="${esc(o.dis||'')}" placeholder="Damaged item, late arrival, wrong item..."><button type="button" class="btn x s" style="width:max-content" onclick="dispute('${o.id}')">Report issue</button></div>`:''}
+  </div>`;
+}
+
+// driver portal (strictly driver-only)
+function toggleOnline(){if(S.user?.role!=='driver')return;S.online=!S.online;save();dview();toast('Driver status: '+(S.online?'Online':'Offline'))}
+
+function dnext(id){
+  if(S.user?.role!=='driver')return;
+  const o=S.orders.find(x=>x.id===id);if(!o)return;
+  const nxt=NEXT[o.status];if(!nxt)return;
+  if(nxt==='Driver Assigned'){o.driver=S.user.name;o.driverEmail=S.user.email}
+  if(nxt==='Delivered'){
+    const pin=($('pin-'+id)?.value||'').trim();
+    if(pin!==String(o.pin))return toast('4-digit PIN mismatch! Ask customer for PIN.',1);
+    S.earn=+(S.earn+o.sub).toFixed(2);
+    o.ps=o.pm==='Wallet'?'Released from escrow to driver':o.pm==='Cash on Delivery'?'Cash collected & settled':'Settled to driver';
+  }
+  setSt(o,nxt);save();dview();toast('Order '+id+' → '+nxt);
+}
+
+function podUpload(inp,id){
+  if(S.user?.role!=='driver')return;
+  const f=inp.files&&inp.files[0];if(!f)return;
+  if(!f.type.startsWith('image/'))return toast('Select an image file.',1);
+  if(f.size>1.5e6)return toast('Image too large (max 1.5 MB).',1);
+  const o=S.orders.find(x=>x.id===id);if(!o)return;
+  const r=new FileReader();r.onload=()=>{o.pod=r.result;save();dview();toast('Proof of delivery uploaded.')};r.readAsDataURL(f);
+}
+
+function cashOut(){
+  if(S.user?.role!=='driver')return;
+  if(!(S.earn>0))return toast('No earnings to cash out.',1);
+  const a=S.earn;
+  S.user.payouts=S.user.payouts||[];
+  S.user.payouts.unshift({amt:a,at:now(),method:'Interac e-Transfer'});
+  S.earn=0;save();dview();toast('Interac payout of '+money(a)+' CAD sent.');
+}
+
+function saveVeh(){
+  if(S.user?.role!=='driver')return;
+  S.user.vehicle=$('d-veh').value.trim();
+  S.user.license=$('d-lic').value.trim();
+  save();dview();toast('Vehicle & license details saved.');
+}
+
+function dview(){
+  if(!S.user||S.user.role!=='driver'){$('dv').innerHTML='<p class="mut">Driver portal requires a Driver account.</p>';return}
+  const open=S.orders.filter(o=>['Confirmed','Driver Assigned','In Transit'].includes(o.status));
+  const done=S.orders.filter(o=>o.status==='Delivered');
+
+  if(drvSub==='jobs'){
+    $('dv').innerHTML=`<div class="row"><div><div class="m lime" style="font-size:11px;font-weight:800">DRIVER DISPATCH & TRIPS · ${esc(S.user.email)}</div><h2>${esc(S.user.name)} — Active Trips</h2></div><div class="row"><button type="button" class="btn ${S.online?'':'d'}" onclick="toggleOnline()">${S.online?'● ONLINE':'○ OFFLINE'}</button><button type="button" class="btn d" onclick="dsub('earn')">Earnings (${money(S.earn)})</button></div></div>
+    <div class="g3 m"><div class="deep"><div class="mut" style="font-size:11px">AVAILABLE EARNINGS</div><b class="lime" style="font-size:20px">${money(S.earn)} CAD</b></div><div class="deep"><div class="mut" style="font-size:11px">OPEN / ACTIVE JOBS</div><b style="font-size:20px">${open.length}</b></div><div class="deep"><div class="mut" style="font-size:11px">DELIVERED ORDERS</div><b class="sky" style="font-size:20px">${done.length}</b></div></div>
+    ${open.length?open.map(o=>`<div class="deep col">
+    <div class="row"><div><b class="m">#${esc(o.id)}</b> · <span class="mut">${esc(o.pk)} → ${esc(o.dp)} (${esc(o.tier)} · ${esc(o.cargo||'Freight')}, ${esc(o.kg||35)} kg)</span></div><span class="st ${o.status==='In Transit'?'Transit':o.status}">${esc(o.status)}</span></div>
+    <div class="m" style="font-size:12px">Driver Payout: <b class="lime">${money(o.sub)} CAD</b> · Recipient: ${esc(o.rn)} (${esc(o.rp)}) ${o.nt?'· '+esc(o.nt):''}</div>
+    <div class="row" style="justify-content:flex-start">
+    ${NEXT[o.status]==='Delivered'?`<input id="pin-${o.id}" maxlength="4" inputmode="numeric" placeholder="4-digit PIN" class="m" style="width:130px"><button type="button" class="btn s" onclick="dnext('${o.id}')">Verify PIN & Deliver</button>`:`<button type="button" class="btn s" onclick="dnext('${o.id}')">${o.status==='Confirmed'?'Accept Job →':'Mark '+NEXT[o.status]+' →'}</button>`}
+    <label class="btn d s" style="margin:0;cursor:pointer">📷 Proof photo<input type="file" accept="image/*" hidden onchange="podUpload(this,'${o.id}')"></label>
+    </div>
+    ${o.pod?`<div class="m lime" style="font-size:11px">✓ Proof photo attached</div>`:''}
+    </div>`).join(''):'<p class="mut">No active jobs right now.</p>'}`;
+  } else if(drvSub==='earn'){
+    const ps=S.user.payouts||[];
+    $('dv').innerHTML=`<div class="row"><div><div class="m lime" style="font-size:11px;font-weight:800">DRIVER EARNINGS & INTERAC PAYOUTS</div><h2>Payout Ledger</h2></div><button type="button" class="btn" onclick="cashOut()">Cash Out ${money(S.earn)} CAD →</button></div>
+    <div class="g3 m"><div class="deep"><div class="mut" style="font-size:11px">UNPAID BALANCE</div><b class="lime" style="font-size:20px">${money(S.earn)} CAD</b></div><div class="deep"><div class="mut" style="font-size:11px">PAYOUTS SENT</div><b style="font-size:20px">${ps.length}</b></div><div class="deep"><div class="mut" style="font-size:11px">COMPLETED TRIPS</div><b class="sky" style="font-size:20px">${done.length}</b></div></div>
+    <div class="deep col"><div class="m lime" style="font-size:11px;font-weight:800">PAYOUT HISTORY</div>${ps.length?ps.map(p=>`<div class="r m" style="font-size:12px"><span>${esc(p.at)} · ${esc(p.method)}</span><b class="lime">${money(p.amt)} CAD</b></div>`).join(''):'<span class="mut">No payouts processed yet.</span>'}</div>`;
+  } else {
+    $('dv').innerHTML=`<div class="col"><div><div class="m lime" style="font-size:11px;font-weight:800">VEHICLE & COMPLIANCE</div><h2>Fleet Unit Profile</h2></div>
+    <div class="g"><div><label>Assigned Vehicle & Plate</label><input id="d-veh" value="${esc(S.user.vehicle||'Ford Transit Cargo Van · #ON-8492')}"></div><div><label>Commercial Driver License</label><input id="d-lic" value="${esc(S.user.license||'G8492-19402-88')}"></div></div>
+    <div class="deep m" style="font-size:12px">Insurance Status: <b class="lime">${esc(S.user.insurance||'Commercial Cargo $2M · Active')}</b></div>
+    <button type="button" class="btn" style="width:max-content" onclick="saveVeh()">Save Vehicle Details</button></div>`;
+  }
+}
+
+// admin / fleet hq (strictly admin-only)
+async function issueStaff(){
+  if(S.user?.role!=='admin')return;
+  const name=$('cn').value.trim(),role=$('cr').value,email=$('ce').value.trim().toLowerCase(),pw=$('cp').value.trim();
+  if(!name||!email||pw.length<6)return toast('Enter name, valid email and password (6+ chars).',1);
+  if(S.users.some(x=>x.email===email))return toast('Email already exists.',1);
+  const salt=Math.random().toString(36).slice(2);
+  S.users.push({name,phone:'+1 (416) 555-0199',email,role,wallet:0,earn:0,pass:await hp(pw,salt),salt,companyIssued:true,payouts:[],notes:[],unread:0});
+  save();aview();toast('Issued company '+role+' account for '+email);
+}
+
+function toggleBan(em){if(S.user?.role!=='admin')return;const u=S.users.find(x=>x.email===em);if(!u||u.role==='admin')return;u.ban=!u.ban;save();aview();toast(u.ban?'User suspended.':'User restored.')}
+function astep(id){if(S.user?.role!=='admin')return;const o=S.orders.find(x=>x.id===id);if(!o||!NEXT[o.status])return;setSt(o,NEXT[o.status]);save();aview();toast('Order '+id+' → '+o.status)}
+function assignDrv(id,em){if(S.user?.role!=='admin')return;const o=S.orders.find(x=>x.id===id),d=S.users.find(x=>x.email===em);if(!o||!d)return;o.driver=d.name;o.driverEmail=d.email;if(o.status==='Confirmed')setSt(o,'Driver Assigned');save();aview();toast('Assigned '+d.name+' to #'+id)}
+function resolveDis(id){if(S.user?.role!=='admin')return;const o=S.orders.find(x=>x.id===id);if(!o)return;o.dis='';note(o.owner,'Dispute resolved for Order '+o.id);save();aview();toast('Dispute resolved for #'+id)}
+function adel(id){if(S.user?.role!=='admin')return;S.orders=S.orders.filter(x=>x.id!==id);save();aview();toast('Order '+id+' removed.')}
+function backup(){if(S.user?.role!=='admin')return;const b=new Blob([JSON.stringify(S,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='HMK-Backup.json';a.click()}
+function restore(inp){if(S.user?.role!=='admin')return;const f=inp.files&&inp.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d||!Array.isArray(d.users)||!Array.isArray(d.orders))return toast('Invalid backup file.',1);S.me=d.me||null;S.users=d.users;ensureStaff();S.orders=d.orders;S.online=d.online!==false;activeTab=defaultTab(S.user?.role||'customer');save();render();toast('Backup restored.')}catch(e){toast('Could not read backup.',1)}};r.readAsText(f)}
+
+function aview(){
+  if(!S.user||S.user.role!=='admin')return;
+  const q=($('af')?.value||'').trim().toLowerCase(),rev=S.orders.filter(o=>o.status!=='Cancelled').reduce((a,o)=>a+(+o.total||0),0);
+  const drivers=S.users.filter(u=>u.role==='driver'&&!u.ban);
+  const list=q?S.orders.filter(o=>[o.id,o.hub,o.tier,o.driver,o.owner,o.status].some(x=>String(x||'').toLowerCase().includes(q))):S.orders;
+
+  if(admSub==='ops'){
+    const byHub={};S.orders.forEach(o=>{byHub[o.hub]=(byHub[o.hub]||0)+1});
+    $('aview-body').innerHTML=`
+      <div class="g4 m">${[['ORDERS',S.orders.length],['REVENUE',money(rev)],['ACTIVE DRIVERS',drivers.length],['DISPUTES',S.orders.filter(o=>o.dis).length]].map(k=>`<div class="deep"><div class="mut" style="font-size:11px">${k[0]}</div><b class="lime" style="font-size:20px">${k[1]}</b></div>`).join('')}</div>
+      <div class="deep"><div class="m lime" style="font-size:11px;font-weight:800;margin-bottom:6px">ORDERS BY HUB</div>${Object.keys(byHub).length?Object.entries(byHub).map(([k,v])=>`<div class="r m" style="font-size:12px"><span>${esc(k)}</span><b>${v}</b></div>`).join(''):'<span class="mut">No orders yet.</span>'}</div>
+      <div style="overflow-x:auto"><table><thead><tr><th>Order</th><th>Hub</th><th>Tier</th><th>Driver</th><th>Total</th><th>Payment</th><th>Status</th><th></th></tr></thead><tbody>${list.map(o=>`<tr><td class="m lime"><b>#${esc(o.id)}</b></td><td>${esc(o.hub)}</td><td>${esc(o.tier)}</td><td>${esc(o.driver)}</td><td class="m">${money(o.total)}</td><td>${esc(o.pm)}</td><td><span class="st ${o.dis?'Disputed':o.status}">${o.dis?'Disputed':esc(o.status)}</span></td><td>${NEXT[o.status]?`<button type="button" class="btn s" onclick="astep('${o.id}')">Next</button>`:''} <button type="button" class="btn x s" onclick="adel('${o.id}')">✕</button></td></tr>`).join('')||'<tr><td colspan="8" class="mut">No matching orders.</td></tr>'}</tbody></table></div>`;
+  } else if(admSub==='disp'){
+    const disOrders=S.orders.filter(o=>o.dis);
+    $('aview-body').innerHTML=`
+      <div class="deep col"><div class="m lime" style="font-size:11px;font-weight:800">OPEN DISPUTES (${disOrders.length})</div>${disOrders.length?disOrders.map(o=>`<div class="deep row"><div><b class="m">#${esc(o.id)}</b> · ${esc(o.owner)}<div class="mut" style="font-size:12px">${esc(o.dis)}</div></div><button type="button" class="btn s" onclick="resolveDis('${o.id}')">Resolve Dispute</button></div>`).join(''):'<span class="mut">No active disputes.</span>'}</div>
+      <div style="overflow-x:auto"><table><thead><tr><th>Order</th><th>Route</th><th>Status</th><th>Assign Driver</th></tr></thead><tbody>${list.map(o=>`<tr><td class="m lime"><b>#${esc(o.id)}</b></td><td>${esc(o.pk)} → ${esc(o.dp)}</td><td><span class="st ${o.status}">${esc(o.status)}</span></td><td><select onchange="assignDrv('${o.id}',this.value)" style="max-width:210px"><option value="">Current: ${esc(o.driver)}</option>${drivers.map(d=>`<option value="${esc(d.email)}">${esc(d.name)}</option>`).join('')}</select></td></tr>`).join('')||'<tr><td colspan="4" class="mut">No orders.</td></tr>'}</tbody></table></div>`;
+  } else {
+    $('aview-body').innerHTML=`
+      <div class="deep col">
+        <div class="m lime" style="font-size:11px;font-weight:800">ISSUE COMPANY DRIVER / STAFF ACCOUNT</div>
+        <div class="g">
+          <div><label>Name</label><input id="cn" placeholder="e.g. Tariq Mahmood"></div>
+          <div><label>Role</label><select id="cr"><option value="driver">Driver Partner</option><option value="admin">Fleet HQ Staff</option></select></div>
+          <div><label>Company Email</label><input id="ce" type="email" placeholder="tariq@hmktrading.ca"></div>
+          <div><label>Company Password</label><input id="cp" type="text" placeholder="e.g. HmkPass#2026"></div>
+        </div>
+        <button type="button" class="btn s" style="width:max-content" onclick="issueStaff()">+ Create Company Account</button>
+      </div>
+      <div style="overflow-x:auto"><table><thead><tr><th>User</th><th>Email</th><th>Role</th><th>Wallet / Earn</th><th>Status</th><th></th></tr></thead><tbody>${S.users.map(u=>`<tr><td><b>${esc(u.name)}</b></td><td class="m">${esc(u.email)}</td><td>${esc(u.role)}</td><td class="m">${u.role==='driver'?money(u.earn)+' (earn)':money(u.wallet)}</td><td>${u.ban?'Suspended':'Active'}</td><td>${u.role!=='admin'?`<button type="button" class="btn d s" onclick="toggleBan('${esc(u.email)}')">${u.ban?'Unban':'Ban'}</button>`:''}</td></tr>`).join('')}</tbody></table></div>`;
+  }
+}
+
+function csv(rows){if(!rows||!rows.length)return toast('Nothing to export.',1);const h=['id','hub','tier','cargo','kg','pk','dp','driver','total','pm','ps','status','at'];
+const out=[h.join(',')].concat(rows.map(o=>h.map(k=>'"'+String(o[k]??'').replace(/"/g,'""')+'"').join(',')));
+const b=new Blob([out.join('\n')],{type:'text/csv'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='HMK-Orders.csv';a.click()}
+
+function render(){
+  const u=S.user, role=u?.role||'customer';
+  if(!can(activeTab)) activeTab=defaultTab(role);
+  ['home','book','driver','admin'].forEach(t=>$('v-'+t).classList.toggle('h',t!==activeTab));
+
+  const isCust = !u || role==='customer';
+  $('wal-wrap').classList.toggle('h', !isCust);
+  $('wal').textContent = money(S.wallet)+' CAD';
+  $('hdr-cta').innerHTML = isCust ? `<button type="button" class="btn" onclick="tab('book');csub('book')">Book Delivery →</button>` : '';
+
+  $('auth').innerHTML = u
+    ? `<span class="chip m" onclick="openProf()" style="color:var(--lime)">${esc(u.name)} (${esc(role.toUpperCase())})</span> <button type="button" class="btn d s" onclick="logout()">Sign out</button>`
+    : `<button type="button" class="btn s" onclick="openAuth('in')">Sign In</button> <button type="button" class="btn d s" onclick="openAuth('up')">Register</button>`;
+
+  $('bell').classList.toggle('h',!u);
+  $('bn').textContent=u&&u.unread?' '+u.unread:'';
+
+  const tabs=allowedTabs(role);
+  $('nav').innerHTML=tabs.map(t=>`<button type="button" data-t="${t[0]}" class="${t[0]===activeTab?'on':''}" onclick="tab('${t[0]}')">${t[1]}</button>`).join('');
+
+  if(activeTab==='book'){
+    ['book','orders','addr'].forEach(k=>{
+      $('csub-'+k).classList.toggle('on',k===custSub);
+      $('cview-'+k).classList.toggle('h',k!==custSub);
+    });
+    if(custSub==='orders')tview();
+    if(custSub==='addr')renderAddr();
+  }
+  if(activeTab==='driver')dview();
+  if(activeTab==='admin')aview();
+}
+
+ensureStaff();
+$('hub').innerHTML=Object.entries(HUBS).map(([k,v])=>`<option value="${k}">${v[0]} — ${v[2]}</option>`).join('');
 $('rates').innerHTML=Object.values(TIERS).map(t=>`<div class="deep row"><b>${t[0]}</b><span class="m lime">${money(t[1])} CAD</span></div>`).join('');
-addEventListener('storage',e=>{if(e.key!==KEY)return;const a=document.activeElement;if(a&&/INPUT|TEXTAREA|SELECT/.test(a.tagName))return;S=load();props();render()});
-addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.mod').forEach(m=>m.classList.add('h'))});
-try{if(localStorage.getItem('hmk_theme')==='l')document.documentElement.classList.add('lt')}catch(e){}
-addEventListener('offline',()=>toast('You are offline. Changes are saved on this device.',1));addEventListener('online',()=>toast('Back online.'));
-let idle;const arm=()=>{clearTimeout(idle);idle=setTimeout(()=>{if(S.user){logout();toast('Signed out after 30 minutes of inactivity.',1)}},18e5)};['click','keydown','touchstart'].forEach(e=>addEventListener(e,arm,{passive:true}));arm();
 drawTiers();hubChange();render();
 </script></body></html>
